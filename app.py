@@ -2,13 +2,23 @@
 # from course import get_course_all, get_course_no_repeat, get_course_section, get_course_detail
 
 # Library from Flask
-from bigquery import getTotalRecycledKG,getTotalTreesPlanted,getTotalEnergySaved,getBranchCount,getCurrentMonth,getTotalCFcurrMonth,getCulmulativeCFcurrMonth,getCurrentYear,getStaffCount,getCurrentDay
+
+from google.cloud import bigquery
+from google.cloud.bigquery import client, dbapi, query
+from bigquery import GetUserName
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+from tkinter import *  
+  
+from tkinter import messagebox  
+  
+
+
 
 
 """
@@ -41,6 +51,45 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 """
 @app.route('/')
 
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():    
+    if request.method == "GET":
+        return render_template('pages-login.html')
+
+    else:
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Customer'
+        username = request.form['username']
+        password = request.form['passwword']
+
+        user_result=False
+
+        query="""
+            SELECT * FROM main.Customer
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if username == row['username'] and password==row['password']:
+                usertype=row['UserType']
+                user_result=True
+
+        if user_result:
+            session['loggedIn'] = TRUE
+            session['username'] = username
+            session['UserType'] = usertype
+            
+            if usertype=="ADMIN":
+                return redirect("/IndexAdmin")
+            elif usertype=="USER":
+                return redirect("IndexResident")
+        else:
+            #messagebox.showinfo("Fail log in","Fail to log in")
+            
+            return redirect('/login')
+
+        
 @app.route('/index')
 def index():
     # branchCount = getBranchCount()
@@ -59,19 +108,88 @@ def index():
     # kgRecycled = round(getTotalRecycledKG(),3)
     # treesPlanted = round(getTotalTreesPlanted(),3)
     # energySaved = round(getTotalEnergySaved(),3)
-    
+    #username = GetUserName()
     return render_template('index.html')#,energySaved=energySaved,treesPlanted=treesPlanted,kgRecycled=kgRecycled,branchCountHTML=branchCount,totSafe=totSafe,staffCount=staffCount,currMonth=month,currYear=year, totalCF=currTotalCF, avgCF=avgCurrTotalCF, culTotal=culTotalCFcurrMonth, avgCulTotal=avgCulTotal,currMonthCFperCapita=currMonthCFperCapita,safe=safePerCapita,currDay=day)
 
-
-@app.route('/login')
-def login():
-    return render_template('pages-login.html')
-
-
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('pages-register.html')
+    if request.method == "GET":    
+           
+        return render_template('pages-register.html')
 
+    else:
+        client=bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Customer'
+
+        username = request.form['inputusername']
+        password = request.form['inputpassword']
+        retype =request.form['inputRetype']
+        name=request.form['inputName']
+        email=request.form['inputEmail']
+        phoneNum=request.form['inputPhoneNumber']
+        BlockNum=request.form['inputBlockNumber']
+        UnitNum=request.form['inputUnitNumber']
+
+         
+        if password == retype:
+            
+
+            # Check student exist or not
+            
+            exist=False
+            query = """
+            SELECT username as L
+            FROM main.Customer
+             """
+            query_job = client.query(query)
+            for row in query_job:
+                if username ==row["L"]:
+                    exist=True
+
+
+            if(exist):
+                
+                return render_template('pages-register.html')
+            else:
+                pass
+        else:
+                 
+            return render_template('pages-register.html')
+
+         
+        # Create new user in database
+        row = [{u'username':username,u'password':password,u'name':name,u'email':email,u'PhoneNumber':phoneNum,u'BlockNumber':BlockNum,u'UnitNumber':UnitNum,u'UserType':"USER"}]
+        
+        errors=client.insert_rows_json(cust_table_id,row)
+        if errors==[]:
+            print('asd')
+            #messagebox.showinfo("Account Created","User have been register! Please SignIn to continue")
+        else:
+            print(f'encounter error : {errors}')
+
+        
+    return redirect('/login')
+
+@app.route('/logout')
+def logout():
+    session.pop('LoggedIn', None)
+    session.pop('username',None)
+    session.pop('Usertype',None)
+    return redirect('/login')
+
+@app.route('/IndexResident')
+def IndexResident():
+    return render_template("indexResident.html")
+
+@app.route('/IndexAdmin')
+def IndexAdmin():
+    return render_template('IndexAdmin.html')
+
+
+
+#Below this is not under AD project
+
+#
 # @app.route('/forgot-password')
 # def forgotpassword():
 #     return render_template('forgot-password.html')
@@ -266,7 +384,7 @@ def faq():
 #         return render_template('register.html')
 
 #     else:
-#         studentID = request.form.get('inputStudentID')
+#        studentID = request.form.get('inputStudentID')
 #         password = request.form.get('inputPassword')
 #         retype = request.form.get('inputRetype')
 #         phash = None
