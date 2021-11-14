@@ -236,7 +236,7 @@ def profile():
     return render_template('users-profile.html')
 
 @app.route('/profile-admin')
-def profile():
+def profileAdmin():
     return render_template('admin-profile.html')
 
 @app.route('/faq')
