@@ -74,13 +74,22 @@ def login():
             if username == row['username'] and password==row['password']:
                 usertype=row['UserType']
                 name=row['name']
+                email=row['email']
+                phoneNum=row['PhoneNumber']
+                blockNum=row['BlockNumber']
+                unitNum=row['UnitNumber']
+                
                 user_result=True
 
         if user_result:
             session['loggedIn'] = TRUE
             session['username'] = username
             session['UserType'] = usertype
-            session['name']=name
+            session['name']= name
+            session['email']= email
+            session['PhoneNumber']=phoneNum
+            session['BlockNumber']=blockNum
+            session['UnitNumber']=unitNum
             
             if usertype=="ADMIN":
                 return redirect("/IndexAdmin")
@@ -237,11 +246,23 @@ def blank():
 
 @app.route('/profile')
 def profile():
-    return render_template('users-profile.html')
+    username = session['username']
+    usertype = session['UserType']
+    name = session['name']
+    email = session['email']
+    phoneNum = session['PhoneNumber']
+    blockNum = session['BlockNumber']
+    unitNum = session['UnitNumber']
+    return render_template('users-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
 @app.route('/profile-admin')
 def profileAdmin():
-    return render_template('admin-profile.html')
+    username = session['username']
+    usertype = session['UserType']
+    name = session['name']
+    email = session['email']
+    phoneNum = session['PhoneNumber']    
+    return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum)
 
 @app.route('/faq')
 def faq():

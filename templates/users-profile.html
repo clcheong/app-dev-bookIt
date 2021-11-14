@@ -211,12 +211,12 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{url_for('static',filename='img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{name}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
+              <h6>{{name}}</h6>
               <!--<span>Web Designer</span>-->
             </li>
             <li>
@@ -526,7 +526,7 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img src="{{url_for('static',filename='img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
+              <h2>{{name}}</h2>
               <!--<h3>Web Designer</h3>
               <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -573,32 +573,32 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <div class="col-lg-9 col-md-8">{{name}}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Username</div>
-                    <div class="col-lg-9 col-md-8">kAnderson</div>
+                    <div class="col-lg-9 col-md-8">{{username}}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">E-Mail</div>
-                    <div class="col-lg-9 col-md-8">testing@gmail.com</div>
+                    <div class="col-lg-9 col-md-8">{{email}}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone Number</div>
-                    <div class="col-lg-9 col-md-8">012-34567890</div>
+                    <div class="col-lg-9 col-md-8">{{phoneNum}}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Block Number</div>
-                    <div class="col-lg-9 col-md-8">AG</div>
+                    <div class="col-lg-9 col-md-8">{{blockNum}}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Unit Number</div>
-                    <div class="col-lg-9 col-md-8">00-01</div>
+                    <div class="col-lg-9 col-md-8">{{unitNum}}</div>
                   </div>
 
                   <!--<div class="row">
@@ -626,42 +626,42 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{name}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">Username</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">kAnderson</textarea>
+                        <textarea name="about" class="form-control" id="about" style="height: 100px">{{username}}</textarea>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">E-Mail</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="kAnderson@gmail.com">
+                        <input name="company" type="text" class="form-control" id="company" value="{{email}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="012-34567890">
+                        <input name="job" type="text" class="form-control" id="Job" value="{{phoneNum}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Block Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="AG">
+                        <input name="country" type="text" class="form-control" id="Country" value="{{blockNum}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Unit Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="00-01">
+                        <input name="address" type="text" class="form-control" id="Address" value="{{unitNum}}">
                       </div>
                     </div>
 
