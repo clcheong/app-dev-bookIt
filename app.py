@@ -235,6 +235,10 @@ def blank():
 def profile():
     return render_template('users-profile.html')
 
+@app.route('/profile-admin')
+def profile():
+    return render_template('admin-profile.html')
+
 @app.route('/faq')
 def faq():
     return render_template('pages-faq.html')
