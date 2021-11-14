@@ -73,17 +73,19 @@ def login():
         for row in query_job:
             if username == row['username'] and password==row['password']:
                 usertype=row['UserType']
+                name=row['name']
                 user_result=True
 
         if user_result:
             session['loggedIn'] = TRUE
             session['username'] = username
             session['UserType'] = usertype
+            session['name']=name
             
             if usertype=="ADMIN":
                 return redirect("/IndexAdmin")
             elif usertype=="USER":
-                return redirect("IndexResident")
+                return redirect("/IndexResident")
         else:
             #messagebox.showinfo("Fail log in","Fail to log in")
             
@@ -179,11 +181,13 @@ def logout():
 
 @app.route('/IndexResident')
 def IndexResident():
-    return render_template("indexResident.html")
+    name = session['name']
+    return render_template("indexResident.html", name=name)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
-    return render_template('IndexAdmin.html')
+    name = session['name']
+    return render_template('IndexAdmin.html',name=name)
 
 
 
