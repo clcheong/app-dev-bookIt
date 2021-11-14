@@ -90,6 +90,7 @@ def login():
             session['PhoneNumber']=phoneNum
             session['BlockNumber']=blockNum
             session['UnitNumber']=unitNum
+            session['password']=password
             
             if usertype=="ADMIN":
                 return redirect("/IndexAdmin")
@@ -331,6 +332,57 @@ def updateProfile():
             return redirect('/profile-admin')
     #return render_template('users-profile.html',username=newUsername, usertype=usertype,name=newName,email=newEmail,phoneNum=newPhoneNum,blockNum=newBlockNum,unitNum=newUnitNum)
 
+
+@app.route('/update-password', methods=['GET', 'POST'])
+def updatePassword():
+    
+    if request.method == "GET":
+        return render_template('users-profile.html')
+
+    else: 
+        
+        username = session['username']
+        
+        password = request.form['password']
+        newPassword = request.form['newpassword']
+        renewPassword = request.form['renewpassword']
+        # newUsername = request.form['username']
+        # newEmail = request.form['email']
+        # newPhoneNum = request.form['phoneNum']
+        # newBlockNum = request.form['blockNum']
+        # newUnitNum = request.form['unitNum']
+        
+        usertype = session['UserType']
+        oripassword = session['password'];
+        # name = session['name']
+        # email = session['email']
+        # phoneNum = session['PhoneNumber']
+        # blockNum = session['BlockNumber']
+        # unitNum = session['UnitNumber']
+        
+        if not (newPassword == renewPassword and password == oripassword):
+            #prompt wrong renewpassword message
+            if usertype == "USER":
+                return redirect('/profile')
+            else:
+                return redirect('/profile-admin')
+        
+        else:
+        
+            client = bigquery.Client()
+            
+            query = """
+                UPDATE `bookit-court-booking-system.main.Customer`
+                SET password='""" + newPassword + """'
+                WHERE username='""" + username + """'
+            """
+            query_job = client.query(query)
+            
+            query_job.result()
+            
+            #prompt successful message
+            
+            return redirect('/logout')
 
 
 @app.route('/profile-admin')
