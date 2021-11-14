@@ -73,17 +73,19 @@ def login():
         for row in query_job:
             if username == row['username'] and password==row['password']:
                 usertype=row['UserType']
+                name=row['name']
                 user_result=True
 
         if user_result:
             session['loggedIn'] = TRUE
             session['username'] = username
             session['UserType'] = usertype
+            session['name']=name
             
             if usertype=="ADMIN":
-                return redirect("/IndexAdmin")
+                return redirect("/IndexAdmin",name=name)
             elif usertype=="USER":
-                return redirect("/IndexResident")
+                return redirect("/IndexResident",name=name)
         else:
             #messagebox.showinfo("Fail log in","Fail to log in")
             
