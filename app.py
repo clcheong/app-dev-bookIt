@@ -83,7 +83,7 @@ def login():
             if usertype=="ADMIN":
                 return redirect("/IndexAdmin")
             elif usertype=="USER":
-                return redirect("IndexResident")
+                return redirect("/IndexResident")
         else:
             #messagebox.showinfo("Fail log in","Fail to log in")
             
