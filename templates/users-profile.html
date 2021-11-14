@@ -611,7 +611,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form name="Update" method="post" action="/update-profile">
                     <!--<div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
@@ -633,35 +633,35 @@
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">Username</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">{{username}}</textarea>
+                        <textarea name="username" class="form-control" id="username" style="height: 100px">{{username}}</textarea>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">E-Mail</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="{{email}}">
+                        <input name="email" type="text" class="form-control" id="email" value="{{email}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="{{phoneNum}}">
+                        <input name="phoneNum" type="text" class="form-control" id="phoneNum" value="{{phoneNum}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Block Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="{{blockNum}}">
+                        <input name="blockNum" type="text" class="form-control" id="blockNum" value="{{blockNum}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Unit Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="{{unitNum}}">
+                        <input name="unitNum" type="text" class="form-control" id="unitNum" value="{{unitNum}}">
                       </div>
                     </div>
 

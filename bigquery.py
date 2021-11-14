@@ -154,6 +154,32 @@ def GetUserName():
 #    for row in query_job:
 #        return(row["totalEnergySaved"])  
 
+
+def testingInsert():
     
-#if __name__ == "__main__":
-#    print(getTotalEnergySaved())
+    oldusername = "clcheong"
+    username = "cl"
+    usertype = "USER"
+    name = "Chien Li"
+    email = "cl@gmail.com"
+    phoneNum = "012"
+    blockNum = "AA"
+    unitNum = "00-01"
+    
+    client = bigquery.Client()
+    
+    query = """
+        UPDATE `bookit-court-booking-system.main.Customer`
+        SET username='""" + username + """', name='""" + name + """', email='"""+ email + """', PhoneNumber='""" + phoneNum + """',BlockNumber='""" + blockNum + """',UnitNumber='""" + unitNum + """'
+        WHERE username='""" + oldusername + """'
+    """
+    query_job = client.query(query)
+    
+    query_job.result()
+
+    print(f"DML query modified {query_job.num_dml_affected_rows} rows.")
+    return query_job.num_dml_affected_rows
+
+    
+# if __name__ == "__main__":
+#     print(testingInsert())

@@ -255,6 +255,60 @@ def profile():
     unitNum = session['UnitNumber']
     return render_template('users-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
+
+
+@app.route('/update-profile', methods=['GET', 'POST'])
+def updateProfile():
+   
+    if request.method == "GET":
+        return render_template('users-profile.html')
+
+    else: 
+    
+        username = session['username']
+        
+        newName = request.form['fullName']
+        newUsername = request.form['username']
+        newEmail = request.form['email']
+        newPhoneNum = request.form['phoneNum']
+        newBlockNum = request.form['blockNum']
+        newUnitNum = request.form['unitNum']
+        
+        usertype = session['UserType']
+        # name = session['name']
+        # email = session['email']
+        # phoneNum = session['PhoneNumber']
+        # blockNum = session['BlockNumber']
+        # unitNum = session['UnitNumber']
+        
+        client = bigquery.Client()
+        
+        query = """
+            UPDATE `bookit-court-booking-system.main.Customer`
+            SET username='""" + newUsername + """', name='""" + newName + """', email='"""+ newEmail + """', PhoneNumber='""" + newPhoneNum + """',BlockNumber='""" + newBlockNum + """',UnitNumber='""" + newUnitNum + """'
+            WHERE username='""" + username + """'
+        """
+        query_job = client.query(query)
+        
+        query_job.result()
+
+        # print(f"DML query modified {query_job.num_dml_affected_rows} rows.")
+        # return query_job.num_dml_affected_rows
+        
+        session['username'] = newUsername
+        session['UserType'] = usertype
+        session['name']= newName
+        session['email']= newEmail
+        session['PhoneNumber']=newPhoneNum
+        session['BlockNumber']=newBlockNum
+        session['UnitNumber']=newUnitNum
+        
+        return redirect('/profile')
+    
+    #return render_template('users-profile.html',username=newUsername, usertype=usertype,name=newName,email=newEmail,phoneNum=newPhoneNum,blockNum=newBlockNum,unitNum=newUnitNum)
+
+
+
 @app.route('/profile-admin')
 def profileAdmin():
     username = session['username']
