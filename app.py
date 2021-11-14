@@ -6,7 +6,7 @@
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
-from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask import * #Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -183,6 +183,7 @@ def register():
 
 @app.route('/logout')
 def logout():
+    session['loggedIn'] = FALSE
     session.pop('LoggedIn', None)
     session.pop('username',None)
     session.pop('Usertype',None)
@@ -190,13 +191,27 @@ def logout():
 
 @app.route('/IndexResident')
 def IndexResident():
-    name = session['name']
-    return render_template("indexResident.html", name=name)
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
-    name = session['name']
-    return render_template('IndexAdmin.html',name=name)
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:    
+        name = session['name']
+        username = session['username']
+        return render_template('IndexAdmin.html',name=name, username=username)
 
 
 
@@ -246,25 +261,31 @@ def blank():
 
 @app.route('/profile')
 def profile():
-    username = session['username']
-    usertype = session['UserType']
-    name = session['name']
-    email = session['email']
-    phoneNum = session['PhoneNumber']
-    blockNum = session['BlockNumber']
-    unitNum = session['UnitNumber']
-    return render_template('users-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else: 
+        username = session['username']
+        usertype = session['UserType']
+        name = session['name']
+        email = session['email']
+        phoneNum = session['PhoneNumber']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+            
+        return render_template('users-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
 
 
 @app.route('/update-profile', methods=['GET', 'POST'])
 def updateProfile():
-   
+    
     if request.method == "GET":
         return render_template('users-profile.html')
 
     else: 
-    
+        
         username = session['username']
         
         newName = request.form['fullName']
@@ -303,20 +324,31 @@ def updateProfile():
         session['BlockNumber']=newBlockNum
         session['UnitNumber']=newUnitNum
         
-        return redirect('/profile')
-    
+        if usertype == "USER":
+            return redirect('/profile')
+
+        else:
+            return redirect('/profile-admin')
     #return render_template('users-profile.html',username=newUsername, usertype=usertype,name=newName,email=newEmail,phoneNum=newPhoneNum,blockNum=newBlockNum,unitNum=newUnitNum)
 
 
 
 @app.route('/profile-admin')
 def profileAdmin():
-    username = session['username']
-    usertype = session['UserType']
-    name = session['name']
-    email = session['email']
-    phoneNum = session['PhoneNumber']    
-    return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum)
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:      
+        username = session['username']
+        usertype = session['UserType']
+        name = session['name']
+        email = session['email']
+        phoneNum = session['PhoneNumber']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']    
+        return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
+
 
 @app.route('/faq')
 def faq():
