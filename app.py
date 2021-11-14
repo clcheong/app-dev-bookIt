@@ -83,9 +83,9 @@ def login():
             session['name']=name
             
             if usertype=="ADMIN":
-                return redirect("/IndexAdmin",name=name)
+                return redirect("/IndexAdmin")
             elif usertype=="USER":
-                return redirect("/IndexResident",name=name)
+                return redirect("/IndexResident")
         else:
             #messagebox.showinfo("Fail log in","Fail to log in")
             
@@ -181,11 +181,13 @@ def logout():
 
 @app.route('/IndexResident')
 def IndexResident():
-    return render_template("indexResident.html")
+    name = session['name']
+    return render_template("indexResident.html", name=name)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
-    return render_template('IndexAdmin.html')
+    name = session['name']
+    return render_template('IndexAdmin.html',name=name)
 
 
 
