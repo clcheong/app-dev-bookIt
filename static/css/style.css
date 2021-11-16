@@ -92,6 +92,17 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
+.booknow
+{
+  display: block;
+  width: 25%;
+  border: none;
+  background-color: #04AA6D;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
 /* Dropdown menus */
 .dropdown-menu {
   border-radius: 4px;
