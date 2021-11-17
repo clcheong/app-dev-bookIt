@@ -108,19 +108,19 @@ def GetUserName():
 #        return(row["culTotal"])
     
     
-#def getTotalRecycledKG():
-#    client = bigquery.Client()
+def getTotalRecycledKG():
+   client = bigquery.Client()
     
-#    query="""
-#        SELECT SUM(totalKG) AS totalKGrecycled
-#        FROM `hlbcyhi2021-2.main.hlb-recycle`
-#        WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
-#    """
+   query="""
+       SELECT SUM(totalKG) AS totalKGrecycled
+       FROM `hlbcyhi2021-2.main.hlb-recycle`
+       WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
+   """
     
-#    query_job = client.query(query)
-#    # print("The query data:")
-#    for row in query_job:
-#        return(row["totalKGrecycled"])    
+   query_job = client.query(query)
+   # print("The query data:")
+   for row in query_job:
+       return(row["totalKGrecycled"])    
     
     
     
