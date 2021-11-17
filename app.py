@@ -50,8 +50,9 @@ from tkinter import messagebox
 ==================================================================================================
 """
 @app.route('/')
-
-
+@app.route('/zhixuen')
+def zhixuen():
+    return render_template('zhixuen-test.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    
@@ -100,7 +101,6 @@ def login():
             #messagebox.showinfo("Fail log in","Fail to log in")
             
             return redirect('/login')
-
         
 @app.route('/index')
 def index():
