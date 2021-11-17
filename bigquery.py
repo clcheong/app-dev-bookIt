@@ -9,11 +9,6 @@ def GetUserName():
     username=request.form['username']
     return username
 
-    
-
-
-
-
 
 #def getAvgCFB001():
     # Construct a BigQuery client object.

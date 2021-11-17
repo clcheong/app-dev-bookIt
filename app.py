@@ -1,14 +1,10 @@
-# My own Library
-# from course import get_course_all, get_course_no_repeat, get_course_section, get_course_detail
-
 # Library from Flask
 
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
 from flask import * #Flask, render_template, request, redirect, session, flash, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -17,31 +13,9 @@ from tkinter import *
   
 from tkinter import messagebox  
   
+  
 
 
-
-
-"""
-==================================================================================================
-||        Data Base Setup                                                                       ||
-==================================================================================================
-"""
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mzqzzqbbqshuyu:8dac9f5ddbfbc9f7556554c9d4d7b101acc45c7b2d8bce1c9ae90931f464c22f@ec2-54-205-61-191.compute-1.amazonaws.com:5432/d55vjv88et7bmh"
-# app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
-
-# db = SQLAlchemy(app)
-
-# class users(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     studentID = db.Column(db.String(10), nullable=False, unique=True)
-#     phash = db.Column(db.String(120), nullable=False)
-
-# class registers(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     studentID = db.Column(db.String(10), nullable=False)
-#     courseID = db.Column(db.String(10), nullable=False)
-#     section = db.Column(db.Integer, nullable=False)
 
 
 """
@@ -104,23 +78,6 @@ def login():
         
 @app.route('/index')
 def index():
-    # branchCount = getBranchCount()
-    # staffCount = getStaffCount()
-    # day = getCurrentDay()
-    # month = getCurrentMonth()
-    # year = getCurrentYear()
-    # currTotalCF = round(getTotalCFcurrMonth() * 0.001,3)
-    # avgCurrTotalCF = round(currTotalCF/branchCount,3)
-    # culTotalCFcurrMonth = round(getCulmulativeCFcurrMonth()*0.001,3)
-    # avgCulTotal = round(culTotalCFcurrMonth/branchCount,3)
-    # currMonthCFperCapita = round(currTotalCF/staffCount,3)
-    # safePerCapita = round(4/12,3)
-    # totSafe = round(staffCount*safePerCapita/branchCount,3)
-    
-    # kgRecycled = round(getTotalRecycledKG(),3)
-    # treesPlanted = round(getTotalTreesPlanted(),3)
-    # energySaved = round(getTotalEnergySaved(),3)
-    #username = GetUserName()
     return render_template('index.html')#,energySaved=energySaved,treesPlanted=treesPlanted,kgRecycled=kgRecycled,branchCountHTML=branchCount,totSafe=totSafe,staffCount=staffCount,currMonth=month,currYear=year, totalCF=currTotalCF, avgCF=avgCurrTotalCF, culTotal=culTotalCFcurrMonth, avgCulTotal=avgCulTotal,currMonthCFperCapita=currMonthCFperCapita,safe=safePerCapita,currDay=day)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -405,6 +362,9 @@ def profileAdmin():
 @app.route('/faq')
 def faq():
     return render_template('pages-faq.html')
+
+if __name__ == "__main__":
+    app.run()
 
 # @app.route('/buttons')
 # def buttons():
