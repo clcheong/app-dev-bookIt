@@ -50,9 +50,11 @@ from tkinter import messagebox
 ==================================================================================================
 """
 @app.route('/')
-@app.route('/zhixuen')
-def zhixuen():
-    return render_template('zhixuen-test.html')
+
+
+# @app.route('/zhixuen')
+# def zhixuen():
+#     return render_template('zhixuen-test.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    
