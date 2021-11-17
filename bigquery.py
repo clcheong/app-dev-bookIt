@@ -178,3 +178,19 @@ def testingInsert():
     
 # if __name__ == "__main__":
 #     print(testingInsert())
+
+# ReservationQuery
+
+def getReservation():
+    client = bigquery.Client()
+    
+    query="""
+       SELECT CourtNo, Booker, ApproveStatus, Time
+       FROM `bookit-court-booking-system.main.Reservation`
+       WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
+    """
+    
+    query_job = client.query(query)
+    # print("The query data:")
+    return query_job;    
+    

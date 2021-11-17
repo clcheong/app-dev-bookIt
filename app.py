@@ -17,6 +17,8 @@ from tkinter import messagebox
 
 
 
+# $env:FLASK_ENV = "development"
+# $env:GOOGLE_APPLICATION_CREDENTIALS="D:\UTM DEGREE\year3\sem1\Application Development\Sport Booking System\bookit-court-booking-system-55f5c7b6bd4d.json"
 
 """
 ==================================================================================================
@@ -167,12 +169,33 @@ def IndexAdmin():
         return redirect('/login')
     
     else:    
+        client = bigquery.Client()
+
+        query="""
+           SELECT *
+           FROM `bookit-court-booking-system.main.Reservation`
+        """
+
+        query_job = client.query(query)
+        # print("The query data:")
         name = session['name']
         username = session['username']
-        return render_template('IndexAdmin.html',name=name, username=username)
+        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job)
 
+@app.route('/IndexAdminPost', methods=['POST'])
+def IndexAdminPost():
+    client = bigquery.Client()
+    app.logger.info('Info level log')
+    Booking_ID=request.form['Booking_ID'].replace("/","");
+    query="""
+    UPDATE `bookit-court-booking-system.main.Reservation` 
+    SET ApproveStatus = FALSE
+    WHERE Booking_ID = {}
+    """.format('\"'+Booking_ID+'\"')
+    app.logger.info(query)
 
-
+    query_job = client.query(query)
+    return '', 400
 #Below this is not under AD project
 
 #
