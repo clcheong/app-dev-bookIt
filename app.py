@@ -16,6 +16,10 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 from tkinter import *  
   
 from tkinter import messagebox  
+from datetime import datetime
+import uuid
+import simplejson as json
+from json import dumps 
   
 
 
@@ -50,11 +54,6 @@ from tkinter import messagebox
 ==================================================================================================
 """
 @app.route('/')
-
-
-# @app.route('/zhixuen')
-# def zhixuen():
-#     return render_template('zhixuen-test.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    
@@ -103,6 +102,8 @@ def login():
             #messagebox.showinfo("Fail log in","Fail to log in")
             
             return redirect('/login')
+
+
         
 @app.route('/index')
 def index():
@@ -217,7 +218,35 @@ def IndexAdmin():
         return render_template('IndexAdmin.html',name=name, username=username)
 
 
-
+@app.route('/managereservation1', methods=['GET', 'POST'])
+def zhixuen():   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        route = request.path
+        Book_ID = str(uuid.uuid4())
+        Customer_Name = session["name"]
+        Court_ID = route.replace("/managereservation","")
+        Customer_Phone_Number = session['PhoneNumber']
+        # Reserve_Time = dumps(datetime.now(), default=json_serial)
+        if request.method == "GET":
+            return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number)
+        else:
+            # Start_Time = int(request.form['starttime'])
+            # End_Time = Start_Time + 1
+            client=bigquery.Client()
+            reservation_table = "bookit-court-booking-system.main.Reservation"
+            ApproveStatus = True
+            row = [{u'Customer_Name':Customer_Name,u'Book_ID':Book_ID,u'Court_ID':Court_ID,u'ApproveStatus':ApproveStatus,u'Customer_Phone_Number':Customer_Phone_Number}]
+            #u'Start_Time':Start_Time,u'End_Time':End_Time,u'Reserve_Time':Reserve_Time
+            errors=client.insert_rows_json(reservation_table,row)
+            if errors==[]:
+                print('asd')
+                #messagebox.showinfo("Account Created","User have been register! Please SignIn to continue")
+            else:
+                print(f'encounter error : {errors}')
+            return redirect("/IndexResident")
+       
 #Below this is not under AD project
 
 #
@@ -288,9 +317,7 @@ def updateProfile():
         return render_template('users-profile.html')
 
     else: 
-        
         username = session['username']
-        
         newName = request.form['fullName']
         newUsername = request.form['username']
         newEmail = request.form['email']
@@ -355,7 +382,7 @@ def updatePassword():
         # newUnitNum = request.form['unitNum']
         
         usertype = session['UserType']
-        oripassword = session['password'];
+        oripassword = session['password']
         # name = session['name']
         # email = session['email']
         # phoneNum = session['PhoneNumber']
@@ -389,7 +416,6 @@ def updatePassword():
 
 @app.route('/profile-admin')
 def profileAdmin():
-    
     if session['loggedIn'] == FALSE or session['UserType']=="USER":
         return redirect('/login')
     
@@ -402,7 +428,7 @@ def profileAdmin():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']    
         return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
-
+        
 
 @app.route('/faq')
 def faq():

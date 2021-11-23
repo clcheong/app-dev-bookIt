@@ -34,6 +34,11 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    body {
+        background-image: url({{ url_for('static', filename='img/testing4.jpeg') }})
+    }
+  </style>
 </head>
 
 <body>
@@ -61,67 +66,42 @@
                     <h5 class="card-title text-center pb-0 fs-4">Make Reservation</h5>
                     <p class="text-center small">Enter your details to make a reservation</p>
                   </div>
-                
-                 
-                  
-                  <form name="Register" method="post" action="/register">
 
+                  
+                  <form name="" method="post" action='/managereservation1'>
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         
-                        <input type="text" name="inputusername" class="form-control" id="yourUsername" required>
-                        
-                        <div class="invalid-feedback">Please choose a username.</div>
+                        <!-- <span type="text" name="inputusername" class="form-control" id="yourUsername" required></span> -->
+                        <span name="Customer_Name" class="form-control" id="yourName" >{{Customer_Name}}</span>
+                        <!-- <div class="invalid-feedback">{{name}}</div> -->
                       </div>
                     </div>
 
-                    <!-- <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      
-                        <input type="password" name="inputpassword" class="form-control" id="yourPassword" required>
-                     
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Retype Password</label>
-                      
-                        <input type="password" name="inputRetype" class="form-control" id="yourRetypePassword" required>
-                     
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div> -->
-
-                    <form class="row g-3 " >
+                    <!-- <form class="row g-3" > -->
                       <div class="col-12">
-                        <label for="yourName" class="form-label">Court</label>
-                        <input type="text" name="inputName" class="form-control" id="yourName" >
-                        <div class="invalid-feedback">Please, enter your court!</div>
+                            <label for="yourName" class="form-label">Book_ID</label>
+                            <span name="Book_ID" class="form-control" id="yourName" >{{Book_ID}}</span>
+                            <!-- <input type="text" name="court" class="form-control" id="yourName" > -->
+                            <!-- <div class="invalid-feedback"></div> -->
+                        </div>
+
+                      <!-- <div class="col-12">
+                        <label for="yourTime" class="form-label">Start Time</label>
+                        <input type="text" name="starttime" class="form-control" id="yourTime" required>
+                        <div class="invalid-feedback">Enter your start time</div>
                       </div>
-  
+   -->
                       <div class="col-12">
-                        <label for="yourEmail" class="form-label">Your Time</label>
-                        <input type="email" name="inputEmail" class="form-control" id="yourEmail" >
-                        <div class="invalid-feedback">Please enter the time to book!</div>
+                        <label for="yourEmail" class="form-label">Court ID</label>
+                        <span name="Court_ID" class="form-control" id="yourName" >{{Court_ID}}</span>
                       </div>
 
                       <div class="col-12">
-                        <label for="yourPhoneNumber" class="form-label">Your Phone Number</label>
-                        <input type="text" name="inputPhoneNumber" class="form-control" id="yourPhoneNumber" >
-                        <div class="invalid-feedback">Please enter a valid Phone Number!</div>
-                      </div>
-
-                      <div class="col-12">
-                        <label for="yourBlockNumber" class="form-label">Your Block Number</label>
-                        <input type="text" name="inputBlockNumber" class="form-control" id="yourBlockNumber" >
-                        <div class="invalid-feedback">Please enter a valid Block Number!</div>
-                      </div>
-
-                      <div class="col-12">
-                        <label for="yourUnitNumber" class="form-label">Your Unit Number</label>
-                        <input type="text" name="inputUnitNumber" class="form-control" id="yourUnitNumber" >
-                        <div class="invalid-feedback">Please enter a valid Unit Number!</div>
+                        <label for="yourPhoneNumber" class="form-label">Customer Phone Number</label>
+                        <span name="Customer_Phone_Number" class="form-control" id="yourName" >{{Customer_Phone_Number}}</span>
                       </div>
 
                     <div class="col-12">
@@ -132,9 +112,9 @@
                       </div>
                     </div>
 
-                    <!-- <div class="col-12">
-                      <input class="btn btn-primary w-100" type="submit" value=submit>Make Reservation</button>
-                    </div> -->
+                    <div class="col-12">
+                      <input class="btn btn-primary w-100" type="submit" value=MakeReservation></button>
+                    </div>
                     <!-- <div class="col-12">
                       <p class="small mb-0">Already have an account? <a href="/login">Log in</a></p>
                     </div> -->

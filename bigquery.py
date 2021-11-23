@@ -154,6 +154,20 @@ def GetUserName():
 #    for row in query_job:
 #        return(row["totalEnergySaved"])  
 
+def testingGetusername():
+    client = bigquery.Client()
+
+    query = """
+                SELECT name 
+                FROM `bookit-court-booking-system.main.Customer` 
+                WHERE username='""" + "bryan" + """'
+            """
+    query_job = client.query(query)
+    print("The query data:")
+    for row in query_job:
+        return(row["name"])
+
+
 
 def testingInsert():
     
@@ -181,5 +195,5 @@ def testingInsert():
     return query_job.num_dml_affected_rows
 
     
-# if __name__ == "__main__":
-#     print(testingInsert())
+if __name__ == "__main__":
+    print(testingGetusername())
