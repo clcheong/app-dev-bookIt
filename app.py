@@ -233,7 +233,6 @@ def viewReservation():
         query_job = client.query(query)
         for row in query_job:
             booker=row['Booker']
-            flash(booker) 
             court=row['CourtNo']
             status=row['ApproveStatus']
             time=row['Time']
