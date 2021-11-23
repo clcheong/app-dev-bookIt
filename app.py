@@ -223,12 +223,27 @@ def viewReservation():
     else:
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
-        court = session['courtNo']
-        booker = session['Booker']
-        status = session['ApproveStatus']
-        time = session['Time']
-        book_id= session ['Booking_ID']
-        return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+        if session['UserType']=="USER":
+            name=session['name']
+            # View reservation of user
+            query = """
+            SELECT CourtNo, Booker, ApproveStatus, Time, Booking_ID
+            FROM main.Reservation
+             """
+            query_job = client.query(query)
+            for row in query_job:
+                court=row['CourtNo']
+                booker=row['Booker']
+                status=row['ApproveStatus']
+                time=row['Time']
+                book_id=row['Booking_ID']
+                if booker==name:
+                    return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+            
+            
+           
+                         
+        
 
 
 #Below this is not under AD project
