@@ -225,7 +225,7 @@ def viewReservation():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
         name=session['name']
-        today= datetime.datetime.now().timestamp()
+        today= datetime.today
         
         # View reservation of user
         query = """
