@@ -225,39 +225,33 @@ def viewReservation():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
         name=session['name']
-        today= datetime.today
+        
         
         # View reservation of user
         query = """
-        SELECT CourtNo, Booker, ApproveStatus, Time, Booking_ID
+        SELECT Court_ID, Customer_Name, ApproveStatus, sTime, eTime, Book_ID
         FROM main.Reservation
         """
         query_job = client.query(query)
         for row in query_job:
-            booker=row['Booker']
-            court=row['CourtNo']
+            cust=row['Customer_Name']
+            court=row['Court_ID']
             status=row['ApproveStatus']
-            time=row['Time']
-            time2=row['Time']
-            book_id=row['Booking_ID']
-            if booker==name and time==today:
+            stime=row['sTime']
+            etime=row['eTime']
+            book_id=row['Book_ID']
+            if cust==name:
                 court=row['CourtNo']
                 status=row['ApproveStatus']
-                time=row['Time']
-                book_id=row['Booking_ID']
-                return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+                stime=row['sTime']
+                etime=row['eTime']
+                book_id=row['Book_ID']
+                return render_template("viewReservation.html",court=court,cust=cust, status=status,stime=stime,etime=etime,book_id=book_id)
             else:
                 pass
-            if booker==name and time!=today:
-                court=row['CourtNo']
-                status=row['ApproveStatus']
-                time2=row['Time']
-                book_id=row['Booking_ID']
-                return render_template("viewReservation.html",court=court,booker=booker, status=status,time2=time2,book_id=book_id)
-            else:
-                pass
+            
                         
-        return render_template("viewReservation.html",court="",booker="", status="",time="",book_id="")
+        return render_template("viewReservation.html",court="",cust="", status="",stime="", etime="",book_id="")
 
 
 #Below this is not under AD project
