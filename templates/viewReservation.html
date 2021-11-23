@@ -320,11 +320,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Reservation History</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/index">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item active">Reservations made</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -336,60 +336,23 @@
         <div class="col-lg-8">
           <div class="row">
 
-            <!-- Court 1 Card -->
-            <div class="col-10">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 1</h5>
-                  <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
-                </div>
-
-              </div>
-            </div><!-- End Court 1 Card -->
-
-            <!-- Court 2 Card -->
-            <div class="col-10">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 2 </h5>
-
-                  <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
-                </div>
-
-              </div>
-            </div><!-- End Court 2 Card -->
-
-            <!-- Court 3 Card -->
-            <div class="col-10">
-
-              <div class="card info-card customers-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 3</h5>
-                  <img src="{{url_for('static',filename='img/testing3.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
-
-                </div>
-              </div>
-
-            </div><!-- End Court 3 Card -->
-
-            <!-- Court 4 Card -->
+            <!-- Today's Reservation -->
             <div class="col-10">
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Court 4</h5>
-                  <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
+                  <h5 class="card-title">Today's Reservation</h5>
+                  <p>
+                    {{court}}
+                    {{booker}}
+                    {{status}}
+                    {{time}}
+                    {{book_id}}
+                  </p>
                 </div>
 
               </div>
-            </div><!-- End Court 4 -->
+            </div><!-- End Today's Reservation's -->
 
           </div>
         </div><!-- End Left side columns -->
@@ -397,7 +360,7 @@
         <!-- Right side columns -->
         <div class="col-lg-4">
 
-          <!-- How to BookIt! -->
+          <!-- Reservation History -->
           <div class="card">
 
             <div class="card-body pb-0">
@@ -429,10 +392,10 @@
                   <p>Enjoy your exercise when the time is right</p>
                 </div>
 
-              </div><!-- End sidebar recent posts-->
+              </div>
 
             </div>
-          </div><!-- End News & Updates -->
+          </div><!-- End Reservation history -->
 
         </div><!-- End Right side columns -->
 
