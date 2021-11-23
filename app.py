@@ -3,6 +3,7 @@
 
 # Library from Flask
 
+from datetime import datetime
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
@@ -224,6 +225,7 @@ def viewReservation():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
         name=session['name']
+        today= datetime.datetime.now().timestamp()
         
         # View reservation of user
         query = """
@@ -236,13 +238,22 @@ def viewReservation():
             court=row['CourtNo']
             status=row['ApproveStatus']
             time=row['Time']
+            time2=row['Time']
             book_id=row['Booking_ID']
-            if booker==name:
+            if booker==name and time==today:
                 court=row['CourtNo']
                 status=row['ApproveStatus']
                 time=row['Time']
                 book_id=row['Booking_ID']
                 return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+            else:
+                pass
+            if booker==name and time!=today:
+                court=row['CourtNo']
+                status=row['ApproveStatus']
+                time2=row['Time']
+                book_id=row['Booking_ID']
+                return render_template("viewReservation.html",court=court,booker=booker, status=status,time2=time2,book_id=book_id)
             else:
                 pass
                         
