@@ -224,7 +224,7 @@ def viewReservation():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
         name=session['name']
-        sta=False
+        
         # View reservation of user
         query = """
         SELECT CourtNo, Booker, ApproveStatus, Time, Booking_ID
@@ -232,14 +232,14 @@ def viewReservation():
         """
         query_job = client.query(query)
         for row in query_job:
-            court=row['CourtNo']
             booker=row['Booker']
-            status=row['ApproveStatus']
-            time=row['Time']
-            book_id=row['Booking_ID']
             if booker==name:
-                sta=True
-                         
+                court=row['CourtNo']
+                status=row['ApproveStatus']
+                time=row['Time']
+                book_id=row['Booking_ID']
+
+        flash(booker)                 
         return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
 
 
