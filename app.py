@@ -239,7 +239,7 @@ def viewReservation():
             book_id=row['Booking_ID']
 
                         
-        return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+        return render_template("viewReservation.html",court="",booker="", status="",time="",book_id="")
 
 
 #Below this is not under AD project
