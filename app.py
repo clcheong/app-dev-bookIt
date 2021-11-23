@@ -3,8 +3,6 @@
 
 # Library from Flask
 
-#testing Brandon
-
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
@@ -216,7 +214,7 @@ def IndexAdmin():
         username = session['username']
         return render_template('IndexAdmin.html',name=name, username=username)
 
-@app.route('/view-reservation')
+@app.route('/viewReservation')
 def viewReservation():
     
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
@@ -230,7 +228,7 @@ def viewReservation():
         status = session['ApproveStatus']
         time = session['Time']
         book_id= session ['Booking_ID']
-        return render_template("viewReservation.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
+        return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
 
 
 #Below this is not under AD project
