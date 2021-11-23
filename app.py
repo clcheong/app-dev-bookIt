@@ -202,6 +202,70 @@ def IndexResident():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']
         username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Court1'
+
+        # View available time
+        query = """
+        SELECT Start_Time
+        FROM main.Court1
+        WHERE Available=true
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Start_Time']=="00:00":
+                stime0=row['Start_Time']
+            else:
+                stime0="Not available"
+            if row['Start_Time']=="01:00":
+                stime1=row['Start_Time']
+            if row['Start_Time']=="02:00":
+                stime2=row['Start_Time']
+            if row['Start_Time']=="03:00":
+                stime3=row['Start_Time']
+            if row['Start_Time']=="04:00":
+                stime4=row['Start_Time']
+            if row['Start_Time']=="05:00":
+                stime5=row['Start_Time']
+            if row['Start_Time']=="06:00":
+                stime6=row['Start_Time']
+            if row['Start_Time']=="07:00":
+                stime7=row['Start_Time']
+            if row['Start_Time']=="08:00":
+                stime8=row['Start_Time']
+            if row['Start_Time']=="09:00":
+                stime9=row['Start_Time']
+            if row['Start_Time']=="10:00":
+                stime10=row['Start_Time']
+            if row['Start_Time']=="11:00":
+                stime11=row['Start_Time']
+            if row['Start_Time']=="12:00":
+                stime12=row['Start_Time']
+            if row['Start_Time']=="13:00":
+                stime13=row['Start_Time']
+            if row['Start_Time']=="14:00":
+                stime14=row['Start_Time']
+            if row['Start_Time']=="15:00":
+                stime15=row['Start_Time']
+            if row['Start_Time']=="16:00":
+                stime16=row['Start_Time']
+            if row['Start_Time']=="17:00":
+                stime17=row['Start_Time']
+            if row['Start_Time']=="18:00":
+                stime18=row['Start_Time']
+            if row['Start_Time']=="19:00":
+                stime19=row['Start_Time']
+            if row['Start_Time']=="20:00":
+                stime20=row['Start_Time']
+            if row['Start_Time']=="21:00":
+                stime21=row['Start_Time']
+            if row['Start_Time']=="22:00":
+                stime22=row['Start_Time']
+            if row['Start_Time']=="23:00":
+                stime23=row['Start_Time']
+
+
+            
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
 
 @app.route('/IndexAdmin')
