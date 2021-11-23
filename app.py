@@ -204,15 +204,13 @@ def IndexResident():
         username = session['username']
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
-
-        # View available time
         query = """
         SELECT Start_Time
         FROM main.Court1
         WHERE Available=false
         """
         query_job = client.query(query)
-        for row in query_job:
+        for row in query_job:        
             stime0=row['Start_Time']
             stime1=row['Start_Time']
             stime2=row['Start_Time']
@@ -237,23 +235,126 @@ def IndexResident():
             stime21=row['Start_Time']
             stime22=row['Start_Time']
             stime23=row['Start_Time']
+            if row['Start_Time']=="00:00:00":
+                stime0=row['Start_Time']
+            else:
+                stime0="NA"
+
+            if row['Start_Time']=="01:00:00":
+                stime1=row['Start_Time']
+            else:
+                stime1="NA"
+
+            if row['Start_Time']=="02:00:00":
+                stime2=row['Start_Time']
+            else:
+                stime2="NA"   
+
+            if row['Start_Time']=="03:00:00":
+                stime3=row['Start_Time']
+            else:
+                stime3="NA"
+
+            if row['Start_Time']=="04:00:00":
+                stime4=row['Start_Time']
+            else:
+                stime4="NA" 
+
+            if row['Start_Time']=="05:00:00":
+                stime5=row['Start_Time']
+            else:
+                stime5="NA" 
                             
+            if row['Start_Time']=="06:00:00":
+                stime6=row['Start_Time']
+            else:
+                stime6="NA"  
 
+            if row['Start_Time']=="07:00:00":
+                stime7=row['Start_Time']
+            else:
+                stime7="NA" 
 
+            if row['Start_Time']=="08:00:00":
+                stime8=row['Start_Time']
+            else:
+                stime8="NA" 
+
+            if row['Start_Time']=="09:00:00":
+                stime9=row['Start_Time']
+            else:
+                stime9="NA"   
+
+            if row['Start_Time']=="10:00:00":
+                stime10=row['Start_Time']
+            else:
+                stime10="NA"
+
+            if row['Start_Time']=="11:00:00":
+                stime11=row['Start_Time']
+            else:
+                stime11="NA"   
+
+            if row['Start_Time']=="12:00:00":
+                stime12=row['Start_Time']
+            else:
+                stime12="NA"                
+                
+            if row['Start_Time']=="13:00:00":
+                stime13=row['Start_Time']
+            else:
+                stime13="NA"                
             
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime0=displayAvailableTime(),stime1=displayAvailableTime())
-#stime0=stime0,        stime1=stime1,stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,    stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,    stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,stime23=stime23
-def displayAvailableTime():
-    client =bigquery.Client()
-    cust_table_id='bookit-court-booking-system.main.Court1'
-    query = """
-    SELECT Start_Time
-    FROM main.Court1
-    WHERE Available=false
-    """
-    query_job = client.query(query)
-    for row in query_job:
-        return (row['Start_Time'])    
+            if row['Start_Time']=="14:00:00":
+                stime14=row['Start_Time']
+            else:
+                stime14="NA"                
+                
+            if row['Start_Time']=="15:00:00":
+                stime15=row['Start_Time']
+            else:
+                stime15="NA"                
+        
+            if row['Start_Time']=="16:00:00":
+                stime16=row['Start_Time']
+            else:
+                stime16="NA"                
+                
+            if row['Start_Time']=="17:00:00":
+                stime17=row['Start_Time']
+            else:
+                stime17="NA"                
+                
+            if row['Start_Time']=="18:00:00":
+                stime18=row['Start_Time']
+            else:
+                stime18="NA"                
+                
+            if row['Start_Time']=="19:00:00":
+                stime19=row['Start_Time']
+            else:
+                stime19="NA"                
+                
+            if row['Start_Time']=="20:00:00":
+                stime20=row['Start_Time']
+            else:
+                stime20="NA"                
+            
+            if row['Start_Time']=="21:00:00":
+                stime21=row['Start_Time']
+            else:
+                stime21="NA"                
+                
+            if row['Start_Time']=="22:00:00":
+                stime22=row['Start_Time']
+            else:
+                stime22="NA"                
+            if row['Start_Time']=="23:00:00":
+                stime23=row['Start_Time']
+            else:
+                stime23="NA"
+
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime0=stime0,stime1=stime1,stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,stime23=stime23)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
@@ -280,7 +381,7 @@ def viewReservation():
         
         # View reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus, sTime, eTime, Book_ID
+        SELECT Court_ID, Customer_Name, ApproveStatus, Start_Time, End_Time, Book_ID
         FROM main.Reservation
         """
         query_job = client.query(query)
@@ -288,14 +389,14 @@ def viewReservation():
             cust=row['Customer_Name']
             court=row['Court_ID']
             status=row['ApproveStatus']
-            stime=row['sTime']
-            etime=row['eTime']
+            stime=row['Start_Time']
+            etime=row['End_Time']
             book_id=row['Book_ID']
             if cust==name:
                 court=row['CourtNo']
                 status=row['ApproveStatus']
-                stime=row['sTime']
-                etime=row['eTime']
+                stime=row['Start_Time']
+                etime=row['End_Time']
                 book_id=row['Book_ID']
                 return render_template("viewReservation.html",court=court,cust=cust, status=status,stime=stime,etime=etime,book_id=book_id)
             else:
