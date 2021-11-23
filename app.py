@@ -216,6 +216,21 @@ def IndexAdmin():
         username = session['username']
         return render_template('IndexAdmin.html',name=name, username=username)
 
+@app.route('/view-reservation')
+def viewReservation():
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Reservation'
+        court = session['courtNo']
+        booker = session['Booker']
+        status = session['ApproveStatus']
+        time = session['Time']
+        book_id= session ['Booking_ID']
+        return render_template("viewReservation.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
 
 
 #Below this is not under AD project
