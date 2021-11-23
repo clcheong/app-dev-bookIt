@@ -237,7 +237,14 @@ def viewReservation():
             status=row['ApproveStatus']
             time=row['Time']
             book_id=row['Booking_ID']
-
+            if booker==name:
+                court=row['CourtNo']
+                status=row['ApproveStatus']
+                time=row['Time']
+                book_id=row['Booking_ID']
+                return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
+            else:
+                pass
                         
         return render_template("viewReservation.html",court="",booker="", status="",time="",book_id="")
 
