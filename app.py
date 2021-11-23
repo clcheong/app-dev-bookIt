@@ -213,6 +213,30 @@ def IndexResident():
         """
         query_job = client.query(query)
         for row in query_job:
+            stime0=row['Start_Time']
+            stime1=row['Start_Time']
+            stime2=row['Start_Time']
+            stime3=row['Start_Time']
+            stime4=row['Start_Time']
+            stime5=row['Start_Time']
+            stime6=row['Start_Time']
+            stime7=row['Start_Time']
+            stime8=row['Start_Time']
+            stime9=row['Start_Time']
+            stime10=row['Start_Time']
+            stime11=row['Start_Time']
+            stime12=row['Start_Time']
+            stime13=row['Start_Time']
+            stime14=row['Start_Time']
+            stime15=row['Start_Time']
+            stime16=row['Start_Time']
+            stime17=row['Start_Time']
+            stime18=row['Start_Time']
+            stime19=row['Start_Time']
+            stime20=row['Start_Time']
+            stime21=row['Start_Time']
+            stime22=row['Start_Time']
+            stime23=row['Start_Time']
             if row['Start_Time']=="00:00:00":
                 stime0=row['Start_Time']
             else:
