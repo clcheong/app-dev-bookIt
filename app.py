@@ -202,7 +202,6 @@ def IndexResident():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']
         username = session['username']
-        setTrue()
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
@@ -357,6 +356,7 @@ def IndexResident():
 
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime0=stime0,stime1=stime1,stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,stime23=stime23)
 
+@app.route('/faq')
 def setTrue():
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Court1'
