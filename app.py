@@ -266,7 +266,7 @@ def IndexResident():
 
 
             
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime0=stime0)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
