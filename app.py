@@ -101,7 +101,16 @@ def login():
             
             return redirect('/login')
 
-        
+
+@app.route('/forgetPassword')
+def forgetPassword():
+    return render_template('forget-password.html')
+
+@app.route('/resetPassword')
+def resetPassword():
+    return render_template('forget-password.html')
+
+       
 @app.route('/index')
 def index():
     # branchCount = getBranchCount()
