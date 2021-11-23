@@ -233,13 +233,14 @@ def viewReservation():
         query_job = client.query(query)
         for row in query_job:
             booker=row['Booker']
+            flash(booker) 
             if booker==name:
                 court=row['CourtNo']
                 status=row['ApproveStatus']
                 time=row['Time']
                 book_id=row['Booking_ID']
 
-        flash(booker)                 
+                        
         return render_template("viewReservation.html",court=court,booker=booker, status=status,time=time,book_id=book_id)
 
 
