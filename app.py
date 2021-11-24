@@ -393,7 +393,7 @@ def viewReservation():
             etime=row['End_Time']
             book_id=row['Book_ID']
             if cust==name:
-                court=row['CourtNo']
+                court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
                 etime=row['End_Time']
