@@ -210,21 +210,21 @@ def IndexResident():
         FROM main.Court1
         WHERE Available=true
         """
-        stime8=0
-        stime9=0
-        stime10=0
-        stime11=0
-        stime12=0
-        stime13=0
-        stime14=0
-        stime15=0
-        stime16=0
-        stime17=0
-        stime18=0
-        stime19=0
-        stime20=0
-        stime21=0
-        stime22=0
+        stime8="NA"
+        stime9="NA"
+        stime10="NA"
+        stime11="NA"
+        stime12="NA"
+        stime13="NA"
+        stime14="NA"
+        stime15="NA"
+        stime16="NA"
+        stime17="NA"
+        stime18="NA"
+        stime19="NA"
+        stime20="NA"
+        stime21="NA"
+        stime22="NA"
         query_job = client.query(query)
         for row in query_job:        
             if row['hour']==8:
@@ -274,33 +274,22 @@ def IndexResident():
                 
             if row['hour']==17:
                 stime17=row['Start_Time']
-            else:
-                stime17="NA"               
                 
             if row['hour']==18:
                 stime18=row['Start_Time']
-            else:
-                stime18="NA"             
                 
             if row['hour']==19:
                 stime19=row['Start_Time']
-            else:
-                stime19="NA"             
                 
             if row['hour']==20:
                 stime20=row['Start_Time']
-            else:
-                stime20="NA"           
             
             if row['hour']==21:
                 stime21=row['Start_Time']
-            else:
-                stime21="NA"
 
             if row['hour']==22:
                 stime22=row['Start_Time']
-                if stime22==0:
-                    stime22="NA"              
+                              
 
 
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22)
