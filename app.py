@@ -648,7 +648,7 @@ def viewReservation():
                 pass
             
                         
-        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,blockNum=blockNum,
+        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         court="",cust="", status="",stime="", etime="",book_id="")
 
 
