@@ -303,7 +303,7 @@ def IndexResident():
                 pass
                               
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court2
         """
         c2stime1=""
@@ -330,7 +330,7 @@ def IndexResident():
         c2stime22=""
         query_job = client.query(query)
         for row in query_job:
-            if row['Available']==True:
+            if row['Booking']==False:
                 if row['hour']==1:
                     c2stime1=row['Start_Time']
                     
@@ -401,7 +401,7 @@ def IndexResident():
                 pass
 
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court3
         """
         c3stime1=""
@@ -428,7 +428,7 @@ def IndexResident():
         c3stime22=""
         query_job = client.query(query)
         for row in query_job:
-            if row['Available']==True:
+            if row['Booking']==False:
                 if row['hour']==1:
                     c3stime1=row['Start_Time']
                     
@@ -496,7 +496,7 @@ def IndexResident():
             else:
                 pass
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court4
         """
         c4stime1=""
@@ -523,7 +523,7 @@ def IndexResident():
         c4stime22=""
         query_job = client.query(query)
         for row in query_job:
-            if row['Available']==True:
+            if row['Booking']==False:
                 if row['hour']==1:
                     c4stime1=row['Start_Time']
                     
