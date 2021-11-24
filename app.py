@@ -231,58 +231,78 @@ def IndexResident():
 
             if row['hour']==8:
                 stime8=row['Start_Time']
+            else:
+                stime8="NA"
 
             if row['hour']==9:
                 stime9=row['Start_Time']
+            else:
+                stime9="NA"
 
             if row['hour']==10:
                 stime10=row['Start_Time']
+            else:
+                stime10="NA"
 
             if row['hour']==11:
                 stime11=row['Start_Time']
-
+            else:
+                stime11="NA"
+                
             if row['hour']==12:
                 stime12=row['Start_Time']
-            
+            else:
+                stime12="NA"            
                 
             if row['hour']==13:
                 stime13=row['Start_Time']
-     
+            else:
+                stime13="NA"     
             
             if row['hour']==14:
                 stime14=row['Start_Time']
-               
+            else:
+                stime14="NA"               
                 
             if row['hour']==15:
                 stime15=row['Start_Time']
-              
+            else:
+                stime15="NA"              
         
             if row['hour']==16:
                 stime16=row['Start_Time']
-           
+            else:
+                stime16="NA"           
                 
             if row['hour']==17:
                 stime17=row['Start_Time']
-               
+            else:
+                stime17="NA"               
                 
             if row['hour']==18:
                 stime18=row['Start_Time']
-             
+            else:
+                stime18="NA"             
                 
             if row['hour']==19:
                 stime19=row['Start_Time']
-             
+            else:
+                stime19="NA"             
                 
             if row['hour']==20:
                 stime20=row['Start_Time']
-           
+            else:
+                stime20="NA"           
             
             if row['hour']==21:
                 stime21=row['Start_Time']
-           
+            else:
+                stime21="NA"
+
             if row['hour']==22:
                 stime22=row['Start_Time']
-               
+            else:
+                stime22="NA"               
 
 
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22)
