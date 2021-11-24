@@ -639,7 +639,6 @@ def viewReservation():
         SELECT Court_ID, Customer_Name, ApproveStatus,CURRENT_TIME() as now,
         EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time,Book_ID
         FROM main.Reservation
-        WHERE Customer_Name=username
         """
         query_job = client.query(query)
         for row in query_job:
