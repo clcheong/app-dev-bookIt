@@ -649,6 +649,7 @@ def viewReservation():
             etime=""
             book_id=""
             if cust==name:
+                print("hereI")
                 court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
