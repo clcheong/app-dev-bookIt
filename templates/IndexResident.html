@@ -26,6 +26,11 @@
   <link href="{{url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
+<script>
+const c1time = new Array(document.stime1, document.stime2, document.stime3);
+document.getElementById("c1").innerHTML = c1time;
+</script>
+
   <!-- Template Main CSS File -->
   <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
 
@@ -307,7 +312,6 @@
 
     <section class="section dashboard">
       <div class="row">
-
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
@@ -320,9 +324,9 @@
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
                   <p id="c1">
-                    {{stime1}} {{stime2}} {{stime3}} {{stime4}} {{stime5}} {{stime6}} {{stime7}} {{stime8}} {{stime9}} {{stime10}} 
+                    <!--{{stime1}} {{stime2}} {{stime3}} {{stime4}} {{stime5}} {{stime6}} {{stime7}} {{stime8}} {{stime9}} {{stime10}} 
                     {{stime11}} {{stime12}} {{stime13}} {{stime14}} {{stime15}} {{stime16}} {{stime17}} {{stime18}} {{stime19}} 
-                    {{stime20}} {{stime21}} {{stime22}} 
+                    {{stime20}} {{stime21}} {{stime22}} -->
                   </p>               
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>                  
