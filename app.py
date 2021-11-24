@@ -274,7 +274,7 @@ def IndexResident():
                               
         query = """
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
-        FROM main.Court1
+        FROM main.Court2
         WHERE Available=true
         """
         c2stime8="NA"
@@ -340,7 +340,7 @@ def IndexResident():
                 c2stime22=row['Start_Time']
         query = """
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
-        FROM main.Court1
+        FROM main.Court3
         WHERE Available=true
         """
         c3stime8="NA"
@@ -406,7 +406,7 @@ def IndexResident():
                 c3stime22=row['Start_Time']
         query = """
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
-        FROM main.Court1
+        FROM main.Court4
         WHERE Available=true
         """
         c4stime8="NA"
