@@ -299,7 +299,7 @@ def IndexResident():
 
             if row['hour']==22:
                 stime22=row['Start_Time']
-                if row['Available']=='false':
+                if stime22==0:
                     stime22="NA"              
 
 
