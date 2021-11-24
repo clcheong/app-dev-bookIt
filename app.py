@@ -106,6 +106,10 @@ def login():
 def forgetPassword():
     return render_template('forget-password.html')
 
+@app.route('/checkAccount')
+def checkAccount():
+    return render_template('forget-password.html')
+
 @app.route('/resetPassword')
 def resetPassword():
     return render_template('forget-password.html')
