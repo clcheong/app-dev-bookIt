@@ -496,7 +496,7 @@ def IndexResident():
             else:
                 pass
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court4
         """
         c4stime1=""
