@@ -205,7 +205,7 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT Start_Time
+        explain SELECT Start_Time
         FROM main.Court1
         WHERE Available=true
         """
