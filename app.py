@@ -499,28 +499,28 @@ def IndexResident():
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court4
         """
-        c4stime1="NA"
-        c4stime2="NA"
-        c4stime3="NA"
-        c4stime4="NA"
-        c4stime5="NA"
-        c4stime6="NA"
-        c4stime7="NA"
-        c4stime8="NA"
-        c4stime9="NA"
-        c4stime10="NA"
-        c4stime11="NA"
-        c4stime12="NA"
-        c4stime13="NA"
-        c4stime14="NA"
-        c4stime15="NA"
-        c4stime16="NA"
-        c4stime17="NA"
-        c4stime18="NA"
-        c4stime19="NA"
-        c4stime20="NA"
-        c4stime21="NA"
-        c4stime22="NA"
+        c4stime1=""
+        c4stime2=""
+        c4stime3=""
+        c4stime4=""
+        c4stime5=""
+        c4stime6=""
+        c4stime7=""
+        c4stime8=""
+        c4stime9=""
+        c4stime10=""
+        c4stime11=""
+        c4stime12=""
+        c4stime13=""
+        c4stime14=""
+        c4stime15=""
+        c4stime16=""
+        c4stime17=""
+        c4stime18=""
+        c4stime19=""
+        c4stime20=""
+        c4stime21=""
+        c4stime22=""
         query_job = client.query(query)
         for row in query_job:
             if row['Available']==True:
@@ -543,7 +543,8 @@ def IndexResident():
                     c4stime6=row['Start_Time']
 
                 if row['hour']==7:
-                    c4stime7=row['Start_Time']        
+                    c4stime7=row['Start_Time']
+                            
                 if row['hour']==8:
                     c4stime8=row['Start_Time']
 
