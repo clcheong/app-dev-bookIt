@@ -207,7 +207,7 @@ def IndexResident():
         query = """
         SELECT Start_Time
         FROM main.Court1
-        WHERE Available=false
+        WHERE Available=true
         """
         query_job = client.query(query)
         for row in query_job:        
