@@ -636,9 +636,10 @@ def viewReservation():
         
         # View reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,CURRENT_TIME() as now,CURRENT_DATE() as today,EXTRACT(DAY FROM today) as day,
-        EXTRACT(MONTH FROM today) as month,EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time, Book_ID
+        SELECT Court_ID, Customer_Name, ApproveStatus,CURRENT_TIME() as now,
+        EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time,Book_ID
         FROM main.Reservation
+        WHERE Customer_Name=username
         """
         query_job = client.query(query)
         for row in query_job:
@@ -648,7 +649,7 @@ def viewReservation():
             stime=""
             etime=""
             book_id=""
-            if cust==username:
+            if cust==name:
                 court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
