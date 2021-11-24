@@ -206,7 +206,7 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court1
         WHERE Available=true
         """
@@ -227,12 +227,10 @@ def IndexResident():
         stime22=0
         query_job = client.query(query)
         for row in query_job:        
-
-
             if row['hour']==8:
                 stime8=row['Start_Time']
-            else:
-                stime8="NA"
+                if row['Available']=='false':
+                    stime8="NA"
 
             if row['hour']==9:
                 stime9=row['Start_Time']
@@ -301,8 +299,8 @@ def IndexResident():
 
             if row['hour']==22:
                 stime22=row['Start_Time']
-            else:
-                stime22="NA"               
+                if row['Available']=='false':
+                    stime22="NA"              
 
 
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22)
