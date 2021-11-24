@@ -272,9 +272,216 @@ def IndexResident():
             if row['hour']==22:
                 stime22=row['Start_Time']
                               
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        FROM main.Court1
+        WHERE Available=true
+        """
+        c2stime8="NA"
+        c2stime9="NA"
+        c2stime10="NA"
+        c2stime11="NA"
+        c2stime12="NA"
+        c2stime13="NA"
+        c2stime14="NA"
+        c2stime15="NA"
+        c2stime16="NA"
+        c2stime17="NA"
+        c2stime18="NA"
+        c2stime19="NA"
+        c2stime20="NA"
+        c2stime21="NA"
+        c2stime22="NA"
+        query_job = client.query(query)
+        for row in query_job:        
+            if row['hour']==8:
+                c2stime8=row['Start_Time']
 
+            if row['hour']==9:
+                c2stime9=row['Start_Time']
 
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22)
+            if row['hour']==10:
+                c2stime10=row['Start_Time']
+
+            if row['hour']==11:
+                c2stime11=row['Start_Time']
+
+            if row['hour']==12:
+                c2stime12=row['Start_Time']
+      
+            if row['hour']==13:
+                c2stime13=row['Start_Time']
+
+            if row['hour']==14:
+                c2stime14=row['Start_Time']
+
+            if row['hour']==15:
+                c2stime15=row['Start_Time']            
+        
+            if row['hour']==16:
+                c2stime16=row['Start_Time']
+
+            if row['hour']==17:
+                c2stime17=row['Start_Time']
+                
+            if row['hour']==18:
+                c2stime18=row['Start_Time']
+                
+            if row['hour']==19:
+                c2stime19=row['Start_Time']
+                
+            if row['hour']==20:
+                c2stime20=row['Start_Time']
+            
+            if row['hour']==21:
+                c2stime21=row['Start_Time']
+
+            if row['hour']==22:
+                c2stime22=row['Start_Time']
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        FROM main.Court1
+        WHERE Available=true
+        """
+        c3stime8="NA"
+        c3stime9="NA"
+        c3stime10="NA"
+        c3stime11="NA"
+        c3stime12="NA"
+        c3stime13="NA"
+        c3stime14="NA"
+        c3stime15="NA"
+        c3stime16="NA"
+        c3stime17="NA"
+        c3stime18="NA"
+        c3stime19="NA"
+        c3stime20="NA"
+        c3stime21="NA"
+        c3stime22="NA"
+        query_job = client.query(query)
+        for row in query_job:        
+            if row['hour']==8:
+                c3stime8=row['Start_Time']
+
+            if row['hour']==9:
+                c3stime9=row['Start_Time']
+
+            if row['hour']==10:
+                c3stime10=row['Start_Time']
+
+            if row['hour']==11:
+                c3stime11=row['Start_Time']
+
+            if row['hour']==12:
+                c3stime12=row['Start_Time']
+      
+            if row['hour']==13:
+                c3stime13=row['Start_Time']
+
+            if row['hour']==14:
+                c3stime14=row['Start_Time']
+
+            if row['hour']==15:
+                c3stime15=row['Start_Time']            
+        
+            if row['hour']==16:
+                c3stime16=row['Start_Time']
+
+            if row['hour']==17:
+                c3stime17=row['Start_Time']
+                
+            if row['hour']==18:
+                c3stime18=row['Start_Time']
+                
+            if row['hour']==19:
+                c3stime19=row['Start_Time']
+                
+            if row['hour']==20:
+                c3stime20=row['Start_Time']
+            
+            if row['hour']==21:
+                c3stime21=row['Start_Time']
+
+            if row['hour']==22:
+                c3stime22=row['Start_Time']
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        FROM main.Court1
+        WHERE Available=true
+        """
+        c4stime8="NA"
+        c4stime9="NA"
+        c4stime10="NA"
+        c4stime11="NA"
+        c4stime12="NA"
+        c4stime13="NA"
+        c4stime14="NA"
+        c4stime15="NA"
+        c4stime16="NA"
+        c4stime17="NA"
+        c4stime18="NA"
+        c4stime19="NA"
+        c4stime20="NA"
+        c4stime21="NA"
+        c4stime22="NA"
+        query_job = client.query(query)
+        for row in query_job:        
+            if row['hour']==8:
+                c4stime8=row['Start_Time']
+
+            if row['hour']==9:
+                c4stime9=row['Start_Time']
+
+            if row['hour']==10:
+                c4stime10=row['Start_Time']
+
+            if row['hour']==11:
+                c4stime11=row['Start_Time']
+
+            if row['hour']==12:
+                c4stime12=row['Start_Time']
+      
+            if row['hour']==13:
+                c4stime13=row['Start_Time']
+
+            if row['hour']==14:
+                c4stime14=row['Start_Time']
+
+            if row['hour']==15:
+                c4stime15=row['Start_Time']            
+        
+            if row['hour']==16:
+                c4stime16=row['Start_Time']
+
+            if row['hour']==17:
+                c4stime17=row['Start_Time']
+                
+            if row['hour']==18:
+                c4stime18=row['Start_Time']
+                
+            if row['hour']==19:
+                c4stime19=row['Start_Time']
+                
+            if row['hour']==20:
+                c4stime20=row['Start_Time']
+            
+            if row['hour']==21:
+                c4stime21=row['Start_Time']
+
+            if row['hour']==22:
+                c4stime22=row['Start_Time']
+
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,
+        stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,
+        stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,
+        c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,
+        c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,
+        c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,c3stime8=c3stime8,c3stime9=c3stime9,c3stime10=c3stime10,
+        c3stime11=c3stime11,c3stime12=c3stime12,c3stime13=c3stime13,c3stime14=c3stime14,c3stime15=c3stime15,c3stime16=c3stime16,
+        c3stime17=c3stime17,c3stime18=c3stime18,c3stime19=c3stime19,c3stime20=c3stime20,c3stime21=c3stime21,c3stime22=c3stime22,
+        c4stime8=c4stime8,c4stime9=c4stime9,c4stime10=c4stime10,c4stime11=c4stime11,c4stime12=c4stime12,c4stime13=c4stime13,
+        c4stime14=c4stime14,c4stime15=c4stime15,c4stime16=c4stime16,c4stime17=c4stime17,c4stime18=c4stime18,c4stime19=c4stime19,
+        c4stime20=c4stime20,c4stime21=c4stime21,c4stime22=c4stime22,)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
