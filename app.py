@@ -212,24 +212,24 @@ def IndexResident():
         """
         query_job = client.query(query)
         for row in query_job:        
-            stime8=row['hour']
-            stime9=row['hour']
-            stime10=row['hour']
-            stime11=row['hour']
-            stime12=row['hour']
-            stime13=row['hour']
-            stime14=row['hour']
-            stime15=row['hour']
-            stime16=row['hour']
-            stime17=row['hour']
-            stime18=row['hour']
-            stime19=row['hour']
-            stime20=row['hour']
-            stime21=row['hour']
-            stime22=row['hour']
+            stime8=0
+            stime9=0
+            stime10=0
+            stime11=0
+            stime12=0
+            stime13=0
+            stime14=0
+            stime15=0
+            stime16=0
+            stime17=0
+            stime18=0
+            stime19=0
+            stime20=0
+            stime21=0
+            stime22=0
 
             if row['hour']==8:
-                stime8=row['hour']
+                stime8=row['Start_Time']
 
             if row['hour']==9:
                 stime9=row['hour']
@@ -265,7 +265,7 @@ def IndexResident():
                
                 
             if row['hour']==18:
-                stime18=row['hour']
+                stime18=row['Start_Time']
              
                 
             if row['hour']==19:
