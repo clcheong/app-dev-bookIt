@@ -642,7 +642,7 @@ def viewReservation():
         """
         query_job = client.query(query)
         for row in query_job:
-            cust=""
+            cust=row['Customer_Name']
             court=""
             status=""
             stime=""
