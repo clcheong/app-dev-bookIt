@@ -206,9 +206,8 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court1
-        WHERE Booking=false
         """
         stime1="NA"
         stime2="NA"
@@ -234,76 +233,78 @@ def IndexResident():
         stime22="NA"
         query_job = client.query(query)
         for row in query_job:
-            if row['hour']==1:
-                stime1=row['Start_Time']
-                
-            if row['hour']==2:
-                stime2=row['Start_Time']
+            if row['Available']==True:
+                if row['hour']==1:
+                    stime1=row['Start_Time']
+                    
+                if row['hour']==2:
+                    stime2=row['Start_Time']
 
-            if row['hour']==3:
-                stime3=row['Start_Time']
+                if row['hour']==3:
+                    stime3=row['Start_Time']
 
-            if row['hour']==4:
-                stime4=row['Start_Time']
+                if row['hour']==4:
+                    stime4=row['Start_Time']
 
-            if row['hour']==5:
-                stime5=row['Start_Time']
+                if row['hour']==5:
+                    stime5=row['Start_Time']
 
-            if row['hour']==6:
-                stime6=row['Start_Time']
+                if row['hour']==6:
+                    stime6=row['Start_Time']
 
-            if row['hour']==7:
-                stime7=row['Start_Time']
+                if row['hour']==7:
+                    stime7=row['Start_Time']
 
-            if row['hour']==8:
-                stime8=row['Start_Time']
+                if row['hour']==8:
+                    stime8=row['Start_Time']
 
-            if row['hour']==9:
-                stime9=row['Start_Time']
+                if row['hour']==9:
+                    stime9=row['Start_Time']
 
-            if row['hour']==10:
-                stime10=row['Start_Time']
+                if row['hour']==10:
+                    stime10=row['Start_Time']
 
-            if row['hour']==11:
-                stime11=row['Start_Time']
+                if row['hour']==11:
+                    stime11=row['Start_Time']
 
-            if row['hour']==12:
-                stime12=row['Start_Time']
-      
-            if row['hour']==13:
-                stime13=row['Start_Time']
-
-            if row['hour']==14:
-                stime14=row['Start_Time']
-
-            if row['hour']==15:
-                stime15=row['Start_Time']            
+                if row['hour']==12:
+                    stime12=row['Start_Time']
         
-            if row['hour']==16:
-                stime16=row['Start_Time']
+                if row['hour']==13:
+                    stime13=row['Start_Time']
 
-            if row['hour']==17:
-                stime17=row['Start_Time']
-                
-            if row['hour']==18:
-                stime18=row['Start_Time']
-                
-            if row['hour']==19:
-                stime19=row['Start_Time']
-                
-            if row['hour']==20:
-                stime20=row['Start_Time']
+                if row['hour']==14:
+                    stime14=row['Start_Time']
+
+                if row['hour']==15:
+                    stime15=row['Start_Time']            
             
-            if row['hour']==21:
-                stime21=row['Start_Time']
+                if row['hour']==16:
+                    stime16=row['Start_Time']
 
-            if row['hour']==22:
-                stime22=row['Start_Time']
+                if row['hour']==17:
+                    stime17=row['Start_Time']
+                    
+                if row['hour']==18:
+                    stime18=row['Start_Time']
+                    
+                if row['hour']==19:
+                    stime19=row['Start_Time']
+                    
+                if row['hour']==20:
+                    stime20=row['Start_Time']
+                
+                if row['hour']==21:
+                    stime21=row['Start_Time']
+
+                if row['hour']==22:
+                    stime22=row['Start_Time']
+            else:
+                pass
                               
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court2
-        WHERE Booking=false
         """
         c2stime1="NA"
         c2stime2="NA"
@@ -329,75 +330,79 @@ def IndexResident():
         c2stime22="NA"
         query_job = client.query(query)
         for row in query_job:
-            if row['hour']==1:
-                c2stime1=row['Start_Time']
-                
-            if row['hour']==2:
-                c2stime2=row['Start_Time']
+            if row['Available']==True:
+                if row['hour']==1:
+                    c2stime1=row['Start_Time']
+                    
+                if row['hour']==2:
+                    c2stime2=row['Start_Time']
 
-            if row['hour']==3:
-                c2stime3=row['Start_Time']
+                if row['hour']==3:
+                    c2stime3=row['Start_Time']
 
-            if row['hour']==4:
-                c2stime4=row['Start_Time']
+                if row['hour']==4:
+                    c2stime4=row['Start_Time']
 
-            if row['hour']==5:
-                c2stime5=row['Start_Time']
+                if row['hour']==5:
+                    c2stime5=row['Start_Time']
 
-            if row['hour']==6:
-                c2stime6=row['Start_Time']
+                if row['hour']==6:
+                    c2stime6=row['Start_Time']
 
-            if row['hour']==7:
-                c2stime7=row['Start_Time']
+                if row['hour']==7:
+                    c2stime7=row['Start_Time']
 
-            if row['hour']==8:
-                c2stime8=row['Start_Time']
+                if row['hour']==8:
+                    c2stime8=row['Start_Time']
 
-            if row['hour']==9:
-                c2stime9=row['Start_Time']
+                if row['hour']==9:
+                    c2stime9=row['Start_Time']
 
-            if row['hour']==10:
-                c2stime10=row['Start_Time']
+                if row['hour']==10:
+                    c2stime10=row['Start_Time']
 
-            if row['hour']==11:
-                c2stime11=row['Start_Time']
+                if row['hour']==11:
+                    c2stime11=row['Start_Time']
 
-            if row['hour']==12:
-                c2stime12=row['Start_Time']
-      
-            if row['hour']==13:
-                c2stime13=row['Start_Time']
-
-            if row['hour']==14:
-                c2stime14=row['Start_Time']
-
-            if row['hour']==15:
-                c2stime15=row['Start_Time']            
+                if row['hour']==12:
+                    c2stime12=row['Start_Time']
         
-            if row['hour']==16:
-                c2stime16=row['Start_Time']
+                if row['hour']==13:
+                    c2stime13=row['Start_Time']
 
-            if row['hour']==17:
-                c2stime17=row['Start_Time']
-                
-            if row['hour']==18:
-                c2stime18=row['Start_Time']
-                
-            if row['hour']==19:
-                c2stime19=row['Start_Time']
-                
-            if row['hour']==20:
-                c2stime20=row['Start_Time']
+                if row['hour']==14:
+                    c2stime14=row['Start_Time']
+
+                if row['hour']==15:
+                    c2stime15=row['Start_Time']            
             
-            if row['hour']==21:
-                c2stime21=row['Start_Time']
+                if row['hour']==16:
+                    c2stime16=row['Start_Time']
 
-            if row['hour']==22:
-                c2stime22=row['Start_Time']
+                if row['hour']==17:
+                    c2stime17=row['Start_Time']
+                    
+                if row['hour']==18:
+                    c2stime18=row['Start_Time']
+                    
+                if row['hour']==19:
+                    c2stime19=row['Start_Time']
+                    
+                if row['hour']==20:
+                    c2stime20=row['Start_Time']
+                
+                if row['hour']==21:
+                    c2stime21=row['Start_Time']
+
+                if row['hour']==22:
+                    c2stime22=row['Start_Time']
+
+            else:
+                pass
+
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court3
-        WHERE Booking=false
         """
         c3stime1="NA"
         c3stime2="NA"
@@ -423,74 +428,76 @@ def IndexResident():
         c3stime22="NA"
         query_job = client.query(query)
         for row in query_job:
-            if row['hour']==1:
-                c3stime1=row['Start_Time']
-                
-            if row['hour']==2:
-                c3stime2=row['Start_Time']
+            if row['Available']==True:
+                if row['hour']==1:
+                    c3stime1=row['Start_Time']
+                    
+                if row['hour']==2:
+                    c3stime2=row['Start_Time']
 
-            if row['hour']==3:
-                c3stime3=row['Start_Time']
+                if row['hour']==3:
+                    c3stime3=row['Start_Time']
 
-            if row['hour']==4:
-                c3stime4=row['Start_Time']
+                if row['hour']==4:
+                    c3stime4=row['Start_Time']
 
-            if row['hour']==5:
-                c3stime5=row['Start_Time']
+                if row['hour']==5:
+                    c3stime5=row['Start_Time']
 
-            if row['hour']==6:
-                c3stime6=row['Start_Time']
+                if row['hour']==6:
+                    c3stime6=row['Start_Time']
 
-            if row['hour']==7:
-                c3stime7=row['Start_Time']        
-            if row['hour']==8:
-                c3stime8=row['Start_Time']
+                if row['hour']==7:
+                    c3stime7=row['Start_Time']        
+                if row['hour']==8:
+                    c3stime8=row['Start_Time']
 
-            if row['hour']==9:
-                c3stime9=row['Start_Time']
+                if row['hour']==9:
+                    c3stime9=row['Start_Time']
 
-            if row['hour']==10:
-                c3stime10=row['Start_Time']
+                if row['hour']==10:
+                    c3stime10=row['Start_Time']
 
-            if row['hour']==11:
-                c3stime11=row['Start_Time']
+                if row['hour']==11:
+                    c3stime11=row['Start_Time']
 
-            if row['hour']==12:
-                c3stime12=row['Start_Time']
-      
-            if row['hour']==13:
-                c3stime13=row['Start_Time']
-
-            if row['hour']==14:
-                c3stime14=row['Start_Time']
-
-            if row['hour']==15:
-                c3stime15=row['Start_Time']            
+                if row['hour']==12:
+                    c3stime12=row['Start_Time']
         
-            if row['hour']==16:
-                c3stime16=row['Start_Time']
+                if row['hour']==13:
+                    c3stime13=row['Start_Time']
 
-            if row['hour']==17:
-                c3stime17=row['Start_Time']
-                
-            if row['hour']==18:
-                c3stime18=row['Start_Time']
-                
-            if row['hour']==19:
-                c3stime19=row['Start_Time']
-                
-            if row['hour']==20:
-                c3stime20=row['Start_Time']
+                if row['hour']==14:
+                    c3stime14=row['Start_Time']
+
+                if row['hour']==15:
+                    c3stime15=row['Start_Time']            
             
-            if row['hour']==21:
-                c3stime21=row['Start_Time']
+                if row['hour']==16:
+                    c3stime16=row['Start_Time']
 
-            if row['hour']==22:
-                c3stime22=row['Start_Time']
+                if row['hour']==17:
+                    c3stime17=row['Start_Time']
+                    
+                if row['hour']==18:
+                    c3stime18=row['Start_Time']
+                    
+                if row['hour']==19:
+                    c3stime19=row['Start_Time']
+                    
+                if row['hour']==20:
+                    c3stime20=row['Start_Time']
+                
+                if row['hour']==21:
+                    c3stime21=row['Start_Time']
+
+                if row['hour']==22:
+                    c3stime22=row['Start_Time']
+            else:
+                pass
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
         FROM main.Court4
-        WHERE Booking=false
         """
         c4stime1="NA"
         c4stime2="NA"
@@ -516,70 +523,73 @@ def IndexResident():
         c4stime22="NA"
         query_job = client.query(query)
         for row in query_job:
-            if row['hour']==1:
-                c4stime1=row['Start_Time']
-                
-            if row['hour']==2:
-                c4stime2=row['Start_Time']
+            if row['Available']==True:
+                if row['hour']==1:
+                    c4stime1=row['Start_Time']
+                    
+                if row['hour']==2:
+                    c4stime2=row['Start_Time']
 
-            if row['hour']==3:
-                c4stime3=row['Start_Time']
+                if row['hour']==3:
+                    c4stime3=row['Start_Time']
 
-            if row['hour']==4:
-                c4stime4=row['Start_Time']
+                if row['hour']==4:
+                    c4stime4=row['Start_Time']
 
-            if row['hour']==5:
-                c4stime5=row['Start_Time']
+                if row['hour']==5:
+                    c4stime5=row['Start_Time']
 
-            if row['hour']==6:
-                c4stime6=row['Start_Time']
+                if row['hour']==6:
+                    c4stime6=row['Start_Time']
 
-            if row['hour']==7:
-                c4stime7=row['Start_Time']        
-            if row['hour']==8:
-                c4stime8=row['Start_Time']
+                if row['hour']==7:
+                    c4stime7=row['Start_Time']        
+                if row['hour']==8:
+                    c4stime8=row['Start_Time']
 
-            if row['hour']==9:
-                c4stime9=row['Start_Time']
+                if row['hour']==9:
+                    c4stime9=row['Start_Time']
 
-            if row['hour']==10:
-                c4stime10=row['Start_Time']
+                if row['hour']==10:
+                    c4stime10=row['Start_Time']
 
-            if row['hour']==11:
-                c4stime11=row['Start_Time']
+                if row['hour']==11:
+                    c4stime11=row['Start_Time']
 
-            if row['hour']==12:
-                c4stime12=row['Start_Time']
-      
-            if row['hour']==13:
-                c4stime13=row['Start_Time']
-
-            if row['hour']==14:
-                c4stime14=row['Start_Time']
-
-            if row['hour']==15:
-                c4stime15=row['Start_Time']            
+                if row['hour']==12:
+                    c4stime12=row['Start_Time']
         
-            if row['hour']==16:
-                c4stime16=row['Start_Time']
+                if row['hour']==13:
+                    c4stime13=row['Start_Time']
 
-            if row['hour']==17:
-                c4stime17=row['Start_Time']
-                
-            if row['hour']==18:
-                c4stime18=row['Start_Time']
-                
-            if row['hour']==19:
-                c4stime19=row['Start_Time']
-                
-            if row['hour']==20:
-                c4stime20=row['Start_Time']
+                if row['hour']==14:
+                    c4stime14=row['Start_Time']
+
+                if row['hour']==15:
+                    c4stime15=row['Start_Time']            
             
-            if row['hour']==21:
-                c4stime21=row['Start_Time']
+                if row['hour']==16:
+                    c4stime16=row['Start_Time']
 
-            if row['hour']==22:
-                c4stime22=row['Start_Time']
+                if row['hour']==17:
+                    c4stime17=row['Start_Time']
+                    
+                if row['hour']==18:
+                    c4stime18=row['Start_Time']
+                    
+                if row['hour']==19:
+                    c4stime19=row['Start_Time']
+                    
+                if row['hour']==20:
+                    c4stime20=row['Start_Time']
+                
+                if row['hour']==21:
+                    c4stime21=row['Start_Time']
+
+                if row['hour']==22:
+                    c4stime22=row['Start_Time']
+            else:
+                pass
 
         return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime1=stime1,
         stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,stime10=stime10,
@@ -636,7 +646,7 @@ def viewReservation():
             stime=row['Start_Time']
             etime=row['End_Time']
             book_id=row['Book_ID']
-            if cust==name:
+            if cust==username:
                 court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
