@@ -233,36 +233,36 @@ def IndexResident():
                 stime8=row['Start_Time']
 
             if row['hour']==9:
-                stime9=row['hour']
+                stime9=row['Start_Time']
 
             if row['hour']==10:
-                stime10=row['hour']
+                stime10=row['Start_Time']
 
             if row['hour']==11:
-                stime11=row['hour']
+                stime11=row['Start_Time']
 
             if row['hour']==12:
-                stime12=row['hour']
+                stime12=row['Start_Time']
             
                 
             if row['hour']==13:
-                stime13=row['hour']
+                stime13=row['Start_Time']
      
             
             if row['hour']==14:
-                stime14=row['hour']
+                stime14=row['Start_Time']
                
                 
             if row['hour']==15:
-                stime15=row['hour']
+                stime15=row['Start_Time']
               
         
             if row['hour']==16:
-                stime16=row['hour']
+                stime16=row['Start_Time']
            
                 
             if row['hour']==17:
-                stime17=row['hour']
+                stime17=row['Start_Time']
                
                 
             if row['hour']==18:
@@ -270,18 +270,18 @@ def IndexResident():
              
                 
             if row['hour']==19:
-                stime19=row['hour']
+                stime19=row['Start_Time']
              
                 
             if row['hour']==20:
-                stime20=row['hour']
+                stime20=row['Start_Time']
            
             
             if row['hour']==21:
-                stime21=row['hour']
+                stime21=row['Start_Time']
            
             if row['hour']==22:
-                stime22=row['hour']
+                stime22=row['Start_Time']
                
 
 
