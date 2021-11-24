@@ -620,7 +620,7 @@ def viewReservation():
         username = session['username']
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
-        username=session['name']
+        
         
         
         # View reservation of user
@@ -636,7 +636,7 @@ def viewReservation():
             stime=row['Start_Time']
             etime=row['End_Time']
             book_id=row['Book_ID']
-            if cust==username:
+            if cust==name:
                 court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
