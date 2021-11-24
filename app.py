@@ -210,6 +210,13 @@ def IndexResident():
         FROM main.Court1
         WHERE Available=true
         """
+        stime1="NA"
+        stime2="NA"
+        stime3="NA"
+        stime4="NA"
+        stime5="NA"
+        stime6="NA"
+        stime7="NA"
         stime8="NA"
         stime9="NA"
         stime10="NA"
@@ -226,7 +233,28 @@ def IndexResident():
         stime21="NA"
         stime22="NA"
         query_job = client.query(query)
-        for row in query_job:        
+        for row in query_job:
+            if row['hour']==1:
+                stime1=row['Start_Time']
+                
+            if row['hour']==2:
+                stime2=row['Start_Time']
+
+            if row['hour']==3:
+                stime3=row['Start_Time']
+
+            if row['hour']==4:
+                stime4=row['Start_Time']
+
+            if row['hour']==5:
+                stime5=row['Start_Time']
+
+            if row['hour']==6:
+                stime6=row['Start_Time']
+
+            if row['hour']==7:
+                stime7=row['Start_Time']
+
             if row['hour']==8:
                 stime8=row['Start_Time']
 
@@ -277,6 +305,13 @@ def IndexResident():
         FROM main.Court2
         WHERE Available=true
         """
+        c2stime1="NA"
+        c2stime2="NA"
+        c2stime3="NA"
+        c2stime4="NA"
+        c2stime5="NA"
+        c2stime6="NA"
+        c2stime7="NA"
         c2stime8="NA"
         c2stime9="NA"
         c2stime10="NA"
@@ -293,7 +328,28 @@ def IndexResident():
         c2stime21="NA"
         c2stime22="NA"
         query_job = client.query(query)
-        for row in query_job:        
+        for row in query_job:
+            if row['hour']==1:
+                c2stime1=row['Start_Time']
+                
+            if row['hour']==2:
+                c2stime2=row['Start_Time']
+
+            if row['hour']==3:
+                c2stime3=row['Start_Time']
+
+            if row['hour']==4:
+                c2stime4=row['Start_Time']
+
+            if row['hour']==5:
+                c2stime5=row['Start_Time']
+
+            if row['hour']==6:
+                c2stime6=row['Start_Time']
+
+            if row['hour']==7:
+                c2stime7=row['Start_Time']
+
             if row['hour']==8:
                 c2stime8=row['Start_Time']
 
@@ -343,6 +399,13 @@ def IndexResident():
         FROM main.Court3
         WHERE Available=true
         """
+        c3stime1="NA"
+        c3stime2="NA"
+        c3stime3="NA"
+        c3stime4="NA"
+        c3stime5="NA"
+        c3stime6="NA"
+        c3stime7="NA"
         c3stime8="NA"
         c3stime9="NA"
         c3stime10="NA"
@@ -359,7 +422,27 @@ def IndexResident():
         c3stime21="NA"
         c3stime22="NA"
         query_job = client.query(query)
-        for row in query_job:        
+        for row in query_job:
+            if row['hour']==1:
+                c3stime1=row['Start_Time']
+                
+            if row['hour']==2:
+                c3stime2=row['Start_Time']
+
+            if row['hour']==3:
+                c3stime3=row['Start_Time']
+
+            if row['hour']==4:
+                c3stime4=row['Start_Time']
+
+            if row['hour']==5:
+                c3stime5=row['Start_Time']
+
+            if row['hour']==6:
+                c3stime6=row['Start_Time']
+
+            if row['hour']==7:
+                c3stime7=row['Start_Time']        
             if row['hour']==8:
                 c3stime8=row['Start_Time']
 
@@ -409,6 +492,13 @@ def IndexResident():
         FROM main.Court4
         WHERE Available=true
         """
+        c4stime1="NA"
+        c4stime2="NA"
+        c4stime3="NA"
+        c4stime4="NA"
+        c4stime5="NA"
+        c4stime6="NA"
+        c4stime7="NA"
         c4stime8="NA"
         c4stime9="NA"
         c4stime10="NA"
@@ -425,7 +515,27 @@ def IndexResident():
         c4stime21="NA"
         c4stime22="NA"
         query_job = client.query(query)
-        for row in query_job:        
+        for row in query_job:
+            if row['hour']==1:
+                c4stime1=row['Start_Time']
+                
+            if row['hour']==2:
+                c4stime2=row['Start_Time']
+
+            if row['hour']==3:
+                c4stime3=row['Start_Time']
+
+            if row['hour']==4:
+                c4stime4=row['Start_Time']
+
+            if row['hour']==5:
+                c4stime5=row['Start_Time']
+
+            if row['hour']==6:
+                c4stime6=row['Start_Time']
+
+            if row['hour']==7:
+                c4stime7=row['Start_Time']        
             if row['hour']==8:
                 c4stime8=row['Start_Time']
 
@@ -471,17 +581,20 @@ def IndexResident():
             if row['hour']==22:
                 c4stime22=row['Start_Time']
 
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,
-        stime8=stime8,stime9=stime9,stime10=stime10,stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,
-        stime16=stime16,stime17=stime17,stime18=stime18,stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,
-        c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,
-        c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,
-        c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,c3stime8=c3stime8,c3stime9=c3stime9,c3stime10=c3stime10,
-        c3stime11=c3stime11,c3stime12=c3stime12,c3stime13=c3stime13,c3stime14=c3stime14,c3stime15=c3stime15,c3stime16=c3stime16,
-        c3stime17=c3stime17,c3stime18=c3stime18,c3stime19=c3stime19,c3stime20=c3stime20,c3stime21=c3stime21,c3stime22=c3stime22,
-        c4stime8=c4stime8,c4stime9=c4stime9,c4stime10=c4stime10,c4stime11=c4stime11,c4stime12=c4stime12,c4stime13=c4stime13,
-        c4stime14=c4stime14,c4stime15=c4stime15,c4stime16=c4stime16,c4stime17=c4stime17,c4stime18=c4stime18,c4stime19=c4stime19,
-        c4stime20=c4stime20,c4stime21=c4stime21,c4stime22=c4stime22,)
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime1=stime1,
+        stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,stime10=stime10,
+        stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,
+        stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
+        c2stime4=c2stime4,c2stime5=c2stime5,c2stime6=c2stime6,c2stime7=c2stime7,c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,
+        c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,
+        c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,
+        c3stime1=c3stime1,c3stime2=c3stime2,c3stime3=c3stime3,c3stime4=c3stime4,c3stime5=c3stime5,c3stime6=c3stime6,c3stime7=c3stime7,
+        c3stime8=c3stime8,c3stime9=c3stime9,c3stime10=c3stime10,c3stime11=c3stime11,c3stime12=c3stime12,c3stime13=c3stime13,
+        c3stime14=c3stime14,c3stime15=c3stime15,c3stime16=c3stime16,c3stime17=c3stime17,c3stime18=c3stime18,c3stime19=c3stime19,
+        c3stime20=c3stime20,c3stime21=c3stime21,c3stime22=c3stime22,c4stime1=c4stime1,c4stime2=c4stime2,c4stime3=c4stime3,
+        c4stime4=c4stime4,c4stime5=c4stime5,c4stime6=c4stime6,c4stime7=c4stime7,c4stime8=c4stime8,c4stime9=c4stime9,c4stime10=c4stime10,
+        c4stime11=c4stime11,c4stime12=c4stime12,c4stime13=c4stime13,c4stime14=c4stime14,c4stime15=c4stime15,c4stime16=c4stime16,
+        c4stime17=c4stime17,c4stime18=c4stime18,c4stime19=c4stime19,c4stime20=c4stime20,c4stime21=c4stime21,c4stime22=c4stime22,)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
