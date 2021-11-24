@@ -614,9 +614,13 @@ def viewReservation():
         return redirect('/login')
     
     else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
-        name=session['name']
+        username=session['name']
         
         
         # View reservation of user
@@ -632,18 +636,20 @@ def viewReservation():
             stime=row['Start_Time']
             etime=row['End_Time']
             book_id=row['Book_ID']
-            if cust==name:
+            if cust==username:
                 court=row['Court_ID']
                 status=row['ApproveStatus']
                 stime=row['Start_Time']
                 etime=row['End_Time']
                 book_id=row['Book_ID']
-                return render_template("viewReservation.html",court=court,cust=cust, status=status,stime=stime,etime=etime,book_id=book_id)
+                return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+                court=court,cust=cust, status=status,stime=stime,etime=etime,book_id=book_id)
             else:
                 pass
             
                         
-        return render_template("viewReservation.html",court="",cust="", status="",stime="", etime="",book_id="")
+        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,blockNum=blockNum,
+        court="",cust="", status="",stime="", etime="",book_id="")
 
 
 #Below this is not under AD project
