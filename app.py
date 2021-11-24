@@ -229,49 +229,31 @@ def IndexResident():
         for row in query_job:        
             if row['hour']==8:
                 stime8=row['Start_Time']
-                if row['Available']=='false':
-                    stime8="NA"
 
             if row['hour']==9:
                 stime9=row['Start_Time']
-            else:
-                stime9="NA"
 
             if row['hour']==10:
                 stime10=row['Start_Time']
-            else:
-                stime10="NA"
 
             if row['hour']==11:
                 stime11=row['Start_Time']
-            else:
-                stime11="NA"
-                
+
             if row['hour']==12:
                 stime12=row['Start_Time']
-            else:
-                stime12="NA"            
-                
+      
             if row['hour']==13:
                 stime13=row['Start_Time']
-            else:
-                stime13="NA"     
-            
+
             if row['hour']==14:
                 stime14=row['Start_Time']
-            else:
-                stime14="NA"               
-                
+
             if row['hour']==15:
-                stime15=row['Start_Time']
-            else:
-                stime15="NA"              
+                stime15=row['Start_Time']            
         
             if row['hour']==16:
                 stime16=row['Start_Time']
-            else:
-                stime16="NA"           
-                
+
             if row['hour']==17:
                 stime17=row['Start_Time']
                 
