@@ -206,9 +206,9 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
         FROM main.Court1
-        WHERE Available=true
+        WHERE Available=true,Booking=false
         """
         stime1="NA"
         stime2="NA"
@@ -301,9 +301,9 @@ def IndexResident():
                 stime22=row['Start_Time']
                               
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
         FROM main.Court2
-        WHERE Available=true
+        WHERE Available=true,Booking=false
         """
         c2stime1="NA"
         c2stime2="NA"
@@ -395,9 +395,9 @@ def IndexResident():
             if row['hour']==22:
                 c2stime22=row['Start_Time']
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
         FROM main.Court3
-        WHERE Available=true
+        WHERE Available=true,Booking=false
         """
         c3stime1="NA"
         c3stime2="NA"
@@ -488,9 +488,9 @@ def IndexResident():
             if row['hour']==22:
                 c3stime22=row['Start_Time']
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Available
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time
         FROM main.Court4
-        WHERE Available=true
+        WHERE Available=true,Booking=false
         """
         c4stime1="NA"
         c4stime2="NA"
