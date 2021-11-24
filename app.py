@@ -636,34 +636,80 @@ def viewReservation():
         
         # View reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,CURRENT_TIME() as now,
-        EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time,Book_ID
+        SELECT Court_ID, Customer_Name, ApproveStatus,EXTRACT(HOUR FROM CURRENT_TIME()) as now,
+        EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time,Reserve_Time,Book_ID
         FROM main.Reservation
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
-            court=""
-            status=""
-            stime=""
-            etime=""
-            book_id=""
+            tcourt=""
+            tstatus=""
+            tstime=""
+            tetime=""
+            tbook_id=""
+            t2court=""
+            t2status=""
+            t2stime=""
+            t2etime=""
+            t2book_id=""
+            r1court=""
+            r1status=""
+            r1stime=""
+            r1etime=""
+            r1book_id=""
+            r2court=""
+            r2status=""
+            r2stime=""
+            r2etime=""
+            r2book_id=""
+            r3court=""
+            r3status=""
+            r3stime=""
+            r3etime=""
+            r3book_id=""
             if cust==name:
-                print("hereI")
-                court=row['Court_ID']
-                status=row['ApproveStatus']
-                stime=row['Start_Time']
-                etime=row['End_Time']
-                book_id=row['Book_ID']
+                tcourt=row['Court_ID']
+                tstatus=row['ApproveStatus']
+                tstime=row['Start_Time']
+                tetime=row['End_Time']
+                tbook_id=row['Book_ID']
+                t2court=row['Court_ID']
+                t2status=row['ApproveStatus']
+                t2stime=row['Start_Time']
+                t2etime=row['End_Time']
+                t2book_id=row['Book_ID']
+                r1court=row['Court_ID']
+                r1status=row['ApproveStatus']
+                r1stime=row['Start_Time']
+                r1etime=row['End_Time']
+                r1book_id=row['Book_ID']
+                r2court=row['Court_ID']
+                r2status=row['ApproveStatus']
+                r2stime=row['Start_Time']
+                r2etime=row['End_Time']
+                r2book_id=row['Book_ID']
+                r3court=row['Court_ID']
+                r3status=row['ApproveStatus']
+                r3stime=row['Start_Time']
+                r3etime=row['End_Time']
+                r3book_id=row['Book_ID']
                 return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-                court=court,cust=cust, status=status,stime=stime,etime=etime,book_id=book_id)
+                cust=cust,tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
+                t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
+                r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
+                r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id,)
             else:
-                print("here")
                 pass
             
                         
-        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        court="",cust="", status="",stime="", etime="",book_id="")
+        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,cust=cust,
+        tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
+        t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
+        r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
+        r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id)
+
+
 
 
 #Below this is not under AD project
