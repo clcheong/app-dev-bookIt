@@ -704,20 +704,13 @@ def viewReservation():
                     r3etime=row['End_Time']
                     r3book_id=row['Book_ID']
 
-                return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-                cust=cust,tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
-                t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
-                r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
-                r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id,)
-            else:
-                pass
+    return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+    cust=cust,tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
+    t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
+    r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
+    r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id,)
             
-                        
-        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,cust=cust,
-        tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
-        t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
-        r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
-        r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id)
+            
 
 
 
