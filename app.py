@@ -669,7 +669,7 @@ def viewReservation():
         for row in query_job:
             cust=row['Customer_Name']
             if cust==name:
-                if tbook_id!=row['Book_ID']:
+                if tbook_id!=t2book_id:
                     tcourt=row['Court_ID']
                     tstatus=row['ApproveStatus']
                     tstime=row['Start_Time']
