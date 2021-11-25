@@ -676,7 +676,7 @@ def viewReservation():
                     tetime=row['End_Time']
                     tbook_id=row['Book_ID']
 
-                if t2book_id!=row['Book_ID']:
+                if t2book_id!=tbook_id:
                     t2court=row['Court_ID']
                     t2status=row['ApproveStatus']
                     t2stime=row['Start_Time']
@@ -690,14 +690,14 @@ def viewReservation():
                     r1etime=row['End_Time']
                     r1book_id=row['Book_ID']
 
-                if r2book_id!=row['Book_ID']:
+                if r2book_id!=r1book_id:
                     r2court=row['Court_ID']
                     r2status=row['ApproveStatus']
                     r2stime=row['Start_Time']
                     r2etime=row['End_Time']
                     r2book_id=row['Book_ID']
 
-                if r3book_id!=row['Book_ID']:
+                if r3book_id!=r1book_id and r3book_id!=r2book_id:
                     r3court=row['Court_ID']
                     r3status=row['ApproveStatus']
                     r3stime=row['Start_Time']
