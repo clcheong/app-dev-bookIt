@@ -193,7 +193,7 @@ def logout():
     session.pop('Usertype',None)
     return redirect('/login')
 
-@app.route('/IndexResident')
+@app.route('/IndexResident',methods=['GET'])
 def IndexResident():
     
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
@@ -210,7 +210,7 @@ def IndexResident():
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court1
         """
-        stime = {}
+        stime = []
         query_job = client.query(query)
         for row in query_job:
             if row['Booking']==False:
