@@ -747,7 +747,7 @@ def jsontest():
             'Resident Name':name , 
             'Reservation Status':status, 
             'Reservation Time':stime,
-            'Booking ID':book_ID+"\\n"}
+            'Booking ID':"testing\\n"}
             reservationlist.append(reservation)
     return json.dumps(reservationlist,None,indent=2)
 
