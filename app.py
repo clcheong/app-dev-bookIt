@@ -749,8 +749,7 @@ def jsontest():
             'Reservation Time':stime,
             'Booking ID':book_ID}
             reservationlist.append(reservation)
-    jsonStr=json.dumps(reservationlist)
-    return jsonify(Reservations=jsonStr)
+    return json.dumps(reservationlist)
 
 
 
