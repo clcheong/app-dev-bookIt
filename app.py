@@ -291,41 +291,37 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         
         
-        court=""
+        court=[]
         cust=name
-        status=""
-        stime=""
-        book_id=""
-        reservationlist=[]
+        status=[]
+        stime=[]
+        book_id=[]
         
-        # View reservation of user
+        # View reservation history of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,EXTRACT(HOUR FROM CURRENT_TIME()) as now,EXTRACT(DAY FROM CURRENT_DATE) as today
-        EXTRACT(HOUR FROM Start_Time) as hour,Start_Time, End_Time,EXTRACT(DAY FROM Reserve_Time) as date,Book_ID,
-        DATE_DIFF(today,date) as daysdiff
+        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+        EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear
+        EXTRACT (DAY FROM Reserve_Time) as day, EXTRACT(MONTH FROM Reserve_Time) as month,EXTRACT (YEAR FROM Reserve_Time) as year
         FROM main.Reservation
+        ORDER BY Reserve_Time DESC
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
             if cust==name:
-                court=row['Court_ID']
-                status=row['ApproveStatus']
-                stime=row['Start_Time']
-                book_ID=row['Book_ID']
-                reservationlist.append(court)
-                reservationlist.append(status)
-                reservationlist.append(cust)
-                reservationlist.append(stime)
-                reservationlist.append(book_ID)
+                court.append(row['Court_ID'])
+                status.append(row['ApproveStatus'])
+                stime.append(row['Start_Time'])
+                book_id.append(row['Book_ID'])
+
                    
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust)
             
 
-@app.route('/jsontest')
-def jsontest():
+@app.route('/history')
+def history():
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
         return redirect('/login')
     
@@ -337,30 +333,28 @@ def jsontest():
 
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Reservation'
-    query = """
-    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time,Book_ID
-    FROM main.Reservation
-    """
-    court=""
+    court=[]
     cust=name
-    status=""
-    stime=""
-    book_id=""
-    reservationlist=[]
+    status=[]
+    stime=[]
+    book_id=[]        
+    # View reservation history of user
+    query = """
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+    EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear
+    EXTRACT (DAY FROM Reserve_Time) as day, EXTRACT(MONTH FROM Reserve_Time) as month,EXTRACT (YEAR FROM Reserve_Time) as year
+    FROM main.Reservation
+    ORDER BY Reserve_Time DESC
+    """
     query_job = client.query(query)
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            court=row['Court_ID']
-            status=row['ApproveStatus']
-            stime=row['Start_Time']
-            book_ID=row['Book_ID']
-            reservationlist.append(court)
-            reservationlist.append(status)
-            reservationlist.append(cust)
-            reservationlist.append(stime)
-            reservationlist.append(book_ID)
-    return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username)
+            court.append(row['Court_ID'])
+            status.append(row['ApproveStatus'])
+            stime.append(row['Start_Time'])
+            book_id.append(row['Book_ID'])
+    return render_template("IndexResident.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username)
 
 
 
