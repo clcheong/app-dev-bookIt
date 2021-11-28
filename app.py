@@ -743,7 +743,11 @@ def jsontest():
             status=row['ApproveStatus']
             stime=row['Start_Time']
             book_ID=row['Book_ID']
-            reservation ={'Court number':court , 'Resident Name':name , 'Reservation Status':status, 'Reservation Time':stime,'Booking ID':book_ID}
+            reservation ={'Court number':court , 
+            'Resident Name':name , 
+            'Reservation Status':status, 
+            'Reservation Time':stime,
+            'Booking ID':book_ID}
             reservationlist.append(reservation)
     return jsonify(reservationlist)
 
