@@ -746,7 +746,7 @@ def jsontest():
             reservationlist.append("Court Number: "+court)
             reservationlist.append(status)
             reservationlist.append(stime)
-            reservationlist.append(book_ID)
+            reservationlist.append(book_ID+"\\n")
     return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username,)
 
 
