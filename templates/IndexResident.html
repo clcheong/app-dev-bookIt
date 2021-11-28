@@ -323,12 +323,13 @@
                   </p>
                   <a href='jsontest'>Testing</a>
                   <script>
-                    let times=""
+                    const times=[];
                     for (let i=0;i<22;i++)
                     {
-                      times += '{{stime[i]}}'+"<br>";
+                      times.push('{{stime[i]}}');
                     }
-                    document.getElementById(court1).innerHTML=times;
+                    times.reverse();
+                    document.getElementById("court1").innerHTML=times;
 
                   </script>               
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
