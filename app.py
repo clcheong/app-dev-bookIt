@@ -5,6 +5,7 @@
 
 from datetime import datetime
 from logging import StringTemplateStyle
+from os import name
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
@@ -713,10 +714,36 @@ def viewReservation():
 
 @app.route('/jsontest')
 def jsontest():
-    flexibleusername= "smth"
-    Dictionary ={'Court number':flexibleusername , 'Resident Name':'Premium' , 'Reservation Status':'2709 days', 'Reservation Time':'Random',
-    'Booking ID':'Random'}
-    return jsonify(Dictionary)
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+
+    client =bigquery.Client()
+    cust_table_id='bookit-court-booking-system.main.Reservation'
+    query = """
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, ,Book_ID,
+    FROM main.Reservation
+    """
+    court=""
+    cust=name
+    status=""
+    stime=""
+    ID=""
+    query_job = client.query(query)
+    for row in query_job:
+        if cust==name:
+            court=row['Court_ID']
+            status=row['ApproveStatus']
+            stime=row['Start_Time']
+            ID=row['Book_ID']
+            reservation ={'Court number':court , 'Resident Name':name , 'Reservation Status':status, 'Reservation Time':stime,
+            'Booking ID':ID}
+    return jsonify(reservation)
 
 
 
