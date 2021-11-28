@@ -207,8 +207,9 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking, hour ORDER BY Start_Time
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court1
+        ORDER BY Start_Time
         """
         stime=[]
         query_job = client.query(query)
