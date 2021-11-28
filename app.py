@@ -287,33 +287,12 @@ def IndexResident():
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court2
         """
-        c2stime1=""
-        c2stime2=""
-        c2stime3=""
-        c2stime4=""
-        c2stime5=""
-        c2stime6=""
-        c2stime7=""
-        c2stime8=""
-        c2stime9=""
-        c2stime10=""
-        c2stime11=""
-        c2stime12=""
-        c2stime13=""
-        c2stime14=""
-        c2stime15=""
-        c2stime16=""
-        c2stime17=""
-        c2stime18=""
-        c2stime19=""
-        c2stime20=""
-        c2stime21=""
-        c2stime22=""
+        c2stime=[]
         query_job = client.query(query)
         for row in query_job:
             if row['Booking']==False:
                 if row['hour']==1:
-                    c2stime1=row['Start_Time']
+                    c2stime.append(row['Start_Time'])
                     
                 if row['hour']==2:
                     c2stime2=row['Start_Time']
@@ -573,10 +552,8 @@ def IndexResident():
             else:
                 pass
 
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime1=stime[0],
-        stime2=stime[1],stime3=stime[2],stime4=stime[3],stime5=stime[4],stime6=stime[5],stime7=stime[6],stime8=stime[7],stime9=stime[8],stime10=stime[9],
-        stime11=stime[10],stime12=stime[11],stime13=stime[12],stime14=stime[13],stime15=stime[14],stime16=stime[15],stime17=stime[16],stime18=stime[17],
-        stime19=stime[18],stime20=stime[19],stime21=stime[20],stime22=stime[21],c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=stime,
+        c2stime1=c2stime[0],c2stime2=c2stime2,c2stime3=c2stime3,
         c2stime4=c2stime4,c2stime5=c2stime5,c2stime6=c2stime6,c2stime7=c2stime7,c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,
         c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,
         c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,
