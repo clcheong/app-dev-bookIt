@@ -288,6 +288,27 @@ def IndexResident():
         FROM main.Court2
         """
         c2stime=[]
+        c2stime2=""
+        c2stime3=""
+        c2stime4=""
+        c2stime5=""
+        c2stime6=""
+        c2stime7=""
+        c2stime8=""
+        c2stime9=""
+        c2stime10=""
+        c2stime11=""
+        c2stime12=""
+        c2stime13=""
+        c2stime14=""
+        c2stime15=""
+        c2stime16=""
+        c2stime17=""
+        c2stime18=""
+        c2stime19=""
+        c2stime20=""
+        c2stime21=""
+        c2stime22=""
         query_job = client.query(query)
         for row in query_job:
             if row['Booking']==False:
