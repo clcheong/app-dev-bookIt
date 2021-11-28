@@ -734,6 +734,7 @@ def jsontest():
     status=""
     stime=""
     book_id=""
+    reservationlist=[]
     query_job = client.query(query)
     for row in query_job:
         cust=row['Customer_Name']
@@ -743,7 +744,8 @@ def jsontest():
             stime=row['Start_Time']
             book_ID=row['Book_ID']
             reservation ={'Court number':court , 'Resident Name':name , 'Reservation Status':status, 'Reservation Time':stime,'Booking ID':book_ID}
-    return jsonify(reservation)
+            reservationlist.append(reservation)
+    return jsonify(reservationlist)
 
 
 
