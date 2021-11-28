@@ -319,11 +319,31 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
-                  <p class="text-success">
-                    {{stime1}} {{stime2}} {{stime3}} {{stime4}} {{stime5}} {{stime6}} {{stime7}} {{stime8}} {{stime9}} {{stime10}} 
+                  <p class="text-success" id="court1">
+                    <!--{{stime1}} {{stime2}} {{stime3}} {{stime4}} {{stime5}} {{stime6}} {{stime7}} {{stime8}} {{stime9}} {{stime10}} 
                     {{stime11}} {{stime12}} {{stime13}} {{stime14}} {{stime15}} {{stime16}} {{stime17}} {{stime18}} {{stime19}} 
-                    {{stime20}} {{stime21}} {{stime22}}
-                  </p>               
+                    {{stime20}} {{stime21}} {{stime22}}-->
+                  </p>
+                  <script>
+                    fetch('stime.json')
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            appendData(data);
+                        })
+                        .catch(function (err) {
+                            console.log('error: ' + err);
+                        });
+                    function appendData(data) {
+                        var mainContainer = document.getElementById("court1");
+                        for (var i = 0; i < data.length; i++) {
+                            var div = document.createElement("div");
+                            div.innerHTML = 'Name: ' + data[i].firstName + ' ' + data[i].lastName;
+                            mainContainer.appendChild(div);
+                        }
+                    }
+                  </script>               
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>                  
 
