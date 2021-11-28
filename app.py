@@ -726,7 +726,7 @@ def jsontest():
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Reservation'
     query = """
-    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, ,Book_ID,
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time,Book_ID
     FROM main.Reservation
     """
     court=""
