@@ -714,7 +714,7 @@ def viewReservation():
 @app.route('/jsontest')
 def jsontest():
     flexibleusername= "smth"
-    Dictionary ={'username':flexibleusername , 'account':'Premium' , 'validity':'2709 days'}
+    Dictionary ={'username':flexibleusername , '\\naccount':'Premium' , 'validity':'2709 days'}
     return jsonify(Dictionary)
 
 
