@@ -340,9 +340,7 @@ def reservations():
     book_id=[]        
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
-    EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear,
-    EXTRACT (DAY FROM Reserve_Time) as day, EXTRACT(MONTH FROM Reserve_Time) as month,EXTRACT (YEAR FROM Reserve_Time) as year
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
@@ -354,7 +352,8 @@ def reservations():
             status.append(row['ApproveStatus'])
             stime.append(row['Start_Time'])
             book_id.append(row['Book_ID'])
-    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username)
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,court=court,status=status,
+    stime=stime,book_id=book_id)
 
 
 
