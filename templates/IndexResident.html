@@ -319,7 +319,7 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
-                  <p class="text-success" id="court1" value={{stime}}>
+                  <p class="text-success" name="court1" value={{stime}}>
                   </p>
                   <a href='jsontest'>Testing</a>
                   <script>
@@ -328,7 +328,7 @@
                     {
                       times += document.court1.value[i]+"<br>";
                     }
-                    document.getElementById(court1).innerHTML=times;
+                    document.getElementByName(court1).innerHTML=times;
 
                   </script>               
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
