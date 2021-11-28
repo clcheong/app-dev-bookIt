@@ -354,7 +354,7 @@ def history():
             status.append(row['ApproveStatus'])
             stime.append(row['Start_Time'])
             book_id.append(row['Book_ID'])
-    return render_template("IndexResident.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username)
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username)
 
 
 
