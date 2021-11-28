@@ -743,11 +743,11 @@ def jsontest():
             status=row['ApproveStatus']
             stime=row['Start_Time']
             book_ID=row['Book_ID']
-            reservation ={'Court number':court , 
+            reservation ={'<br>Court number':court , 
             'Resident Name':name , 
             'Reservation Status':status, 
             'Reservation Time':stime,
-            'Booking ID':"testing\\n"}
+            'Booking ID':book_ID}
             reservationlist.append(reservation)
     return json.dumps(reservationlist,None,indent=2)
 
