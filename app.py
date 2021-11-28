@@ -291,32 +291,13 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         
         
+        court=""
         cust=name
-        tcourt=""
-        tstatus=""
-        tstime=""
-        tetime=""
-        tbook_id=""
-        t2court=""
-        t2status=""
-        t2stime=""
-        t2etime=""
-        t2book_id=""
-        r1court=""
-        r1status=""
-        r1stime=""
-        r1etime=""
-        r1book_id=""
-        r2court=""
-        r2status=""
-        r2stime=""
-        r2etime=""
-        r2book_id=""
-        r3court=""
-        r3status=""
-        r3stime=""
-        r3etime=""
-        r3book_id=""
+        status=""
+        stime=""
+        book_id=""
+        reservationlist=[]
+        
         # View reservation of user
         query = """
         SELECT Court_ID, Customer_Name, ApproveStatus,EXTRACT(HOUR FROM CURRENT_TIME()) as now,EXTRACT(DAY FROM CURRENT_DATE) as today
@@ -326,47 +307,21 @@ def viewReservation():
         """
         query_job = client.query(query)
         for row in query_job:
+            cust=row['Customer_Name']
             if cust==name:
-                if row['date']==row['today']:
-                    tcourt=row['Court_ID']
-                    tstatus=row['ApproveStatus']
-                    tstime=row['Start_Time']
-                    tetime=row['End_Time']
-                    tbook_id=row['Book_ID']
+                court=row['Court_ID']
+                status=row['ApproveStatus']
+                stime=row['Start_Time']
+                book_ID=row['Book_ID']
+                reservationlist.append(court)
+                reservationlist.append(status)
+                reservationlist.append(cust)
+                reservationlist.append(stime)
+                reservationlist.append(book_ID)
+                   
 
-                if row['date']==row['today']:
-                    t2court=row['Court_ID']
-                    t2status=row['ApproveStatus']
-                    t2stime=row['Start_Time']
-                    t2etime=row['End_Time']
-                    t2book_id=row['Book_ID']
-
-                if row['daysdiff']==0:
-                    r1court=row['Court_ID']
-                    r1status=row['ApproveStatus']
-                    r1stime=row['Start_Time']
-                    r1etime=row['End_Time']
-                    r1book_id=row['Book_ID']
-
-                if row['daysdiff']==0:
-                    r2court=row['Court_ID']
-                    r2status=row['ApproveStatus']
-                    r2stime=row['Start_Time']
-                    r2etime=row['End_Time']
-                    r2book_id=row['Book_ID']
-
-                if row['daysdiff']>=0:
-                    r3court=row['Court_ID']
-                    r3status=row['ApproveStatus']
-                    r3stime=row['Start_Time']
-                    r3etime=row['End_Time']
-                    r3book_id=row['Book_ID']
-
-    return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-    cust=cust,tcourt=tcourt,tstatus=tstatus,tstime=tstime,tetime=tetime,tbook_id=tbook_id,t2court=t2court,t2status=t2status,t2stime=t2stime,
-    t2etime=t2etime,t2book_id=t2book_id,r1court=r1court,r1status=r1status,r1stime=r1stime,r1etime=r1etime,r1book_id=r1book_id,
-    r2court=r2court,r2status=r2status,r2stime=r2stime,r2etime=r2etime,r2book_id=r2book_id,r3court=r3court,r3status=r3status,
-    r3stime=r3stime,r3etime=r3etime,r3book_id=r3book_id,)
+        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+        cust=cust)
             
 
 @app.route('/jsontest')
@@ -400,8 +355,9 @@ def jsontest():
             status=row['ApproveStatus']
             stime=row['Start_Time']
             book_ID=row['Book_ID']
-            reservationlist.append("Court Number: "+court)
+            reservationlist.append(court)
             reservationlist.append(status)
+            reservationlist.append(cust)
             reservationlist.append(stime)
             reservationlist.append(book_ID)
     return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username)
