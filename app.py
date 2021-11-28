@@ -11,8 +11,6 @@ from bigquery import GetUserName
 from flask import * #Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_sqlalchemy import SQLAlchemy
-from flask import Flask,jsonify
-import json
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -194,7 +192,7 @@ def logout():
     session.pop('Usertype',None)
     return redirect('/login')
 
-@app.route('/IndexResident',methods=['GET'])
+@app.route('/IndexResident')
 def IndexResident():
     
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
@@ -211,77 +209,99 @@ def IndexResident():
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court1
         """
-        stime = []
+        stime1=""
+        stime2=""
+        stime3=""
+        stime4=""
+        stime5=""
+        stime6=""
+        stime7=""
+        stime8=""
+        stime9=""
+        stime10=""
+        stime11=""
+        stime12=""
+        stime13=""
+        stime14=""
+        stime15=""
+        stime16=""
+        stime17=""
+        stime18=""
+        stime19=""
+        stime20=""
+        stime21=""
+        stime22=""
         query_job = client.query(query)
         for row in query_job:
             if row['Booking']==False:
                 if row['hour']==1:
-                    stime.append(row['Start_Time'])                    
+                    stime1=row['Start_Time']
+                    
                 if row['hour']==2:
-                    stime.append(row['Start_Time']) 
+                    stime2=row['Start_Time']
 
                 if row['hour']==3:
-                    stime.append(row['Start_Time']) 
+                    stime3=row['Start_Time']
 
                 if row['hour']==4:
-                    stime.append(row['Start_Time']) 
+                    stime4=row['Start_Time']
 
                 if row['hour']==5:
-                    stime.append(row['Start_Time']) 
+                    stime5=row['Start_Time']
 
                 if row['hour']==6:
-                    stime.append(row['Start_Time']) 
+                    stime6=row['Start_Time']
 
                 if row['hour']==7:
-                    stime.append(row['Start_Time']) 
+                    stime7=row['Start_Time']
 
                 if row['hour']==8:
-                    stime.append(row['Start_Time']) 
+                    stime8=row['Start_Time']
 
                 if row['hour']==9:
-                    stime.append(row['Start_Time']) 
+                    stime9=row['Start_Time']
 
                 if row['hour']==10:
-                    stime.append(row['Start_Time']) 
+                    stime10=row['Start_Time']
 
                 if row['hour']==11:
-                    stime.append(row['Start_Time']) 
+                    stime11=row['Start_Time']
 
                 if row['hour']==12:
-                    stime.append(json.loads(row['Start_Time']))
+                    stime12=row['Start_Time']
         
                 if row['hour']==13:
-                    stime.append(row['Start_Time']) 
+                    stime13=row['Start_Time']
 
                 if row['hour']==14:
-                    stime.append(row['Start_Time']) 
+                    stime14=row['Start_Time']
 
                 if row['hour']==15:
-                    stime.append(row['Start_Time'])             
+                    stime15=row['Start_Time']            
             
                 if row['hour']==16:
-                    stime.append(row['Start_Time']) 
+                    stime16=row['Start_Time']
 
                 if row['hour']==17:
-                    stime.append(row['Start_Time']) 
+                    stime17=row['Start_Time']
                     
                 if row['hour']==18:
-                    stime.append(row['Start_Time']) 
+                    stime18=row['Start_Time']
                     
                 if row['hour']==19:
-                    stime.append(row['Start_Time']) 
+                    stime19=row['Start_Time']
                     
                 if row['hour']==20:
-                    stime.append(row['Start_Time']) 
+                    stime20=row['Start_Time']
                 
                 if row['hour']==21:
-                    stime.append(row['Start_Time']) 
+                    stime21=row['Start_Time']
 
                 if row['hour']==22:
-                    stime.append(row['Start_Time']) 
+                    stime22=row['Start_Time']
             else:
                 pass
-        jsonStime=json.dumps(stime)                      
+                              
         query = """
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court2
@@ -572,7 +592,10 @@ def IndexResident():
             else:
                 pass
 
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=jsonify(jsonStime),c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime1=stime1,
+        stime2=stime2,stime3=stime3,stime4=stime4,stime5=stime5,stime6=stime6,stime7=stime7,stime8=stime8,stime9=stime9,stime10=stime10,
+        stime11=stime11,stime12=stime12,stime13=stime13,stime14=stime14,stime15=stime15,stime16=stime16,stime17=stime17,stime18=stime18,
+        stime19=stime19,stime20=stime20,stime21=stime21,stime22=stime22,c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
         c2stime4=c2stime4,c2stime5=c2stime5,c2stime6=c2stime6,c2stime7=c2stime7,c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,
         c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,
         c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,
