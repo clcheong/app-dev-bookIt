@@ -747,7 +747,7 @@ def jsontest():
             reservationlist.append(status)
             reservationlist.append(stime)
             reservationlist.append(book_ID)
-    return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username,r4=reservationlist[2])
+    return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username)
 
 
 
