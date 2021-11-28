@@ -749,7 +749,7 @@ def jsontest():
             'Reservation Time':stime,
             'Booking ID':book_ID}
             reservationlist.append(reservation)
-    return render_template("IndexReservation.html",json.dumps(reservationlist))
+    return render_template("IndexReservation.html",rlist=json.dumps(reservationlist))
 
 
 
