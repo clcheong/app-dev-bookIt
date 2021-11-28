@@ -319,14 +319,15 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
-                  <p class="text-success" name="court1" value={{stime}}>
+                  <p class="text-success" id="court1">
+                    {{stime}}
                   </p>
                   <a href='jsontest'>Testing</a>
                   <script>
                     let times=""
                     for (let i=0;i<22;i++)
                     {
-                      times += document.court1.value[i]+"<br>";
+                      times += "{{stime[i]}}"+"<br>";
                     }
                     document.getElementByName(court1).innerHTML=times;
 
