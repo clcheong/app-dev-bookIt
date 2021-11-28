@@ -743,7 +743,7 @@ def jsontest():
             status=row['ApproveStatus']
             stime=row['Start_Time']
             book_ID=row['Book_ID']
-            reservationlist.append(court)
+            reservationlist.append("Court Number: "+court)
             reservationlist.append(status)
             reservationlist.append(stime)
             reservationlist.append(book_ID)
