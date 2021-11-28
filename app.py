@@ -733,16 +733,15 @@ def jsontest():
     cust=name
     status=""
     stime=""
-    ID=""
+    book_id=""
     query_job = client.query(query)
     for row in query_job:
         if cust==name:
             court=row['Court_ID']
             status=row['ApproveStatus']
             stime=row['Start_Time']
-            ID=row['Book_ID']
-            reservation ={'Court number':court , 'Resident Name':name , 'Reservation Status':status, 'Reservation Time':stime,
-            'Booking ID':ID}
+            book_ID=row['Book_ID']
+            reservation ={'Court number':court , 'Resident Name':name , 'Reservation Status':status, 'Reservation Time':stime,'Booking ID':book_ID}
     return jsonify(reservation)
 
 
