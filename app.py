@@ -280,7 +280,7 @@ def IndexResident():
                     stime.append(row['Start_Time']) 
             else:
                 pass
-                              
+        jsonStime=json.dumps(stime)                      
         query = """
         SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
         FROM main.Court2
@@ -571,7 +571,7 @@ def IndexResident():
             else:
                 pass
 
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=json.dumps(stime),c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=jsonify(jsonStime),c2stime1=c2stime1,c2stime2=c2stime2,c2stime3=c2stime3,
         c2stime4=c2stime4,c2stime5=c2stime5,c2stime6=c2stime6,c2stime7=c2stime7,c2stime8=c2stime8,c2stime9=c2stime9,c2stime10=c2stime10,
         c2stime11=c2stime11,c2stime12=c2stime12,c2stime13=c2stime13,c2stime14=c2stime14,c2stime15=c2stime15,c2stime16=c2stime16,
         c2stime17=c2stime17,c2stime18=c2stime18,c2stime19=c2stime19,c2stime20=c2stime20,c2stime21=c2stime21,c2stime22=c2stime22,
