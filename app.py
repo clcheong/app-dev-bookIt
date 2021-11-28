@@ -213,8 +213,6 @@ def IndexResident():
         stime = []
         query_job = client.query(query)
         for row in query_job:
-            stimeJson= stime.to_json()
-            stimeData= json.loads(stimeJson)
             if row['Booking']==False:
                 if row['hour']==1:
                     stime.append(row['Start_Time'])                    
