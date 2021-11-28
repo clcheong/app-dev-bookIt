@@ -743,12 +743,7 @@ def jsontest():
             status=row['ApproveStatus']
             stime=row['Start_Time']
             book_ID=row['Book_ID']
-            reservation ={'<br>Court number':court , 
-            'Resident Name':name , 
-            'Reservation Status':status, 
-            'Reservation Time':stime,
-            'Booking ID':book_ID}
-            reservationlist.append(reservation)
+            reservationlist.append(court,status,stime,book_ID)
     return render_template("IndexResident.html",rlist=reservationlist,blockNum=blockNum,unitNum=unitNum,username=username,)
 
 
