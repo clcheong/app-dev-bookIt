@@ -11,7 +11,8 @@ from bigquery import GetUserName
 from flask import * #Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_sqlalchemy import SQLAlchemy
-from flask import Flask,jsonify,json
+from flask import Flask,jsonify
+import json
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -247,7 +248,7 @@ def IndexResident():
                     stime.append(row['Start_Time']) 
 
                 if row['hour']==12:
-                    stime.append(row['Start_Time']) 
+                    stime.append(json.loads(row['Start_Time']))
         
                 if row['hour']==13:
                     stime.append(row['Start_Time']) 
