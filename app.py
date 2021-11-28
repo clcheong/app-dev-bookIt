@@ -320,8 +320,8 @@ def viewReservation():
         cust=cust)
             
 
-@app.route('/history')
-def history():
+@app.route('/reservations')
+def reservations():
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
         return redirect('/login')
     
@@ -341,7 +341,7 @@ def history():
     # View reservation history of user
     query = """
     SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
-    EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear
+    EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear,
     EXTRACT (DAY FROM Reserve_Time) as day, EXTRACT(MONTH FROM Reserve_Time) as month,EXTRACT (YEAR FROM Reserve_Time) as year
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
