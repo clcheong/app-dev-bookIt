@@ -215,69 +215,69 @@ def IndexResident():
         for row in query_job:
             if row['Booking']==False:
                 if row['hour']==1:
-                    stime.append(row['Start Time'])                    
+                    stime.append(row['Start_Time'])                    
                 if row['hour']==2:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==3:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==4:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==5:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==6:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==7:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==8:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==9:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==10:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==11:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==12:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
         
                 if row['hour']==13:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==14:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==15:
-                    stime.append(row['Start Time'])             
+                    stime.append(row['Start_Time'])             
             
                 if row['hour']==16:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==17:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
                     
                 if row['hour']==18:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
                     
                 if row['hour']==19:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
                     
                 if row['hour']==20:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
                 
                 if row['hour']==21:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
 
                 if row['hour']==22:
-                    stime.append(row['Start Time']) 
+                    stime.append(row['Start_Time']) 
             else:
                 pass
                               
