@@ -736,6 +736,7 @@ def jsontest():
     book_id=""
     query_job = client.query(query)
     for row in query_job:
+        cust=row['Customer_Name']
         if cust==name:
             court=row['Court_ID']
             status=row['ApproveStatus']
