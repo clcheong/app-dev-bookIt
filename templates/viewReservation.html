@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>BookIt! Resident Dashboard</title>
+  <title>BookIt! View Reservation</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -25,7 +25,6 @@
   <link href="{{url_for('static',filename='vendor/quill/quill.snow.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
-
 
   <!-- Template Main CSS File -->
   <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
@@ -76,7 +75,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 2 new notifications
+              You have 4 new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
@@ -102,6 +101,32 @@
                 <h4>Atque rerum nesciunt</h4>
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
               </div>
             </li>
 
@@ -297,141 +322,38 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Reservation History</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/index">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item active">Reservations made</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
       <div class="row">
+
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-            <p>Available time is shown below in 1 hour period ( Eg.17:00:00 to 18:00:00 is available)</p>
 
-            <!-- Court 1 Card -->
-            <div class="col-10">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 1</h5>
-                  <p class="text-success" id="court1">
-                    {{stime[0]}} {{stime[1]}} {{stime[2]}} {{stime[3]}} {{stime[4]}} {{stime[5]}} {{stime[6]}} {{stime[7]}} {{stime[8]}}
-                    {{stime[9]}} {{stime[10]}} {{stime[11]}} {{stime[12]}} {{stime[13]}} {{stime[14]}} {{stime[15]}} {{stime[16]}} {{stime[17]}}
-                    {{stime[18]}} {{stime[19]}} {{stime[20]}} {{stime[21]}}
-                  </p>
-                              
-                  <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>                  
-
-                </div>
-
-              </div>
-            </div><!-- End Court 1 Card -->
-
-            <!-- Court 2 Card -->
-            <div class="col-10">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 2 </h5>
-                  <p class="text-success">
-                    {{c2stime[0]}} {{c2stime[1]}} {{c2stime[2]}} {{c2stime[3]}} {{c2stime[4]}} {{c2stime[5]}} {{c2stime[6]}} {{c2stime[7]}} 
-                    {{c2stime[8]}} {{c2stime[9]}} {{c2stime[10]}} {{c2stime[11]}} {{c2stime[12]}} {{c2stime[13]}} {{c2stime[14]}} {{c2stime[15]}} 
-                    {{c2stime[16]}} {{c2stime[17]}} {{c2stime[18]}} {{c2stime[19]}} {{c2stime[20]}} {{c2stime[21]}} {{c2stime[22]}} 
-                  </p>
-                  <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
-                </div>
-
-              </div>
-            </div><!-- End Court 2 Card -->
-
-            <!-- Court 3 Card -->
-            <div class="col-10">
-
-              <div class="card info-card customers-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Court 3</h5>
-                  <p class="text-success">
-                    {{c3stime[0]}} {{c3stime[1]}} {{c3stime[2]}} {{c3stime[3]}} {{c3stime[4]}} {{c3stime[5]}} {{c3stime[6]}} {{c3stime[7]}} 
-                    {{c3stime[8]}} {{c3stime[9]}} {{c3stime[10]}} {{c3stime[11]}} {{c3stime[12]}} {{c3stime[13]}} {{c3stime[14]}} {{c3stime[15]}} 
-                    {{c3stime[16]}} {{c3stime[17]}} {{c3stime[18]}} {{c3stime[19]}} {{c3stime[20]}} {{c3stime[21]}}  
-                  </p>
-                  <img src="{{url_for('static',filename='img/testing3.png')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
-
-                </div>
-              </div>
-
-            </div><!-- End Court 3 Card -->
-
-            <!-- Court 4 Card -->
+            <!-- Today's Reservation -->
             <div class="col-10">
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Court 4</h5>
-                  <p class="text-success">
-                    {{c4stime[0]}} {{c4stime[1]}} {{c4stime[2]}} {{c4stime[3]}} {{c4stime[4]}} {{c4stime[5]}} {{c4stime[6]}} {{c4stime[7]}} 
-                    {{c4stime[8]}} {{c4stime[9]}} {{c4stime[10]}} {{c4stime[11]}} {{c4stime[12]}} {{c4stime[13]}} {{c4stime[14]}} {{c4stime[15]}} 
-                    {{c4stime[16]}} {{c4stime[17]}} {{c4stime[18]}} {{c4stime[19]}} {{c4stime[20]}} {{c4stime[21]}} 
-                  </p>                  
-                  <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=400 height=auto>
-                  <button class="btn btn-primary w-25" type="submit">Book Now!</button>
+                  <h5 class="card-title">Today's Reservation</h5>
+                  
+                  <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
                 </div>
-
+                
               </div>
-            </div><!-- End Court 4 -->
+            </div><!-- End Today's Reservation's -->
 
           </div>
         </div><!-- End Left side columns -->
 
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-          <!-- How to BookIt! -->
-          <div class="card">
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">How to BookIt!</h5>
-
-              <div class="news">
-                <div class="post-item clearfix">
-                  <img src="{{url_for('static',filename='img/s1.png')}}" alt="">
-                  <p>Select court and press the button</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="{{url_for('static',filename='img/s2.png')}}" alt="">
-                  <p>Select time and date of your reservation</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="{{url_for('static',filename='img/s3.png')}}" alt="">
-                  <p>Submit reservation request</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="{{url_for('static',filename='img/s4.png')}}" alt="">
-                  <p>Check your reservation history for reservation status</p>
-                </div>
-
-                <div class="post-item clearfix">
-                  <img src="{{url_for('static',filename='img/s5.png')}}" alt="">
-                  <p>Enjoy your exercise when the time is right</p>
-                </div>
-
-              </div><!-- End sidebar recent posts-->
-            </div>
-          </div><!-- End News & Updates -->
-
-        </div><!-- End Right side columns -->
 
       </div>
     </section>

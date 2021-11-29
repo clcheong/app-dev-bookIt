@@ -3,6 +3,9 @@
 
 # Library from Flask
 
+from datetime import datetime
+from logging import StringTemplateStyle
+from os import name
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
@@ -201,7 +204,66 @@ def IndexResident():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']
         username = session['username']
-        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum)
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Court1'
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        FROM main.Court1
+        ORDER BY Start_Time
+        """
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False:
+                stime.append(row['Start_Time'])
+                    
+            else:
+                pass
+                              
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        FROM main.Court2
+        ORDER BY Start_Time
+        """
+        c2stime=[]
+        
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False:
+                c2stime.append(row['Start_Time'])
+                    
+
+            else:
+                pass
+
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        FROM main.Court3
+        ORDER BY Start_Time
+        """
+        c3stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False:
+                c3stime.append(row['Start_Time'])
+                    
+            else:
+                pass
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        FROM main.Court4
+        ORDER BY Start_Time
+        """
+        c4stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False: 
+                c4stime.append(row['Start_Time'])
+            else:
+                pass
+
+        return render_template("indexResident.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=stime,
+        c2stime=c2stime,c3stime=c3stime,c4stime=c4stime)
 
 @app.route('/IndexAdmin')
 def IndexAdmin():
@@ -213,6 +275,88 @@ def IndexAdmin():
         name = session['name']
         username = session['username']
         return render_template('IndexAdmin.html',name=name, username=username)
+
+@app.route('/viewReservation')
+def viewReservation():
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Reservation'
+        rlist=[]
+        cust=name
+
+        
+        # View today reservation of user
+        query = """
+        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+        EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
+        FROM main.Reservation
+        ORDER BY Reserve_Time DESC
+        WHERE date=today
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            cust=row['Customer_Name']
+            if cust==name:
+                rlist.append("<br>Court Number: "+row['Court_ID'])
+                rlist.append("Reservation Date: "+row['rDate'])
+                rlist.append("Reservation Time: ")
+                rlist.append(row['Start_Time'])
+                rlist.append("Booking ID: "+row['Book_ID'])
+                rlist.append("Booking Status: ")
+                rlist.append(row['ApproveStatus'])
+
+                   
+
+        return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+        cust=cust)
+            
+
+@app.route('/reservations')
+def reservations():
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+
+    client =bigquery.Client()
+    cust_table_id='bookit-court-booking-system.main.Reservation'
+    rlist=[]
+    cust=name
+           
+    # View reservation history of user
+    query = """
+    SELECT Court_ID, Customer_Name,Start_Time,ApproveStatus, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate
+    FROM main.Reservation
+    ORDER BY Reserve_Time DESC
+    """
+    query_job = client.query(query)
+    for row in query_job:
+        cust=row['Customer_Name']
+        if cust==name:
+            rlist.append("<br>Court Number: "+row['Court_ID'])
+            rlist.append("Reservation Date: "+row['rDate'])
+            rlist.append("Reservation Time: ")
+            rlist.append(row['Start_Time'])
+            rlist.append("Booking ID: "+row['Book_ID'])
+            rlist.append("Booking Status: ")
+            rlist.append(row['ApproveStatus'])
+
+            
+
+    return json.dumps(rlist)
+
 
 
 @app.route('/managereservation1', methods=['GET', 'POST'])
