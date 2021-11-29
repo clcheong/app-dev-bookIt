@@ -352,7 +352,7 @@ def reservations():
             rlist.append(row['Start_Time'])
             rlist.append(row['Book_ID'])
 
-    return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=rlist)
 
 
