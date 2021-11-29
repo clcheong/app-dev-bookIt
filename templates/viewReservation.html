@@ -343,12 +343,11 @@
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title" >Today's Reservation</h5>
+                  <h5 class="card-title" onload="createDiv()">Today's Reservation</h5>
                   <div id="res">
 
                   </div>
                   <script>
-                    document.body.onload=createDiv;
                     function createDiv()
                     {
                       const newDiv = document.createElement("div");
