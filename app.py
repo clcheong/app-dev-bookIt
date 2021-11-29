@@ -346,11 +346,11 @@ def reservations():
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            rlist.append("<br>"+row['Court_ID'])
-            rlist.append(row['ApproveStatus'])
-            rlist.append(row['rDate'])
-            rlist.append(row['Start_Time'])
-            rlist.append(row['Book_ID'])
+            rlist.append("Court Number: "+row['Court_ID'])
+            rlist.append("Reservation Status: " +row['ApproveStatus'])
+            rlist.append("Reservation Date: "+row['rDate'])
+            rlist.append("Reservation Time: "+row['Start_Time'])
+            rlist.append("Booking ID: "+row['Book_ID'])
 
     return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=json.dumps(rlist))
