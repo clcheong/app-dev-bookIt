@@ -319,12 +319,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
+                  {% for stime in stime %}
                   <p class="text-success" id="court1">
-                    {{stime[0]}} {{stime[1]}} {{stime[2]}} {{stime[3]}} {{stime[4]}} {{stime[5]}} {{stime[6]}} {{stime[7]}} {{stime[8]}}
-                    {{stime[9]}} {{stime[10]}} {{stime[11]}} {{stime[12]}} {{stime[13]}} {{stime[14]}} {{stime[15]}} {{stime[16]}} {{stime[17]}}
-                    {{stime[18]}} {{stime[19]}} {{stime[20]}} {{stime[21]}}
+                    {{stime}}
                   </p>
-                              
+                  {% endfor %}          
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>                  
 

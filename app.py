@@ -402,7 +402,6 @@ def viewReservation():
                     rlist.append(row['Book_ID'])
                     rlist.append("Booking Status: ")
                     rlist.append(row['ApproveStatus'])
-                    rlist.append("\n")
                     count+=1
 
                    
