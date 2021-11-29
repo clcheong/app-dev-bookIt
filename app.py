@@ -333,11 +333,9 @@ def reservations():
 
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Reservation'
-    court=[]
+    rlist=[]
     cust=name
-    status=[]
-    stime=[]
-    book_id=[]        
+           
     # View reservation history of user
     query = """
     SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID
@@ -348,12 +346,11 @@ def reservations():
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            court.append(row['Court_ID'])
-            status.append(row['ApproveStatus'])
-            stime.append(row['Start_Time'])
-            book_id.append(row['Book_ID'])
-    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,court=court,status=status,
-    stime=stime,book_id=book_id)
+            rlist.append(row['Court_ID'])
+            rlist.append(row['ApproveStatus'])
+            rlist.append(row['Start_Time'])
+            rlist.append(row['Book_ID'])
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,rlist=json.dumps(rlist))
 
 
 
