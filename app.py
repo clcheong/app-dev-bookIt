@@ -53,6 +53,25 @@ from json import dumps
 ||        App Route                                                                             ||
 ==================================================================================================
 """
+ # branchCount = getBranchCount()
+    # staffCount = getStaffCount()
+    # day = getCurrentDay()
+    # month = getCurrentMonth()
+    # year = getCurrentYear()
+    # currTotalCF = round(getTotalCFcurrMonth() * 0.001,3)
+    # avgCurrTotalCF = round(currTotalCF/branchCount,3)
+    # culTotalCFcurrMonth = round(getCulmulativeCFcurrMonth()*0.001,3)
+    # avgCulTotal = round(culTotalCFcurrMonth/branchCount,3)
+    # currMonthCFperCapita = round(currTotalCF/staffCount,3)
+    # safePerCapita = round(4/12,3)
+    # totSafe = round(staffCount*safePerCapita/branchCount,3)
+    
+    # kgRecycled = round(getTotalRecycledKG(),3)
+    # treesPlanted = round(getTotalTreesPlanted(),3)
+    # energySaved = round(getTotalEnergySaved(),3)
+    #username = GetUserName()
+
+
 @app.route('/')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -99,32 +118,13 @@ def login():
             elif usertype=="USER":
                 return redirect("/IndexResident")
         else:
-            #messagebox.showinfo("Fail log in","Fail to log in")
-            
             return redirect('/login')
 
 
         
 @app.route('/index')
 def index():
-    # branchCount = getBranchCount()
-    # staffCount = getStaffCount()
-    # day = getCurrentDay()
-    # month = getCurrentMonth()
-    # year = getCurrentYear()
-    # currTotalCF = round(getTotalCFcurrMonth() * 0.001,3)
-    # avgCurrTotalCF = round(currTotalCF/branchCount,3)
-    # culTotalCFcurrMonth = round(getCulmulativeCFcurrMonth()*0.001,3)
-    # avgCulTotal = round(culTotalCFcurrMonth/branchCount,3)
-    # currMonthCFperCapita = round(currTotalCF/staffCount,3)
-    # safePerCapita = round(4/12,3)
-    # totSafe = round(staffCount*safePerCapita/branchCount,3)
-    
-    # kgRecycled = round(getTotalRecycledKG(),3)
-    # treesPlanted = round(getTotalTreesPlanted(),3)
-    # energySaved = round(getTotalEnergySaved(),3)
-    #username = GetUserName()
-    return render_template('index.html')#,energySaved=energySaved,treesPlanted=treesPlanted,kgRecycled=kgRecycled,branchCountHTML=branchCount,totSafe=totSafe,staffCount=staffCount,currMonth=month,currYear=year, totalCF=currTotalCF, avgCF=avgCurrTotalCF, culTotal=culTotalCFcurrMonth, avgCulTotal=avgCulTotal,currMonthCFperCapita=currMonthCFperCapita,safe=safePerCapita,currDay=day)
+    return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -147,10 +147,7 @@ def register():
 
          
         if password == retype:
-            
-
             # Check student exist or not
-            
             exist=False
             query = """
             SELECT username as L
