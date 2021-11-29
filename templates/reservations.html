@@ -349,6 +349,11 @@
                   {% for rlist in rlist %}
                       <p>
                         {{rlist}}
+                        {% for bid in bid%}
+                          {% if rlist == bid %}
+                          <hr style="height: 3px;">
+                          {% endif %}
+                        {% endfor %}
                       </p>
                   {% endfor %}
                   </div>
