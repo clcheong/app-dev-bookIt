@@ -347,10 +347,9 @@
                   <script>
                     const rlist= new Array('{{rlist}}');
                     var count=rlist.length;
-                    var max=5;
-                    for (var i=0;i<max;i++)
+                    for (var i=0;i<count;i++)
                     {
-                      document.getElementById("history").innerHTML=rlist[i]+"<br />";
+                      document.getElementById("history").innerHTML=rlist[i]+"<br />"+count;
                     }                      
                     
 
