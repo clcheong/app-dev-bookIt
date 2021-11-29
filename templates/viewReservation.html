@@ -396,12 +396,13 @@
 <script>
   function createDiv()
   {
+    const rlist=new Array().join(',','{{rlist}}');
     var count=0;
     do
     {
       var div= document.createElement("div");
       var para=document.createElement("p");
-      para.innerHTML='{{rlist[count]}}';
+      para.innerHTML=rlist;
       document.getElementById("res").appendChild(div);
       document.getElementById("res").appendChild(para);
     }while (count<'{{count}}')
