@@ -291,32 +291,32 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         rlist=[]
         cust=name
+        count=0
 
         
         # View today reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
-        WHERE date=today
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
             if cust==name:
-                rlist.append("<br>Court Number: "+row['Court_ID'])
-                rlist.append("Reservation Date: "+row['rDate'])
-                rlist.append("Reservation Time: ")
-                rlist.append(row['Start_Time'])
-                rlist.append("Booking ID: "+row['Book_ID'])
-                rlist.append("Booking Status: ")
-                rlist.append(row['ApproveStatus'])
+                if row['date']==row['today']:
+                    rlist.append(row['Court_ID'])
+                    rlist.append(row['rDate'])
+                    rlist.append(row['Start_Time'])
+                    rlist.append(row['Book_ID'])
+                    rlist.append(row['ApproveStatus'])
+                    count+=1
 
                    
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust)
+        cust=cust,rlist=rlist,count=count)
             
 
 @app.route('/reservations')
