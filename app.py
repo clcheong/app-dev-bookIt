@@ -376,7 +376,6 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         rlist=[]
         cust=name
-        count=0
 
         
         # View today reservation of user
@@ -399,12 +398,11 @@ def viewReservation():
                     rlist.append("Booking ID: "+row['Book_ID'])
                     rlist.append("Booking Status: ")
                     rlist.append(row['ApproveStatus'])
-                    count+=1
 
                    
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust,rlist=rlist,count=count)
+        cust=cust,rlist=rlist)
             
 
 @app.route('/reservations')
@@ -421,11 +419,11 @@ def reservations():
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Reservation'
     rlist=[]
-    cust=name
-           
+    cust=name           
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name,Start_Time,ApproveStatus, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate
+    SELECT Court_ID, Customer_Name,Start_Time,ApproveStatus, End_Time,Book_ID,
+    FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
@@ -433,7 +431,7 @@ def reservations():
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            rlist.append("<br>Court Number: "+row['Court_ID'])
+            rlist.append("Court Number: "+row['Court_ID'])
             rlist.append("Reservation Date: "+row['rDate'])
             rlist.append("Reservation Time: ")
             rlist.append(row['Start_Time'])
@@ -443,7 +441,8 @@ def reservations():
 
             
 
-    return json.dumps(rlist)
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+        cust=cust,rlist=rlist)
 
 
 
