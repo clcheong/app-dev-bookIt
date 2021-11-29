@@ -338,7 +338,7 @@ def reservations():
            
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,DATE(Reserve_Time) as rDate
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMp("%b-%d-%Y",Reserve_Time) as rDate
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
