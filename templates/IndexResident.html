@@ -320,7 +320,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Court 1</h5>
                   {% for stime in stime %}
-                  <p class="text-success" id="court1">
+                  <p class="text-success">
                     {{stime}}
                   </p>
                   {% endfor %}          
@@ -338,11 +338,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 2 </h5>
+                  {% for c2stime in c2stime %}
                   <p class="text-success">
-                    {{c2stime[0]}} {{c2stime[1]}} {{c2stime[2]}} {{c2stime[3]}} {{c2stime[4]}} {{c2stime[5]}} {{c2stime[6]}} {{c2stime[7]}} 
-                    {{c2stime[8]}} {{c2stime[9]}} {{c2stime[10]}} {{c2stime[11]}} {{c2stime[12]}} {{c2stime[13]}} {{c2stime[14]}} {{c2stime[15]}} 
-                    {{c2stime[16]}} {{c2stime[17]}} {{c2stime[18]}} {{c2stime[19]}} {{c2stime[20]}} {{c2stime[21]}} {{c2stime[22]}} 
+                    {{c2stime}}
                   </p>
+                  {% endfor %}
                   <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>
                 </div>
@@ -357,11 +357,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 3</h5>
+                  {% for c3stime in c3stime %}
                   <p class="text-success">
-                    {{c3stime[0]}} {{c3stime[1]}} {{c3stime[2]}} {{c3stime[3]}} {{c3stime[4]}} {{c3stime[5]}} {{c3stime[6]}} {{c3stime[7]}} 
-                    {{c3stime[8]}} {{c3stime[9]}} {{c3stime[10]}} {{c3stime[11]}} {{c3stime[12]}} {{c3stime[13]}} {{c3stime[14]}} {{c3stime[15]}} 
-                    {{c3stime[16]}} {{c3stime[17]}} {{c3stime[18]}} {{c3stime[19]}} {{c3stime[20]}} {{c3stime[21]}}  
+                    {{c3stime}}
                   </p>
+                  {% endfor %}
                   <img src="{{url_for('static',filename='img/testing3.png')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>
 
@@ -376,11 +376,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Court 4</h5>
+                  {% for c4stime in c4stime %}
                   <p class="text-success">
-                    {{c4stime[0]}} {{c4stime[1]}} {{c4stime[2]}} {{c4stime[3]}} {{c4stime[4]}} {{c4stime[5]}} {{c4stime[6]}} {{c4stime[7]}} 
-                    {{c4stime[8]}} {{c4stime[9]}} {{c4stime[10]}} {{c4stime[11]}} {{c4stime[12]}} {{c4stime[13]}} {{c4stime[14]}} {{c4stime[15]}} 
-                    {{c4stime[16]}} {{c4stime[17]}} {{c4stime[18]}} {{c4stime[19]}} {{c4stime[20]}} {{c4stime[21]}} 
-                  </p>                  
+                    {{c4stime}}
+                  </p>
+                  {% endfor %}               
                   <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=400 height=auto>
                   <button class="btn btn-primary w-25" type="submit">Book Now!</button>
                 </div>
