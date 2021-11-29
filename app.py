@@ -392,10 +392,10 @@ def viewReservation():
             if cust==name:
                 if row['date']==row['today']:
                     rlist.append("Court Number: "+row['Court_ID'])
-                    rlist.append("Reservation Date: "+row['rDate']+"<br>")
-                    rlist.append(row['Start_Time'])
+                    rlist.append("Reservation Date: "+row['rDate'])
+                    rlist.append("Reservation Time: "+row['Start_Time'])
                     rlist.append("Booking ID: "+row['Book_ID'])
-                    rlist.append(row['ApproveStatus'])
+                    rlist.append("Booking Status: "+row['ApproveStatus'])
                     count+=1
 
                    
