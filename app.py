@@ -396,7 +396,8 @@ def viewReservation():
                     rlist.append("Reservation Date: "+row['rDate'])
                     rlist.append("Reservation Time: ")
                     rlist.append(row['Start_Time'])
-                    rlist.append("Booking ID: "+row['Book_ID'])
+                    rlist.append("Booking ID: ")
+                    rlist.append(row['Book_ID'])
                     rlist.append("Booking Status: ")
                     rlist.append(row['ApproveStatus'])
                     bid=row['Book_ID']
