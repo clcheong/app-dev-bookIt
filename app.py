@@ -381,7 +381,7 @@ def viewReservation():
         status=[]
         cust=name
         count=[]
-        
+        i=0
         # View today reservation of user
         query = """
         SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
@@ -399,7 +399,8 @@ def viewReservation():
                     stime.append(row['Start_Time'])
                     bookid.append(row['Book_ID'])
                     status.append(row['ApproveStatus'])
-                    count.append(row['row'])                   
+                    count.append(i)
+                    i+=1                   
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,court=court,rdate=rdate,stime=stime,bookid=bookid,status=status,count=count)
