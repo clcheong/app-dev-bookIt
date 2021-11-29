@@ -85,6 +85,7 @@
                       <label for="otp" class="form-label">OTP Code</label>
                       <input type="text" name="enteredOTP" class="form-control" id="enteredOTP" required>
                       <input type="hidden" name="trueOTP" class="form-control" id="trueOTP" value="{{trueOTP}}">
+                      <input type="hidden" name="email" class="form-control" id="email" value="{{email}}">
                       <div class="invalid-feedback">Please enter your OTP Code!</div>
                     </div>
 
@@ -98,12 +99,12 @@
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Next</button>
                     </div>
-                    <div class="col-12">
+                    <!--<div class="col-12">
                       <p class="small mb-0">Remembered your password? <a href="/login">Login</a></p>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Don't have account? <a href="/register">Create an account</a></p>
-                    </div>
+                    </div>-->
                   </form>
 
                 </div>

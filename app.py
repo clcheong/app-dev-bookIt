@@ -147,21 +147,42 @@ def sendOTP():
     server.login(myEmail,password)
     server.sendmail(myEmail,email,message)
 
-    return render_template('otp.html',trueOTP = otp)
+    return render_template('otp.html',trueOTP = otp, email=email)
 
 @app.route('/verifyOTP', methods=['GET','POST'])
 def verifyOTP():
     trueOTP = request.form['trueOTP']
     enteredOTP = request.form['enteredOTP']
+    email = request.form['email']
     
     if enteredOTP == trueOTP:
-        return redirect('/resetPassword') 
+        return render_template('resetPassword.html',email=email)
     else:
         return redirect('/forgetPassword')
 
-@app.route('/resetPassword')
+@app.route('/resetPassword', methods=['GET','POST'])
 def resetPassword():
-    return render_template('pages-error-404.html')
+    newPW = request.form['newPW']
+    renewPW = request.form['renewPW']
+    email = request.form['email']
+    
+    if not(newPW == renewPW):
+        return render_template('resetPassword.html', email=email)
+    
+    else:
+        client = bigquery.Client()
+        
+        query = """
+            UPDATE `bookit-court-booking-system.main.Customer`
+            SET password='""" + newPW + """'
+            WHERE email='""" + email + """'
+        """
+        query_job = client.query(query)
+        
+        query_job.result()
+        
+        #prompt successful message
+        return redirect('/login')
 
        
 @app.route('/index')
