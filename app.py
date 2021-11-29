@@ -419,7 +419,8 @@ def reservations():
     client =bigquery.Client()
     cust_table_id='bookit-court-booking-system.main.Reservation'
     rlist=[]
-    cust=name           
+    cust=name
+    bid=""           
     # View reservation history of user
     query = """
     SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,Book_ID,
@@ -438,11 +439,12 @@ def reservations():
             rlist.append("Booking ID: "+row['Book_ID'])
             rlist.append("Booking Status: ")
             rlist.append(row['ApproveStatus'])
+            bid=row['Book_ID']
 
             
 
     return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust,rlist=rlist)
+        cust=cust,rlist=rlist,bid=bid)
 
 
 
