@@ -395,11 +395,11 @@ def viewReservation():
                     rlist.append("Court Number: "+row['Court_ID'])
                     rlist.append("Reservation Date: "+row['rDate'])
                     rlist.append("Reservation Time: ")
-                    rlist.append(row['Start_Time'])
-                    rlist.append("Booking ID: ")
-                    rlist.append(row['Book_ID'])
+                    rlist.append(row['Start_Time'])                    
                     rlist.append("Booking Status: ")
                     rlist.append(row['ApproveStatus'])
+                    rlist.append("Booking ID: ")
+                    rlist.append(row['Book_ID'])
                     bid=row['Book_ID']
 
                    
@@ -438,10 +438,11 @@ def reservations():
             rlist.append("Reservation Date: ")
             rlist.append(row['rDate'])
             rlist.append("Reservation Time: ")
-            rlist.append(row['Start_Time'])
-            rlist.append("Booking ID: "+row['Book_ID'])
+            rlist.append(row['Start_Time'])                    
             rlist.append("Booking Status: ")
             rlist.append(row['ApproveStatus'])
+            rlist.append("Booking ID: ")
+            rlist.append(row['Book_ID'])
             bid=row['Book_ID']
 
             
