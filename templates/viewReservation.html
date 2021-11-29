@@ -344,10 +344,16 @@
 
                 <div class="card-body" id="res">
                   <h5 class="card-title">Today's Reservation</h5>
-                  {% for rlist in rlist %}
+                  {% for count in count %}
                     <div>
                       <p>
-                        {{rlist}}
+                        {% for court in court %}
+                          Court Number:{{court}}
+                        {% endfor %}
+                        Reservation Date:{{rdate}}
+                        Reservation Time:{{stime}}
+                        Booking ID: {{bookid}}
+                        Booking Status:{{status}}
                       </p>
                     </div>
                   {% endfor %}
