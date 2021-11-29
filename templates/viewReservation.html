@@ -400,7 +400,7 @@
     var para=document.createElement("p");
     para="Here";
     var location=document.getElementById("location");
-    document.body.insertBefore(div,location);
-    document.body.insertBefore(para,location);
+    document.body.insertAdjacentElement(location,div);
+    document.body.insertAdjacentElement(location,para);
   }
 </script>
