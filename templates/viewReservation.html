@@ -398,17 +398,14 @@
   {
     var count=0;
     var max=parseInt('{{count}}');
-    do
+    if (max==1)
     {
       var div= document.createElement("div");
       var para=document.createElement("p");
-      para.innerHTML='{{rlist}}';
+      para.innerHTML='{{rlist[0]}}'+'{{rlist[1]}}'+'{{rlist[2]}}'+'{{rlist[3]}}'+'{{rlist[4]}}';
       document.getElementById("res").appendChild(div);
       document.getElementById("res").appendChild(para);
-    }while (count<max);
-
-
-    
-    
+    }
+ 
   }
 </script>
