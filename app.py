@@ -13,6 +13,8 @@ from flask import * #Flask, render_template, request, redirect, session, flash, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint, randrange
 import smtplib
+from flask import jsonify
+import json
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
