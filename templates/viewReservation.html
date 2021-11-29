@@ -343,10 +343,22 @@
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Today's Reservation</h5>
-                  <p>
-                    {{rlist}}
-                  </p>
+                  <h5 class="card-title" onload="createDiv()">Today's Reservation</h5>
+                  <script>
+                    function createDiv()
+                    {
+                      var count=0;
+                      var div=document.createElement("DIV");
+                      var para=document.createElement("P");
+                      do
+                      {
+                        para.appendChild('{{rlist}}');
+                        div.appendChild(para);
+                        
+                      }
+                      while(count<='{{count}}')
+                    }
+                  </script>
                   <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
                 </div>
                 

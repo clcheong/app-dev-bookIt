@@ -291,7 +291,7 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         rlist=[]
         cust=name
-        count=1
+        count=0
 
         
         # View today reservation of user
