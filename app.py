@@ -374,14 +374,11 @@ def viewReservation():
         username = session['username']
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
-        court=[]
-        rdate=[]
-        stime=[]
-        bookid=[]
-        status=[]
+        rlist=[]
         cust=name
-        count=[]
-        i=0
+        count=0
+
+        
         # View today reservation of user
         query = """
         SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
@@ -394,16 +391,17 @@ def viewReservation():
             cust=row['Customer_Name']
             if cust==name:
                 if row['date']==row['today']:
-                    court.append(row['Court_ID'])
-                    rdate.append(row['rDate'])
-                    stime.append(row['Start_Time'])
-                    bookid.append(row['Book_ID'])
-                    status.append(row['ApproveStatus'])
-                    count.append(i)
-                    i+=1                   
+                    rlist.append(row['Court_ID'])
+                    rlist.append(row['rDate'])
+                    rlist.append(row['Start_Time'])
+                    rlist.append(row['Book_ID'])
+                    rlist.append(row['ApproveStatus'])
+                    count+=1
+
+                   
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust,court=court,rdate=rdate,stime=stime,bookid=bookid,status=status,count=count)
+        cust=cust,rlist=rlist,count=count)
             
 
 @app.route('/reservations')
