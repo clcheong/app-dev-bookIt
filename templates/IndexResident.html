@@ -321,7 +321,7 @@
                   <h5 class="card-title">Court 1</h5>
                   {% for stime in stime %}
                   <p class="text-success">
-                    {{stime}}
+                    <li>{{stime}}</li>
                   </p>
                   {% endfor %}          
                   <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=600 height=auto>
@@ -340,7 +340,7 @@
                   <h5 class="card-title">Court 2 </h5>
                   {% for c2stime in c2stime %}
                   <p class="text-success">
-                    {{c2stime}}
+                    <li>{{c2stime}}</li>
                   </p>
                   {% endfor %}
                   <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=600 height=auto>
@@ -378,7 +378,7 @@
                   <h5 class="card-title">Court 4</h5>
                   {% for c4stime in c4stime %}
                   <p class="text-success">
-                    {{c4stime}}
+                    <li>{{c4stime}}</li>
                   </p>
                   {% endfor %}               
                   <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=600 height=auto>
