@@ -11,6 +11,8 @@ from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
 from flask import * #Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
+from random import randint, randrange
+import smtplib
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -104,7 +106,88 @@ def login():
             
             return redirect('/login')
 
+
+@app.route('/forgetPassword')
+def forgetPassword():
+    return render_template('forget-password.html')
+
+@app.route('/checkAccount',methods=['GET','POST'])
+def checkAccount():
+    
+    userExist = False
+    email = request.form['email'];
+    client = bigquery.Client();
+    query = """ 
+        SELECT email 
+        FROM `bookit-court-booking-system.main.Customer`
+        WHERE email=\'""" + email + """\'
+    """
+    
+    queryjob = client.query(query)
+    
+    for row in queryjob:
+        if row["email"] == email:
+            userExist = True
+    
+    if(userExist):
+        return redirect(url_for('.sendOTP', email=email))
+    
+    else:
+        return redirect('/register')
+
+@app.route('/sendOTP')
+def sendOTP():
+
+    email = request.args['email']
+    otp = randint(100000,999999)
+    message = "Your OTP Code is " + str(otp) + "."
+    myEmail = "bookitappdev@gmail.com"
+    password = "@ppDev123"
+    
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    
+    server.login(myEmail,password)
+    server.sendmail(myEmail,email,message)
+
+    return render_template('otp.html',trueOTP = otp, email=email)
+
+@app.route('/verifyOTP', methods=['GET','POST'])
+def verifyOTP():
+    trueOTP = request.form['trueOTP']
+    enteredOTP = request.form['enteredOTP']
+    email = request.form['email']
+    
+    if enteredOTP == trueOTP:
+        return render_template('resetPassword.html',email=email)
+    else:
+        return redirect('/forgetPassword')
+
+@app.route('/resetPassword', methods=['GET','POST'])
+def resetPassword():
+    newPW = request.form['newPW']
+    renewPW = request.form['renewPW']
+    email = request.form['email']
+    
+    if not(newPW == renewPW):
+        return render_template('resetPassword.html', email=email)
+    
+    else:
+        client = bigquery.Client()
         
+        query = """
+            UPDATE `bookit-court-booking-system.main.Customer`
+            SET password='""" + newPW + """'
+            WHERE email='""" + email + """'
+        """
+        query_job = client.query(query)
+        
+        query_job.result()
+        
+        #prompt successful message
+        return redirect('/login')
+
+       
 @app.route('/index')
 def index():
     # branchCount = getBranchCount()
