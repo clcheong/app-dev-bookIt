@@ -399,7 +399,7 @@ def viewReservation():
                     stime.append(row['Start_Time'])
                     bookid.append(row['Book_ID'])
                     status.append(row['ApproveStatus'])
-                    count.append("1")                   
+                    count.append(row)                   
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,court=court,rdate=rdate,stime=stime,bookid=bookid,status=status,count=count)
