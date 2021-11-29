@@ -344,8 +344,13 @@
 
                 <div class="card-body" id="res">
                   <h5 class="card-title">Today's Reservation</h5>
-                  
-
+                  <php>while (int i<{{count}}) {</php>
+                    <div>
+                      <p>
+                        {{rlist[i]}}
+                      </p>
+                    </div>
+                  <php>}</php>
                   <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
                 </div>
                 
