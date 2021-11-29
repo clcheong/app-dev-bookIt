@@ -352,7 +352,8 @@ def reservations():
             rlist.append(row['Start_Time'])
             rlist.append(row['Book_ID'])
 
-    return jsonify(rlist)
+    return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+        cust=cust,rlist=rlist)
 
 
 

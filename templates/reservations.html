@@ -343,8 +343,11 @@
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Reservation History</h5>
-                  {{rlist}}
+                  <h5 class="card-title" id="history">Reservation History</h5>
+                  <script>
+                    const rlist= new Array('{{rlist}}');
+                    document.getElementById("history").innerHTML=rlist;
+                  </script>
                 </div>
 
               </div>
