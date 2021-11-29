@@ -396,10 +396,15 @@
 <script>
   function createDiv()
   {
-    var div= document.createElement("div");
-    var para=document.createElement("p");
-    para.innerHTML='{{rlist}}';
-    document.getElementById("res").appendChild(div);
-    document.getElementById("res").appendChild(para);
+    var count=0;
+    do
+    {
+      var div= document.createElement("div");
+      var para=document.createElement("p");
+      para.innerHTML='{{rlist[count]}}';
+      document.getElementById("res").appendChild(div);
+      document.getElementById("res").appendChild(para);
+    }while (count<'{{count}}')
+    
   }
 </script>
