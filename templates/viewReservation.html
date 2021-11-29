@@ -347,11 +347,12 @@
                   {% for i in count %}
                     <div>
                       <p>
-                        Court Number:{{court[i]}}<br>
-                        Reservation Date:{{rdate[i]}}<br>
+                        Court Number:{{court}}<br>
+                        Reservation Date:{{rdate}}<br>
                         Reservation Time:{{stime}}<br>
                         Booking ID: {{bookid}}<br>
                         Booking Status:{{status}}<br>
+                        {{i}}
                       </p>
                     </div>
                   {% endfor %}
