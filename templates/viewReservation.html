@@ -346,7 +346,7 @@
                   <h5 class="card-title">Today's Reservation</h5>
                   
 
-                  <a href='/reservations' class="btn btn-primary w-25" id="location" >View Reservation History</a>
+                  <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
                 </div>
                 
               </div>
@@ -399,8 +399,7 @@
     var div= document.createElement("div");
     var para=document.createElement("p");
     para="Here";
-    var location=document.getElementById("location");
-    document.body.insertAdjacentHTML(location,div);
-    document.body.insertAdjacentHTML(location,para);
+    document.getElementById("res").appendChild(div);
+    document.getElementById("res").appendChild(para);
   }
 </script>
