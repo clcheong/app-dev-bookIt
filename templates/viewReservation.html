@@ -349,9 +349,11 @@
                   {% for rlist in rlist %}
                       <p>
                         {{rlist}}
-                        {% if rlist == bid %}
-                        <hr>
-                        {% endif %}
+                        {% for bid in bid%}
+                          {% if rlist == bid %}
+                          <hr>
+                          {% endif %}
+                        {% endfor %}
                       </p>
                   {% endfor %}
                   

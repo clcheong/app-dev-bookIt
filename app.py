@@ -423,7 +423,7 @@ def reservations():
     cust_table_id='bookit-court-booking-system.main.Reservation'
     rlist=[]
     cust=name
-    bid=""           
+    bid=[]           
     # View reservation history of user
     query = """
     SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID
@@ -443,7 +443,7 @@ def reservations():
             rlist.append(row['ApproveStatus'])
             rlist.append("Booking ID: ")
             rlist.append(row['Book_ID'])
-            bid=row['Book_ID']
+            bid.append(row['Book_ID'])
 
             
 
