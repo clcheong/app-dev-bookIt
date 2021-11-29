@@ -346,16 +346,11 @@
                   <h5 class="card-title" id="history">Reservation History</h5>
                   <script>
                     const rlist= new Array('{{rlist}}');
-                    var count=0;
-                    for (var i=0;i<rlist.length;i++)
+                    for (var i=0;i<5;i++)
                     {
-                      for (var i=0;i<5;i++)
-                      {
-                        const reslist= new Array('{{rlist}}');
-                        count=i;
-                        document.getElementById("history").innerHTML=reslist[i]+"<br />";
-                      }                      
-                    }
+                      document.getElementById("history").innerHTML=reslist[i]+"<br />";
+                    }                      
+                    
 
                     
                   </script>
