@@ -338,7 +338,7 @@ def reservations():
            
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID
+    SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,EXTRACT (DATE FROM Reserver_Time) as rDate
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
@@ -348,6 +348,7 @@ def reservations():
         if cust==name:
             rlist.append(row['Court_ID'])
             rlist.append(row['ApproveStatus'])
+            rlist.append(row['rDate'])
             rlist.append(row['Start_Time'])
             rlist.append(row['Book_ID'])
     return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,rlist=json.dumps(rlist))
