@@ -344,11 +344,9 @@
 
                 <div class="card-body" id="res">
                   <h5 class="card-title">Today's Reservation</h5>
-                  <div>
-                    <button onclick="createDiv()">Here</button>
-                  </div>
+                  
 
-                  <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
+                  <a href='/reservations' class="btn btn-primary w-25" id="location" >View Reservation History</a>
                 </div>
                 
               </div>
@@ -398,7 +396,11 @@
 <script>
   function createDiv()
   {
-    var btn= document.createElement("button");
-    document.getElementById("res").appendChild(btn);
+    var div= document.createElement("div");
+    var para=document.createElement("p");
+    para="Here";
+    var location=document.getElementById("res");
+    document.body.insertBefore(div,location);
+    document.body.insertBefore(para,location);
   }
 </script>
