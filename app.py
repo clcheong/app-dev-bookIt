@@ -292,7 +292,7 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court1
         ORDER BY Start_Time
         """
@@ -306,7 +306,7 @@ def IndexResident():
                 pass
                               
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court2
         ORDER BY Start_Time
         """
@@ -322,7 +322,7 @@ def IndexResident():
                 pass
 
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court3
         ORDER BY Start_Time
         """
@@ -335,7 +335,7 @@ def IndexResident():
             else:
                 pass
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court4
         ORDER BY Start_Time
         """
@@ -381,7 +381,8 @@ def viewReservation():
         
         # View today reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
+        SELECT Court_ID, Customer_Name, CAST(ApproveStatus AS STRING) as bstatus,STRING(Start_Time) as stime, End_Time,Book_ID,
+        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
@@ -393,9 +394,9 @@ def viewReservation():
                 if row['date']==row['today']:
                     rlist.append("Court Number: "+row['Court_ID'])
                     rlist.append("Reservation Date: "+row['rDate'])
-                    rlist.append("Reservation Time: "+row['Start_Time'])
+                    rlist.append("Reservation Time: "+row['stime'])
                     rlist.append("Booking ID: "+row['Book_ID'])
-                    rlist.append("Booking Status: "+row['ApproveStatus'])
+                    rlist.append("Booking Status: "+row['bstatus'])
                     count+=1
 
                    
