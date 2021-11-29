@@ -346,7 +346,7 @@ def reservations():
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            rlist.append("Court Number: "+row['Court_ID'])
+            rlist.append("<br>Court Number: "+row['Court_ID'])
             rlist.append("Reservation Date: "+row['rDate'])
             rlist.append("Reservation Time: ")
             rlist.append(row['Start_Time'])
