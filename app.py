@@ -289,30 +289,29 @@ def viewReservation():
         username = session['username']
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Reservation'
-        
-        
-        court=[]
+        rlist=[]
         cust=name
-        status=[]
-        stime=[]
-        book_id=[]
+
         
-        # View reservation history of user
+        # View today reservation of user
         query = """
         SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
-        EXTRACT (DAY FROM CURRENT_TIMESTAMP()) as today, EXTRACT (MONTH FROM CURRENT_TIMESTAMP()) as thismonth, EXTRAcT(YEAR FROM CURRENT_TIMESTAMP()) as thisyear,
-        EXTRACT (DAY FROM Reserve_Time) as day, EXTRACT(MONTH FROM Reserve_Time) as month,EXTRACT (YEAR FROM Reserve_Time) as year
+        EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
+        WHERE date=today
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
             if cust==name:
-                court.append(row['Court_ID'])
-                status.append(row['ApproveStatus'])
-                stime.append(row['Start_Time'])
-                book_id.append(row['Book_ID'])
+                rlist.append("<br>Court Number: "+row['Court_ID'])
+                rlist.append("Reservation Date: "+row['rDate'])
+                rlist.append("Reservation Time: ")
+                rlist.append(row['Start_Time'])
+                rlist.append("Booking ID: "+row['Book_ID'])
+                rlist.append("Booking Status: ")
+                rlist.append(row['ApproveStatus'])
 
                    
 
