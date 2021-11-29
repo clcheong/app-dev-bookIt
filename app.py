@@ -296,7 +296,7 @@ def viewReservation():
         
         # View today reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
@@ -307,7 +307,7 @@ def viewReservation():
             if cust==name:
                 if row['date']==row['today']:
                     rlist.append(row['Court_ID'])
-                    rlist.append(row['date'])
+                    rlist.append(row['rDate'])
                     rlist.append(row['Start_Time'])
                     rlist.append(row['Book_ID'])
                     rlist.append(row['ApproveStatus'])
