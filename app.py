@@ -352,7 +352,7 @@ def reservations():
             rlist.append(row['Start_Time'])
             rlist.append("Booking ID: "+row['Book_ID'])
             rlist.append("Booking Status: ")
-            rlist.append(row['ApporveStatus'])
+            rlist.append(row['ApproveStatus'])
 
     return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=json.dumps(rlist, indent=4, separators=(". ","=")))
