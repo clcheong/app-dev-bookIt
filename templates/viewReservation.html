@@ -343,8 +343,12 @@
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title" onload="createDiv()">Today's Reservation</h5>
+                  <h5 class="card-title" >Today's Reservation</h5>
+                  <div id="res">
+
+                  </div>
                   <script>
+                    document.body.onload=createDiv
                     function createDiv()
                     {
                       var count=0;
@@ -352,8 +356,9 @@
                       var para=document.createElement("P");
                       do
                       {
-                        para.appendChild('{{rlist}}');
+                        document.res.appendChild(div);
                         div.appendChild(para);
+                        para.appendChild('{{rlist}}');
                         
                       }
                       while(count<='{{count}}')
