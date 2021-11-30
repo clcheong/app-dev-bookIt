@@ -388,7 +388,7 @@ def viewReservation():
         # View today reservation of user
         query = """
         SELECT Court_ID, Customer_Name,Approve_Status, Start_Time, End_Time,Book_ID,
-        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIMESTAMP("%T",Start_Time) as stime,
+        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIME("%R",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
