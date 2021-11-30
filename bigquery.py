@@ -223,10 +223,7 @@ def testingEmail():
     
 
     
-<<<<<<< HEAD
-if __name__ == "__main__":
-    print(testingGetusername())
-=======
+# if __name__ == "__main__":
+#     print(testingGetusername())
 # if __name__ == "__main__":
 #     print(testingEmailSQL())
->>>>>>> origin/brandonBranch

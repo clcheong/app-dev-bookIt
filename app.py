@@ -312,7 +312,7 @@ def IndexResident():
                 pass
                               
         query = """
-        SELECT Start_Time,Booking
+        SELECT Start_Time,Booking,Available
         FROM main.Court2
         ORDER BY Start_Time
         """
@@ -328,7 +328,7 @@ def IndexResident():
                 pass
 
         query = """
-        SELECT Start_Time,Booking
+        SELECT Start_Time,Booking,Available
         FROM main.Court3
         ORDER BY Start_Time
         """
@@ -341,7 +341,7 @@ def IndexResident():
             else:
                 pass
         query = """
-        SELECT Start_Time,Booking
+        SELECT Start_Time,Booking,Available
         FROM main.Court4
         ORDER BY Start_Time
         """
@@ -387,7 +387,7 @@ def viewReservation():
         
         # View today reservation of user
         query = """
-        SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,Book_ID,
+        SELECT Court_ID, Customer_Name,Approve_Status, Start_Time, End_Time,Book_ID,
         FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIMESTAMP("%T",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
@@ -402,7 +402,7 @@ def viewReservation():
                     rlist.append("Reservation Date: "+row['rDate'])
                     rlist.append("Reservation Time: "+row['stime'])                    
                     rlist.append("Booking Status: ")
-                    rlist.append(row['ApproveStatus'])
+                    rlist.append(row['Approve_Status'])
                     rlist.append("Booking ID: ")
                     rlist.append(row['Book_ID'])
                     bid.append(row['Book_ID'])
@@ -431,7 +431,7 @@ def reservations():
     bid=[]           
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name,ApproveStatus,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
+    SELECT Court_ID, Customer_Name,Approve_Status,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
     FORMAT_TIMESTAMP("%T",Start_Time) as stime
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
@@ -444,7 +444,7 @@ def reservations():
             rlist.append("Reservation Date: "+row['rDate'])
             rlist.append("Reservation Time: "+row['stime'])                    
             rlist.append("Booking Status: ")
-            rlist.append(row['ApproveStatus'])
+            rlist.append(row['Approve_Status'])
             rlist.append("Booking ID: ")
             rlist.append(row['Book_ID'])
             bid.append(row['Book_ID'])
@@ -463,7 +463,7 @@ def zhixuen(court_id):
         client=bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court{}'.format(court_id)
         query = """
-        SELECT CURRENT_TIMESTAMP() as now,FORMAT_TIMESTAMP("%F",CURRENT_TIMESTAMP()) as stimestampfront
+        SELECT CURRENT_TIMESTAMP() as now,FORMAT_TIMESTAMP("%F",CURRENT_TIMESTAMP()) as stimestampfront,
         Start_Time,Booking,Available
         FROM main.Court{}
         ORDER BY Start_Time
@@ -478,49 +478,38 @@ def zhixuen(court_id):
             letters = string.digits
             Book_ID = str(''.join(random.choice(letters) for i in range(16)))
             Customer_Name = session["name"]
-            Court_ID = court_id
+            Court_ID = str(court_id)
             Customer_Phone_Number = session['PhoneNumber']
-            Reserve_Time =row['now']
+            #Reserve_Time =row['now']
         if request.method == "GET":
             return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
         else:
-            #stimestampback="+00"
             print("asd")
-            Start_Time1 = str(request.form.get('Start_time')
-            print(str(Start_Time1))
-            sTIME= row['stimestampfront'] +Start_Time1
-            print(Start_Time)
-            End_Time = Start_Time + timedelta(hours=1)
-            print(End_Time)
+            Start_Time_Form = (str(request.form.get('Start_time')))
+            date_object_start_time = datetime.strptime(Start_Time_Form, "%H:%M:%S")
+            date_object_end_time = date_object_start_time + timedelta(hours=1)
+            print(date_object_start_time.time())
+            print(date_object_end_time.time())
+            print(type(date_object_start_time.time()))
+            print(type(date_object_end_time.time()))
+
             client=bigquery.Client()
-            reservation_table = "bookit-court-booking-system.main.Reservation"
-            ApproveStatus = True
-            """
-            SELECT PARSE_TIMESTAMP("%F %T",{{sTIME}})
-            """
-            row = [{u'Customer_Name':Customer_Name,u'Book_ID':Book_ID,u'Court_ID':Court_ID,u'ApproveStatus':ApproveStatus,u'Customer_Phone_Number':Customer_Phone_Number,u'Reserve_Time':Reserve_Time}]
-            # 
-            """INSERT `bookit-court-booking-system.main.Reservation` (Customer_Name, Book_ID,Court_ID,ApproveStatus,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) VALUES()"""
+            cust_table_id='bookit-court-booking-system.main.Reservation'
+            """INSERT INTO bookit-court-booking-system.main.Reservation 
+            (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
+            VALUES 
+            (bryan,7891150093213407,4,True,6131666166, CURRENT_TIMESTAMP(),TIME "01:00:00",TIME "02:00:00")"""
 
-            errors=client.insert_rows_json(reservation_table,row)
-            # query1 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Reserve_Time = CURRENT_TIMESTAMP WHERE Book_ID = '""" + Book_ID + """' """
-            # query2 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Start_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(Start_Time)
-            # query3 = """UPDATE `bookit-court-booking-system.main.Reservation` SET End_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(End_Time)
-            # client.query(query3)
-            # client.query(query1)
-            # client.query(query2)
-            if errors==[]:
-                client=bigquery.Client()
-                query = """UPDATE `bookit-court-booking-system.main.Court{}` SET Booking = True  """.format(court_id)
-                client.query(query)
-                print('success')
-                return redirect("/viewReservation")
-                #messagebox.showinfo("Account Created","User have been register! Please SignIn to continue")
-            else:
-                print(f'encounter error : {errors}')
+            query = """
+            INSERT INTO bookit-court-booking-system.main.Reservation 
+            (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
+            VALUES 
+            ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
 
+            query_job = client.query(query)
 
-
+            print('success')
+            return redirect("/viewReservation")
 
 #Below this is not under AD project
 
