@@ -463,15 +463,14 @@ def zhixuen(court_id):
         client=bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court{}'.format(court_id)
         query = """
-        SELECT CURRENT_TIMESTAMP() as now,FORMAT_TIMESTAMP("%F",CURRENT_TIMESTAMP()) as stimestampfront,
-        Start_Time,Booking,Available
+        SELECT Start_Time,Booking,Available
         FROM main.Court{}
         ORDER BY Start_Time
         """.format(court_id)
         stime=[]
         query_job = client.query(query)
         for row in query_job:
-            if row['Booking']==False and row['Available']==False:
+            if row['Booking']==False and row['Available']==True:
                 stime.append(row['Start_Time'])      
             else:
                 pass
@@ -480,7 +479,6 @@ def zhixuen(court_id):
             Customer_Name = session["name"]
             Court_ID = str(court_id)
             Customer_Phone_Number = session['PhoneNumber']
-            #Reserve_Time =row['now']
         if request.method == "GET":
             return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
         else:
@@ -488,18 +486,8 @@ def zhixuen(court_id):
             Start_Time_Form = (str(request.form.get('Start_time')))
             date_object_start_time = datetime.strptime(Start_Time_Form, "%H:%M:%S")
             date_object_end_time = date_object_start_time + timedelta(hours=1)
-            print(date_object_start_time.time())
-            print(date_object_end_time.time())
-            print(type(date_object_start_time.time()))
-            print(type(date_object_end_time.time()))
 
             client=bigquery.Client()
-            cust_table_id='bookit-court-booking-system.main.Reservation'
-            """INSERT INTO bookit-court-booking-system.main.Reservation 
-            (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
-            VALUES 
-            (bryan,7891150093213407,4,True,6131666166, CURRENT_TIMESTAMP(),TIME "01:00:00",TIME "02:00:00")"""
-
             query = """
             INSERT INTO bookit-court-booking-system.main.Reservation 
             (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
@@ -508,6 +496,13 @@ def zhixuen(court_id):
 
             query_job = client.query(query)
 
+            query1 = """
+            UPDATE `bookit-court-booking-system.main.Court""" +Court_ID +"""`
+            SET Booking=True
+            WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
+        """.format(court_id)
+
+            query_job = client.query(query1)
             print('success')
             return redirect("/viewReservation")
 
