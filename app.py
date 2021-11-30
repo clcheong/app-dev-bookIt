@@ -439,7 +439,7 @@ def reservations():
             rlist.append("Reservation Date: ")
             rlist.append(row['rDate'])
             rlist.append("Reservation Time: ")
-            rlist.append(row['Start_Time'])                    
+            rlist.append(row['stime'])                    
             rlist.append("Booking Status: ")
             rlist.append(row['ApproveStatus'])
             rlist.append("Booking ID: ")
