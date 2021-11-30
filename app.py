@@ -434,7 +434,7 @@ def reservations():
     SELECT Court_ID, Customer_Name,Approve_Status,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
     FORMAT_TIME("%R",Start_Time) as stime
     FROM main.Reservation
-    ORDER BY Reserve_Time,Start_Time DESC
+    ORDER BY Reserve_Time,Start_Time ASC
     """
     query_job = client.query(query)
     for row in query_job:
