@@ -360,9 +360,6 @@ def reservations():
 
     return json.dumps(rlist)
 
-        
-
-
 @app.route('/makereservation<int:court_id>', methods=['GET', 'POST'])
 def zhixuen(court_id):   
     if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
@@ -393,7 +390,7 @@ def zhixuen(court_id):
         else:
             print("asd")
             Start_Time1 = str(request.form.get('Start_time'))
-            print(str(Start_Time1))
+            print((Start_Time1))
             Start_Time = datetime.strptime(Start_Time1,'%H:%M:%S')
             print(Start_Time)
             End_Time = Start_Time + timedelta(hours=1)
