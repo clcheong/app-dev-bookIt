@@ -39,6 +39,7 @@
         background-image: url({{ url_for('static', filename='img/testing4.jpeg') }})
     }
   </style>
+
 </head>
 
 <body>
@@ -68,7 +69,7 @@
                   </div>
 
                   
-                  <form name="" method="post" action='/managereservation1'>
+                  <form name="" method="post" action='/makereservation{{Court_ID}}'>
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
@@ -88,12 +89,18 @@
                             <!-- <div class="invalid-feedback"></div> -->
                         </div>
 
-                      <!-- <div class="col-12">
+                      <div class="col-12">
                         <label for="yourTime" class="form-label">Start Time</label>
-                        <input type="text" name="starttime" class="form-control" id="yourTime" required>
-                        <div class="invalid-feedback">Enter your start time</div>
+                        <select aria-label="Default select example" name="Start_time">
+                          {%for time in stime%}
+                                <option name="Time" value="{{time}}">{{time}}</option>
+                          {%endfor%}
+                      </select>
                       </div>
-   -->
+                        <!-- <input type="text" name="starttime" class="form-control" id="yourTime" required>
+                        <div class="invalid-feedback">Enter your start time</div> -->
+                      </div>
+                      
                       <div class="col-12">
                         <label for="yourEmail" class="form-label">Court ID</label>
                         <span name="Court_ID" class="form-control" id="yourName" >{{Court_ID}}</span>
