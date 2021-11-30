@@ -382,7 +382,7 @@ def viewReservation():
         # View today reservation of user
         query = """
         SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,Book_ID,
-        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,
+        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIMESTAMP("%T",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
         ORDER BY Reserve_Time DESC
@@ -395,7 +395,7 @@ def viewReservation():
                     rlist.append("Court Number: "+row['Court_ID'])
                     rlist.append("Reservation Date: "+row['rDate'])
                     rlist.append("Reservation Time: ")
-                    rlist.append(row['Start_Time'])                    
+                    rlist.append(row['stime'])                    
                     rlist.append("Booking Status: ")
                     rlist.append(row['ApproveStatus'])
                     rlist.append("Booking ID: ")
@@ -426,7 +426,8 @@ def reservations():
     bid=[]           
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID
+    SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
+    FORMAT_TIMESTAMP("%T",Start_Time) as stime
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
