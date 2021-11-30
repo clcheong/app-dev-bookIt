@@ -305,7 +305,7 @@ def IndexResident():
         stime=[]
         query_job = client.query(query)
         for row in query_job:
-            if row['Booking']==False & row['Available']==True:
+            if row['Booking']==False and row['Available']==True:
                 stime.append(row['Start_Time'])
                     
             else:
@@ -320,7 +320,7 @@ def IndexResident():
         
         query_job = client.query(query)
         for row in query_job:
-            if row['Booking']==False & row['Available']==True:
+            if row['Booking']==False and row['Available']==True:
                 c2stime.append(row['Start_Time'])
                     
 
@@ -335,7 +335,7 @@ def IndexResident():
         c3stime=[]
         query_job = client.query(query)
         for row in query_job:
-            if row['Booking']==False & row['Available']==True:
+            if row['Booking']==False and row['Available']==True:
                 c3stime.append(row['Start_Time'])
                     
             else:
@@ -348,7 +348,7 @@ def IndexResident():
         c4stime=[]
         query_job = client.query(query)
         for row in query_job:
-            if row['Booking']==False & row['Available']==True:
+            if row['Booking']==False and row['Available']==True:
                 c4stime.append(row['Start_Time'])
             else:
                 pass
