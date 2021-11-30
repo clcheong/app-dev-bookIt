@@ -391,7 +391,7 @@ def viewReservation():
         FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIME("%R",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
-        ORDER BY Reserve_Time,Start_Time ASC
+        ORDER BY Reserve_Time DESC
         """
         query_job = client.query(query)
         for row in query_job:
