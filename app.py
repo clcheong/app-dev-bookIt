@@ -435,8 +435,7 @@ def reservations():
         cust=row['Customer_Name']
         if cust==name:
             rlist.append("Court Number: "+row['Court_ID'])
-            rlist.append("Reservation Date: ")
-            rlist.append(row['rDate'])
+            rlist.append("Reservation Date: "+row['rDate'])
             rlist.append("Reservation Time: "+row['stime'])                    
             rlist.append("Booking Status: ")
             rlist.append(row['ApproveStatus'])
