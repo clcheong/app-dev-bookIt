@@ -14,7 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint, randrange
 import smtplib
 from flask import jsonify
-import json
+from flask import json
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -22,7 +22,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 from tkinter import *  
   
+from tkinter import messagebox
 from tkinter import messagebox  
+from datetime import datetime,timedelta
+import uuid
+from json import dumps 
+import random
+import string  
   
 
 
@@ -447,6 +453,67 @@ def reservations():
 
     return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=rlist,bid=bid)
+
+
+@app.route('/makereservation<int:court_id>', methods=['GET', 'POST'])
+def zhixuen(court_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Court{}'.format(court_id)
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking,Available
+        FROM main.Court{}
+        ORDER BY Start_Time
+        """.format(court_id)
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==False:
+                stime.append(row['Start_Time'])      
+            else:
+                pass
+        letters = string.digits
+        Book_ID = str(''.join(random.choice(letters) for i in range(16)))
+        Customer_Name = session["name"]
+        Court_ID = court_id
+        Customer_Phone_Number = session['PhoneNumber']
+        # Reserve_Time = "CURRENT_DATETIME([%c])"
+        if request.method == "GET":
+            return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
+        else:
+            print("asd")
+            Start_Time1 = str(request.form.get('Start_time'))
+            print(str(Start_Time1))
+            Start_Time = datetime.strptime(Start_Time1,'%H:%M:%S')
+            print(Start_Time)
+            End_Time = Start_Time + timedelta(hours=1)
+            print(End_Time)
+            client=bigquery.Client()
+            reservation_table = "bookit-court-booking-system.main.Reservation"
+            ApproveStatus = True
+            
+            row = [{u'Customer_Name':Customer_Name,u'Book_ID':Book_ID,u'Court_ID':Court_ID,u'ApproveStatus':ApproveStatus,u'Customer_Phone_Number':Customer_Phone_Number}]
+            # u'Reserve_Time':CURRENT_TIMESTAMP()
+            """INSERT `bookit-court-booking-system.main.Reservation` (Customer_Name, Book_ID,Court_ID,ApproveStatus,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) VALUES()"""
+
+            errors=client.insert_rows_json(reservation_table,row)
+            # query1 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Reserve_Time = CURRENT_TIMESTAMP WHERE Book_ID = '""" + Book_ID + """' """
+            # query2 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Start_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(Start_Time)
+            # query3 = """UPDATE `bookit-court-booking-system.main.Reservation` SET End_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(End_Time)
+            # client.query(query3)
+            # client.query(query1)
+            # client.query(query2)
+            if errors==[]:
+                client=bigquery.Client()
+                query = """UPDATE `bookit-court-booking-system.main.Court{}` SET Booking = True """.format(court_id)
+                client.query(query)
+                print('success')
+                return redirect("/viewReservation")
+                #messagebox.showinfo("Account Created","User have been register! Please SignIn to continue")
+            else:
+                print(f'encounter error : {errors}')
 
 
 
