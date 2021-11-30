@@ -11,6 +11,10 @@ from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
 from flask import * #Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
+from random import randint, randrange
+import smtplib
+from flask import jsonify
+from flask import json
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -18,14 +22,21 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 from tkinter import *  
   
+from tkinter import messagebox
 from tkinter import messagebox  
 from datetime import datetime,timedelta
 import uuid
+<<<<<<< HEAD
 import simplejson as json
 from json import dumps 
 import random
 import string
 
+=======
+from json import dumps 
+import random
+import string  
+>>>>>>> origin/brandonBranch
   
 
 
@@ -127,7 +138,90 @@ def login():
             return redirect('/login')
 
 
+<<<<<<< HEAD
+=======
+@app.route('/forgetPassword')
+def forgetPassword():
+    return render_template('forget-password.html')
+
+@app.route('/checkAccount',methods=['GET','POST'])
+def checkAccount():
+    
+    userExist = False
+    email = request.form['email'];
+    client = bigquery.Client();
+    query = """ 
+        SELECT email 
+        FROM `bookit-court-booking-system.main.Customer`
+        WHERE email=\'""" + email + """\'
+    """
+    
+    queryjob = client.query(query)
+    
+    for row in queryjob:
+        if row["email"] == email:
+            userExist = True
+    
+    if(userExist):
+        return redirect(url_for('.sendOTP', email=email))
+    
+    else:
+        return redirect('/register')
+
+@app.route('/sendOTP')
+def sendOTP():
+
+    email = request.args['email']
+    otp = randint(100000,999999)
+    message = "Your OTP Code is " + str(otp) + "."
+    myEmail = "bookitappdev@gmail.com"
+    password = "@ppDev123"
+    
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    
+    server.login(myEmail,password)
+    server.sendmail(myEmail,email,message)
+
+    return render_template('otp.html',trueOTP = otp, email=email)
+
+@app.route('/verifyOTP', methods=['GET','POST'])
+def verifyOTP():
+    trueOTP = request.form['trueOTP']
+    enteredOTP = request.form['enteredOTP']
+    email = request.form['email']
+    
+    if enteredOTP == trueOTP:
+        return render_template('resetPassword.html',email=email)
+    else:
+        return redirect('/forgetPassword')
+
+@app.route('/resetPassword', methods=['GET','POST'])
+def resetPassword():
+    newPW = request.form['newPW']
+    renewPW = request.form['renewPW']
+    email = request.form['email']
+    
+    if not(newPW == renewPW):
+        return render_template('resetPassword.html', email=email)
+    
+    else:
+        client = bigquery.Client()
+>>>>>>> origin/brandonBranch
         
+        query = """
+            UPDATE `bookit-court-booking-system.main.Customer`
+            SET password='""" + newPW + """'
+            WHERE email='""" + email + """'
+        """
+        query_job = client.query(query)
+        
+        query_job.result()
+        
+        #prompt successful message
+        return redirect('/login')
+
+       
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -210,7 +304,7 @@ def IndexResident():
         client =bigquery.Client()
         cust_table_id='bookit-court-booking-system.main.Court1'
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court1
         ORDER BY Start_Time
         """
@@ -224,7 +318,7 @@ def IndexResident():
                 pass
                               
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court2
         ORDER BY Start_Time
         """
@@ -240,7 +334,7 @@ def IndexResident():
                 pass
 
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court3
         ORDER BY Start_Time
         """
@@ -253,7 +347,7 @@ def IndexResident():
             else:
                 pass
         query = """
-        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking
+        SELECT Start_Time,Booking
         FROM main.Court4
         ORDER BY Start_Time
         """
@@ -294,32 +388,35 @@ def viewReservation():
         cust_table_id='bookit-court-booking-system.main.Reservation'
         rlist=[]
         cust=name
+        bid=[]
 
         
         # View today reservation of user
         query = """
-        SELECT Court_ID, Customer_Name, ApproveStatus,Start_Time, End_Time,Book_ID,
+        SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,Book_ID,
+        FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIMESTAMP("%T",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
         FROM main.Reservation
-        WHERE date=today
         ORDER BY Reserve_Time DESC
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
             if cust==name:
-                rlist.append("<br>Court Number: "+row['Court_ID'])
-                rlist.append("Reservation Date: "+row['rDate'])
-                rlist.append("Reservation Time: ")
-                rlist.append(row['Start_Time'])
-                rlist.append("Booking ID: "+row['Book_ID'])
-                rlist.append("Booking Status: ")
-                rlist.append(row['ApproveStatus'])
+                if row['date']==row['today']:
+                    rlist.append("Court Number: "+row['Court_ID'])
+                    rlist.append("Reservation Date: "+row['rDate'])
+                    rlist.append("Reservation Time: "+row['stime'])                    
+                    rlist.append("Booking Status: ")
+                    rlist.append(row['ApproveStatus'])
+                    rlist.append("Booking ID: ")
+                    rlist.append(row['Book_ID'])
+                    bid.append(row['Book_ID'])
 
                    
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust)
+        cust=cust,rlist=rlist,bid=bid)
             
 
 @app.route('/reservations')
@@ -337,10 +434,11 @@ def reservations():
     cust_table_id='bookit-court-booking-system.main.Reservation'
     rlist=[]
     cust=name
-           
+    bid=[]           
     # View reservation history of user
     query = """
-    SELECT Court_ID, Customer_Name,Start_Time,ApproveStatus, End_Time,Book_ID,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate
+    SELECT Court_ID, Customer_Name,ApproveStatus, Start_Time, End_Time,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
+    FORMAT_TIMESTAMP("%T",Start_Time) as stime
     FROM main.Reservation
     ORDER BY Reserve_Time DESC
     """
@@ -348,17 +446,80 @@ def reservations():
     for row in query_job:
         cust=row['Customer_Name']
         if cust==name:
-            rlist.append("<br>Court Number: "+row['Court_ID'])
+            rlist.append("Court Number: "+row['Court_ID'])
             rlist.append("Reservation Date: "+row['rDate'])
-            rlist.append("Reservation Time: ")
-            rlist.append(row['Start_Time'])
-            rlist.append("Booking ID: "+row['Book_ID'])
+            rlist.append("Reservation Time: "+row['stime'])                    
             rlist.append("Booking Status: ")
             rlist.append(row['ApproveStatus'])
+            rlist.append("Booking ID: ")
+            rlist.append(row['Book_ID'])
+            bid.append(row['Book_ID'])
 
             
 
-    return json.dumps(rlist)
+    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+        cust=cust,rlist=rlist,bid=bid)
+
+
+@app.route('/makereservation<int:court_id>', methods=['GET', 'POST'])
+def zhixuen(court_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        cust_table_id='bookit-court-booking-system.main.Court{}'.format(court_id)
+        query = """
+        SELECT EXTRACT(HOUR FROM Start_Time) as hour,Start_Time,Booking,Available
+        FROM main.Court{}
+        ORDER BY Start_Time
+        """.format(court_id)
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==False:
+                stime.append(row['Start_Time'])      
+            else:
+                pass
+        letters = string.digits
+        Book_ID = str(''.join(random.choice(letters) for i in range(16)))
+        Customer_Name = session["name"]
+        Court_ID = court_id
+        Customer_Phone_Number = session['PhoneNumber']
+        # Reserve_Time = "CURRENT_DATETIME([%c])"
+        if request.method == "GET":
+            return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
+        else:
+            print("asd")
+            Start_Time1 = str(request.form.get('Start_time'))
+            print(str(Start_Time1))
+            Start_Time = datetime.strptime(Start_Time1,'%H:%M:%S')
+            print(Start_Time)
+            End_Time = Start_Time + timedelta(hours=1)
+            print(End_Time)
+            client=bigquery.Client()
+            reservation_table = "bookit-court-booking-system.main.Reservation"
+            ApproveStatus = True
+            
+            row = [{u'Customer_Name':Customer_Name,u'Book_ID':Book_ID,u'Court_ID':Court_ID,u'ApproveStatus':ApproveStatus,u'Customer_Phone_Number':Customer_Phone_Number}]
+            # u'Reserve_Time':CURRENT_TIMESTAMP()
+            """INSERT `bookit-court-booking-system.main.Reservation` (Customer_Name, Book_ID,Court_ID,ApproveStatus,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) VALUES()"""
+
+            errors=client.insert_rows_json(reservation_table,row)
+            # query1 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Reserve_Time = CURRENT_TIMESTAMP WHERE Book_ID = '""" + Book_ID + """' """
+            # query2 = """UPDATE `bookit-court-booking-system.main.Reservation` SET Start_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(Start_Time)
+            # query3 = """UPDATE `bookit-court-booking-system.main.Reservation` SET End_Time = {} WHERE Book_ID = '""" + Book_ID + """' """.format(End_Time)
+            # client.query(query3)
+            # client.query(query1)
+            # client.query(query2)
+            if errors==[]:
+                client=bigquery.Client()
+                query = """UPDATE `bookit-court-booking-system.main.Court{}` SET Booking = True """.format(court_id)
+                client.query(query)
+                print('success')
+                return redirect("/viewReservation")
+                #messagebox.showinfo("Account Created","User have been register! Please SignIn to continue")
+            else:
+                print(f'encounter error : {errors}')
 
 @app.route('/makereservation<int:court_id>', methods=['GET', 'POST'])
 def zhixuen(court_id):   
