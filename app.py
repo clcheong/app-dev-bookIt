@@ -386,6 +386,13 @@ def courtAvailable():
     else:      
         return render_template('court-availability.html')
 
+@app.route('/manageFacility')
+def manageFacility():
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:      
+        return render_template('ManageFacility.html')
 
 @app.route('/faq')
 def faq():

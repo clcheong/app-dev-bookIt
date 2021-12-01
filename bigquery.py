@@ -205,7 +205,6 @@ def testingEmail():
 
     
 # if __name__ == "__main__":
-<<<<<<< HEAD
 #     print(testingInsert())
 
 # ReservationQuery
@@ -222,7 +221,3 @@ def getReservation():
     query_job = client.query(query)
     # print("The query data:")
     return query_job;    
-    
-=======
-#     print(testingEmailSQL())
->>>>>>> origin/register
