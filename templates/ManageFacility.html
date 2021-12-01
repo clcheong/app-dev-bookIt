@@ -10,24 +10,24 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{url_for(assets/img/favicon.png)}}" rel="icon">
-  <link href="{{url_for(assets/img/apple-touch-icon.png)}}" rel="apple-touch-icon">
+  <link href="{{url_for('static',filename='img/favicon.png')}}" rel="icon">
+  <link href="{{url_for('static',filename='img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{{url_for(assets/vendor/bootstrap/css/bootstrap.min.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/bootstrap-icons/bootstrap-icons.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/remixicon/remixicon.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/boxicons/css/boxicons.min.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/quill/quill.snow.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/quill/quill.bubble.css)}}" rel="stylesheet">
-  <link href="{{url_for(assets/vendor/simple-datatables/style.css)}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/quill/quill.snow.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="{{url_for(assets/css/style.css)}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.1.0
@@ -43,8 +43,8 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/indexAdmin" class="logo d-flex align-items-center">
-        <img src="{{url_for(assets/img/logo.png)}}" alt="">
+      <a href="/IndexAdmin" class="logo d-flex align-items-center">
+        <img src="{{url_for('static',filename='img/logo.png')}}" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -159,7 +159,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="{{url_for(assets/img/messages-1.jpg)}}" alt="" class="rounded-circle">
+                <img src="{{url_for('static',filename='img/messages-1.jpg')}}" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -173,7 +173,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="{{url_for(assets/img/messages-2.jpg)}}" alt="" class="rounded-circle">
+                <img src="{{url_for('static',filename='img/messages-2.jpg')}}" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -187,7 +187,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="{{url_for(assets/img/messages-3.jpg)}}" alt="" class="rounded-circle">
+                <img src="{{url_for('static',filename='img/messages-3.jpg')}}" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -210,7 +210,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{url_for(assets/img/profile-img.jpg)}}" alt="Profile" class="rounded-circle">
+            <img src="{{url_for('static',filename='img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -526,18 +526,22 @@
             <h5 class="card-title">All Court</h5>
 
             <!-- General Form Elements -->
-            <form name="ManageFacility" method="POST" action="/Manage">
+            <form name="ManageFacility" method="POST" action="/Update-Facility-all">
               <fieldset class="row mb-3">
                 <legend class="col-form-label col-sm-2 pt-0">Court Availability</legend>
                 <div class="col-sm-10">
+
+
                   <div class="form-check">
-                    <input type="form-check-input" type="radio" name="Available" id="Available" value="Available" checked>
+                    <input class="form-check-input" type="radio" name="Availability" id="Available" value="available" checked>
                     <label class="form-check-label" for="Available">
                       Available
                     </label>
                   </div>
+
+
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="UnAvailable" id="UnAvailable" value="UnAvailable">
+                    <input class="form-check-input" type="radio" name="Availability" id="UnAvailable" value="unavailable">
                     <label class="form-check-label" for="UnAvailable">
                       Not Available
                     </label>
@@ -548,30 +552,31 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Opening Time</label>
                 <div class="col-sm-10">
-                  <select class="form-select" aria-label="Default select example" id="StartTime" >
-                    <option value="01:00:00">01:00</option>
-                    <option value="02:00:00">02:00</option>
-                    <option value="03:00:00">03:00</option>
-                    <option value="04:00:00">04:00</option>
-                    <option value="05:00:00">05:00</option>
-                    <option value="06:00:00">06:00</option>
-                    <option value="07:00:00">07:00</option>
-                    <option value="08:00:00">08:00</option>
-                    <option value="09:00:00">09:00</option>
-                    <option value="10:00:00">10:00</option>
-                    <option value="11:00:00">11:00</option>
-                    <option value="12:00:00">12:00</option>
-                    <option value="13:00:00">13:00</option>
-                    <option value="14:00:00">14:00</option>
-                    <option value="15:00:00">15:00</option>
-                    <option value="16:00:00">16:00</option>
-                    <option value="17:00:00">17:00</option>
-                    <option value="18:00:00">18:00</option>
-                    <option value="19:00:00">19:00</option>
-                    <option value="20:00:00">20:00</option>
-                    <option value="21:00:00">21:00</option>
-                    <option value="22:00:00">22:00</option>
-                  </select>
+                  <select class="form-select" aria-label="Default select example" name="Start_time" >
+                    <option value="{{AllCourt_Start_Time}}">{{AllCourt_Start_Time}}</option>
+                    <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    </select>
                 </div>
               </div>
 
@@ -579,29 +584,30 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Closing Time</label>
                 <div class="col-sm-10">
-                  <select class="form-select" aria-label="Default select example">
-                    <option value="02:00:00">02:00</option>
-                    <option value="03:00:00">03:00</option>
-                    <option value="04:00:00">04:00</option>
-                    <option value="05:00:00">05:00</option>
-                    <option value="06:00:00">06:00</option>
-                    <option value="07:00:00">07:00</option>
-                    <option value="08:00:00">08:00</option>
-                    <option value="09:00:00">09:00</option>
-                    <option value="10:00:00">10:00</option>
-                    <option value="11:00:00">11:00</option>
-                    <option value="12:00:00">12:00</option>
-                    <option value="13:00:00">13:00</option>
-                    <option value="14:00:00">14:00</option>
-                    <option value="15:00:00">15:00</option>
-                    <option value="16:00:00">16:00</option>
-                    <option value="17:00:00">17:00</option>
-                    <option value="18:00:00">18:00</option>
-                    <option value="19:00:00">19:00</option>
-                    <option value="20:00:00">20:00</option>
-                    <option value="21:00:00">21:00</option>
-                    <option value="22:00:00">22:00</option>
-                    <option value="23:00:00">23:00</option>
+                  <select class="form-select" aria-label="Default select example" name="End_time"> 
+                    <option value="{{AllCourt_End_Time}}">{{AllCourt_End_Time}}</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    <option value="23:00:00">23:00:00</option>
                   </select>
                 </div>
               </div>
@@ -615,27 +621,32 @@
               </div>
 
             </form><!-- End General Form Elements -->
-
           </div>
         </div>
+
+
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Court 1</h5>
 
               <!-- General Form Elements -->
-              <form>
+              <form name="ManageFacility" method="POST" action="/Update-Facility-1">
                 <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">Court Availability</legend>
                   <div class="col-sm-10">
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                      <label class="form-check-label" for="gridRadios1">
+                      <input class="form-check-input" type="radio" name="Availability" id="Available" value="available" checked>
+                      <label class="form-check-label" for="Available">
                         Available
                       </label>
                     </div>
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                      <label class="form-check-label" for="gridRadios2">
+                      <input class="form-check-input" type="radio" name="Availability" id="UnAvailable" value="unavailable">
+                      <label class="form-check-label" for="UnAvailable">
                         Not Available
                       </label>
                     </div>
@@ -645,29 +656,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Opening Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="1">01:00</option>
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
+                    <select class="form-select" aria-label="Default select example" name="Start_time" >
+                      <option value="{{Court1_Start_Time}}">{{Court1_Start_Time}}</option>
+                      <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -676,30 +688,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Closing Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
-                      <option value="23">23:00</option>
-  
+                    <select class="form-select" aria-label="Default select example" name="End_time"> 
+                      <option value="{{Court1_End_Time}}">{{Court1_End_Time}}</option>
+                      <option value="02:00:00">02:00:00</option>
+                      <option value="03:00:00">03:00:00</option>
+                      <option value="04:00:00">04:00:00</option>
+                      <option value="05:00:00">05:00:00</option>
+                      <option value="06:00:00">06:00:00</option>
+                      <option value="07:00:00">07:00:00</option>
+                      <option value="08:00:00">08:00:00</option>
+                      <option value="09:00:00">09:00:00</option>
+                      <option value="10:00:00">10:00:00</option>
+                      <option value="11:00:00">11:00:00</option>
+                      <option value="12:00:00">12:00:00</option>
+                      <option value="13:00:00">13:00:00</option>
+                      <option value="14:00:00">14:00:00</option>
+                      <option value="15:00:00">15:00:00</option>
+                      <option value="16:00:00">16:00:00</option>
+                      <option value="17:00:00">17:00:00</option>
+                      <option value="18:00:00">18:00:00</option>
+                      <option value="19:00:00">19:00:00</option>
+                      <option value="20:00:00">20:00:00</option>
+                      <option value="21:00:00">21:00:00</option>
+                      <option value="22:00:00">22:00:00</option>
+                      <option value="23:00:00">23:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -722,19 +734,23 @@
               <h5 class="card-title">Court 2</h5>
 
               <!-- General Form Elements -->
-              <form>
+              <form name="ManageFacility" method="POST" action="/Update-Facility-2">
                 <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">Court Availability</legend>
                   <div class="col-sm-10">
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                      <label class="form-check-label" for="gridRadios1">
+                      <input class="form-check-input" type="radio" name="Availability" id="Available" value="available" checked>
+                      <label class="form-check-label" for="Available">
                         Available
                       </label>
                     </div>
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                      <label class="form-check-label" for="gridRadios2">
+                      <input class="form-check-input" type="radio" name="Availability" id="UnAvailable" value="unavailable">
+                      <label class="form-check-label" for="UnAvailable">
                         Not Available
                       </label>
                     </div>
@@ -744,29 +760,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Opening Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="1">01:00</option>
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
+                    <select class="form-select" aria-label="Default select example" name="Start_time" >
+                      <option value="{{Court2_Start_Time}}">{{Court2_Start_Time}}</option>
+                      <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -775,30 +792,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Closing Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
-                      <option value="23">23:00</option>
-  
+                    <select class="form-select" aria-label="Default select example" name="End_time"> 
+                      <option value="{{Court2_End_Time}}">{{Court2_End_Time}}</option>
+                      <option value="02:00:00">02:00:00</option>
+                      <option value="03:00:00">03:00:00</option>
+                      <option value="04:00:00">04:00:00</option>
+                      <option value="05:00:00">05:00:00</option>
+                      <option value="06:00:00">06:00:00</option>
+                      <option value="07:00:00">07:00:00</option>
+                      <option value="08:00:00">08:00:00</option>
+                      <option value="09:00:00">09:00:00</option>
+                      <option value="10:00:00">10:00:00</option>
+                      <option value="11:00:00">11:00:00</option>
+                      <option value="12:00:00">12:00:00</option>
+                      <option value="13:00:00">13:00:00</option>
+                      <option value="14:00:00">14:00:00</option>
+                      <option value="15:00:00">15:00:00</option>
+                      <option value="16:00:00">16:00:00</option>
+                      <option value="17:00:00">17:00:00</option>
+                      <option value="18:00:00">18:00:00</option>
+                      <option value="19:00:00">19:00:00</option>
+                      <option value="20:00:00">20:00:00</option>
+                      <option value="21:00:00">21:00:00</option>
+                      <option value="22:00:00">22:00:00</option>
+                      <option value="23:00:00">23:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -820,19 +837,23 @@
               <h5 class="card-title">Court 3</h5>
 
               <!-- General Form Elements -->
-              <form>
+              <form name="ManageFacility" method="POST" action="/Update-Facility-3">
                 <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">Court Availability</legend>
                   <div class="col-sm-10">
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                      <label class="form-check-label" for="gridRadios1">
+                      <input class="form-check-input" type="radio" name="Availability" id="Available" value="available" checked>
+                      <label class="form-check-label" for="Available">
                         Available
                       </label>
                     </div>
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                      <label class="form-check-label" for="gridRadios2">
+                      <input class="form-check-input" type="radio" name="Availability" id="UnAvailable" value="unavailable">
+                      <label class="form-check-label" for="UnAvailable">
                         Not Available
                       </label>
                     </div>
@@ -842,29 +863,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Opening Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="1">01:00</option>
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
+                    <select class="form-select" aria-label="Default select example" name="Start_time" >
+                      <option value="{{Court3_Start_Time}}">{{Court3_Start_Time}}</option>
+                      <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -873,30 +895,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Closing Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
-                      <option value="23">23:00</option>
-  
+                    <select class="form-select" aria-label="Default select example" name="End_time"> 
+                      <option value="{{Court3_End_Time}}">{{Court3_End_Time}}</option>
+                      <option value="02:00:00">02:00:00</option>
+                      <option value="03:00:00">03:00:00</option>
+                      <option value="04:00:00">04:00:00</option>
+                      <option value="05:00:00">05:00:00</option>
+                      <option value="06:00:00">06:00:00</option>
+                      <option value="07:00:00">07:00:00</option>
+                      <option value="08:00:00">08:00:00</option>
+                      <option value="09:00:00">09:00:00</option>
+                      <option value="10:00:00">10:00:00</option>
+                      <option value="11:00:00">11:00:00</option>
+                      <option value="12:00:00">12:00:00</option>
+                      <option value="13:00:00">13:00:00</option>
+                      <option value="14:00:00">14:00:00</option>
+                      <option value="15:00:00">15:00:00</option>
+                      <option value="16:00:00">16:00:00</option>
+                      <option value="17:00:00">17:00:00</option>
+                      <option value="18:00:00">18:00:00</option>
+                      <option value="19:00:00">19:00:00</option>
+                      <option value="20:00:00">20:00:00</option>
+                      <option value="21:00:00">21:00:00</option>
+                      <option value="22:00:00">22:00:00</option>
+                      <option value="23:00:00">23:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -919,19 +941,23 @@
               <h5 class="card-title">Court 4</h5>
 
               <!-- General Form Elements -->
-              <form>
+              <form name="ManageFacility" method="POST" action="/Update-Facility-4">
                 <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">Court Availability</legend>
                   <div class="col-sm-10">
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                      <label class="form-check-label" for="gridRadios1">
+                      <input class="form-check-input" type="radio" name="Availability" id="Available" value="available" checked>
+                      <label class="form-check-label" for="Available">
                         Available
                       </label>
                     </div>
+  
+  
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                      <label class="form-check-label" for="gridRadios2">
+                      <input class="form-check-input" type="radio" name="Availability" id="UnAvailable" value="unavailable">
+                      <label class="form-check-label" for="UnAvailable">
                         Not Available
                       </label>
                     </div>
@@ -941,29 +967,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Opening Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="1">01:00</option>
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
+                    <select class="form-select" aria-label="Default select example" name="Start_time" >
+                      <option value="{{Court4_Start_Time}}">{{Court4_Start_Time}}</option>
+                      <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -972,30 +999,30 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Closing Time</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option value="2">02:00</option>
-                      <option value="3">03:00</option>
-                      <option value="4">04:00</option>
-                      <option value="5">05:00</option>
-                      <option value="6">06:00</option>
-                      <option value="7">07:00</option>
-                      <option value="8">08:00</option>
-                      <option value="9">09:00</option>
-                      <option value="10">10:00</option>
-                      <option value="11">11:00</option>
-                      <option value="12">12:00</option>
-                      <option value="13">13:00</option>
-                      <option value="14">14:00</option>
-                      <option value="15">15:00</option>
-                      <option value="16">16:00</option>
-                      <option value="17">17:00</option>
-                      <option value="18">18:00</option>
-                      <option value="19">19:00</option>
-                      <option value="20">20:00</option>
-                      <option value="21">21:00</option>
-                      <option value="22">22:00</option>
-                      <option value="23">23:00</option>
-  
+                    <select class="form-select" aria-label="Default select example" name="End_time"> 
+                      <option value="{{Court4_End_Time}}">{{Court4_End_Time}}</option>
+                      <option value="02:00:00">02:00:00</option>
+                      <option value="03:00:00">03:00:00</option>
+                      <option value="04:00:00">04:00:00</option>
+                      <option value="05:00:00">05:00:00</option>
+                      <option value="06:00:00">06:00:00</option>
+                      <option value="07:00:00">07:00:00</option>
+                      <option value="08:00:00">08:00:00</option>
+                      <option value="09:00:00">09:00:00</option>
+                      <option value="10:00:00">10:00:00</option>
+                      <option value="11:00:00">11:00:00</option>
+                      <option value="12:00:00">12:00:00</option>
+                      <option value="13:00:00">13:00:00</option>
+                      <option value="14:00:00">14:00:00</option>
+                      <option value="15:00:00">15:00:00</option>
+                      <option value="16:00:00">16:00:00</option>
+                      <option value="17:00:00">17:00:00</option>
+                      <option value="18:00:00">18:00:00</option>
+                      <option value="19:00:00">19:00:00</option>
+                      <option value="20:00:00">20:00:00</option>
+                      <option value="21:00:00">21:00:00</option>
+                      <option value="22:00:00">22:00:00</option>
+                      <option value="23:00:00">23:00:00</option>
                     </select>
                   </div>
                 </div>
@@ -1004,7 +1031,7 @@
                   <label class="col-sm-2 col-form-label">Update Button</label>
                   <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <button type="submit" class="btn btn-primary">Update All</button>
+                    
                   </div>
                 </div>
 
@@ -1038,17 +1065,17 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/chart.js/chart.min.js"></script>
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/quill/quill.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/chart.js/chart.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/echarts/echarts.min.js')}}"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{{url_for('static',filename='js/main.js')}}"></script>
 
 </body>
 

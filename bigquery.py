@@ -2,6 +2,7 @@ from google.cloud import bigquery
 from datetime import datetime
 from flask import request,session
 from google.cloud.bigquery.job.query import QueryJob
+import smtplib
 #set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\User\Downloads\hlb-carbon-footprint-ps6\turing-goods-324908-d52fcabab09f.json
 
 
@@ -150,33 +151,61 @@ def getTotalRecycledKG():
 #        return(row["totalEnergySaved"])  
 
 
-def testingInsert():
+# def testingInsert():
     
-    oldusername = "clcheong"
-    username = "cl"
-    usertype = "USER"
-    name = "Chien Li"
-    email = "cl@gmail.com"
-    phoneNum = "012"
-    blockNum = "AA"
-    unitNum = "00-01"
+#     oldusername = "clcheong"
+#     username = "cl"
+#     usertype = "USER"
+#     name = "Chien Li"
+#     email = "cl@gmail.com"
+#     phoneNum = "012"
+#     blockNum = "AA"
+#     unitNum = "00-01"
     
-    client = bigquery.Client()
+#     client = bigquery.Client()
     
-    query = """
-        UPDATE `bookit-court-booking-system.main.Customer`
-        SET username='""" + username + """', name='""" + name + """', email='"""+ email + """', PhoneNumber='""" + phoneNum + """',BlockNumber='""" + blockNum + """',UnitNumber='""" + unitNum + """'
-        WHERE username='""" + oldusername + """'
-    """
-    query_job = client.query(query)
+#     query = """
+#         UPDATE `bookit-court-booking-system.main.Customer`
+#         SET username='""" + username + """', name='""" + name + """', email='"""+ email + """', PhoneNumber='""" + phoneNum + """',BlockNumber='""" + blockNum + """',UnitNumber='""" + unitNum + """'
+#         WHERE username='""" + oldusername + """'
+#     """
+#     query_job = client.query(query)
     
-    query_job.result()
+#     query_job.result()
 
-    print(f"DML query modified {query_job.num_dml_affected_rows} rows.")
-    return query_job.num_dml_affected_rows
+#     print(f"DML query modified {query_job.num_dml_affected_rows} rows.")
+#     return query_job.num_dml_affected_rows
+
+
+def testingEmailSQL():
+    email = "test@gmail.com"
+    client = bigquery.Client()
+    query = """ 
+        SELECT email 
+        FROM `bookit-court-booking-system.main.Customer`
+        WHERE email=\'""" + email + """\'
+    """
+    queryjob = client.query(query)
+    print("The query data:")
+    for row in queryjob:
+        return(row["email"])
+
+def testingEmail():
+    
+    clientEmail = "zhixuenloo2000@gmail.com"
+    message = "This is a testing message from bookIt flask mail."
+    password = "@ppDev123"
+    
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    
+    server.login("bookitappdev@gmail.com",password)
+    server.sendmail("bookitappdev@gmail.com",clientEmail,message)
+    
 
     
 # if __name__ == "__main__":
+<<<<<<< HEAD
 #     print(testingInsert())
 
 # ReservationQuery
@@ -194,3 +223,6 @@ def getReservation():
     # print("The query data:")
     return query_job;    
     
+=======
+#     print(testingEmailSQL())
+>>>>>>> origin/register
