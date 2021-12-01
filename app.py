@@ -501,7 +501,7 @@ def UpdateFacility1():
             query_job.result()
             
             query1="""
-                UPDATE main.Court1 set Available = True ,Booking = True
+                UPDATE main.Court1 set Available = True 
                     where Start_Time >= '""" + Start_time + """' 
                    and  End_Time <= '""" + End_time + """'
 
@@ -556,7 +556,7 @@ def UpdateFacility2():
             query_job.result()
             
             query1="""
-                UPDATE main.Court2 set Available = True,Booking = True
+                UPDATE main.Court2 set Available = True
                     where Start_Time >= '""" + Start_time + """' 
                    and  End_Time <= '""" + End_time + """'
 
@@ -611,7 +611,7 @@ def UpdateFacility3():
             query_job.result()
             
             query1="""
-                UPDATE main.Court3 set Available = True,Booking = True
+                UPDATE main.Court3 set Available = True
                     where Start_Time >= '""" + Start_time + """' 
                    and  End_Time <= '""" + End_time + """'
 
@@ -667,7 +667,7 @@ def UpdateFacility4():
             query_job.result()
             
             query1="""
-                UPDATE main.Court4 set Available = True,Booking = True
+                UPDATE main.Court4 set Available = True
                     where Start_Time >= '""" + Start_time + """' 
                    and  End_Time <= '""" + End_time + """'
 
@@ -725,7 +725,7 @@ def UpdateFacilityAll():
                 query_job.result()
             
                 query1="""
-                    UPDATE main.Court"""+(StringNum)+""" set Available = True,Booking = True
+                    UPDATE main.Court"""+(StringNum)+""" set Available = True
                     where Start_Time >= '""" + Start_time + """' 
                      and  End_Time <= '""" + End_time + """'
 
