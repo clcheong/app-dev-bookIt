@@ -13,9 +13,6 @@ from tkinter import *
   
 from tkinter import messagebox  
   
-  
-
-
 
 # $env:FLASK_ENV = "development"
 # $env:GOOGLE_APPLICATION_CREDENTIALS="D:\UTM DEGREE\year3\sem1\Application Development\Sport Booking System\bookit-court-booking-system-55f5c7b6bd4d.json"
@@ -380,6 +377,14 @@ def profileAdmin():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']    
         return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
+
+@app.route('/court-availability')
+def courtAvailable():
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:      
+        return render_template('court-availability.html')
 
 
 @app.route('/faq')
