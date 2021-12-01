@@ -274,41 +274,32 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="/IndexAdmin">
+        <a class="nav-link " href="{{url_for('IndexAdmin')}}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/profile-admin">
+        <a class="nav-link collapsed" href="{{url_for('profileAdmin')}}">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/court-availability">
+        <a class="nav-link collapsed" href="{{url_for('courtAvailable')}}">
           <i class="bi bi-question-circle"></i>
           <span>Court Availability</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/manageFacility">
+        <a class="nav-link collapsed" href="{{url_for('ManageFacility')}}">
           <i class="bi bi-question-circle"></i>
           <span>Court Managing</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/contact">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-      
 
     </ul>
 
