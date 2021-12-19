@@ -44,6 +44,14 @@
       border-radius:2rem;
       color:white;
     }
+    .Status
+    {
+      background-color:transparent;
+      border:1px solid #4154f1;
+      padding:5px 15px;
+      border-radius:2rem;
+      color:#4154f1;      
+    }
   </style>
 </head>
 
@@ -54,7 +62,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <img src="{{url_for('static',filename='img/logo.png')}}" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -220,7 +228,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="{{url_for('static',filename='img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -347,23 +355,23 @@
                 <tbody>
                   <tr style="height:30px">
                     <th scope="row" style="line-height:30px;">Court 1</th>
-                    <td><button>Close</button></td>
+                    <td><button class="Status" disabled>{{Court1Open}}</button></td>
                     <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
                   </tr>
                   <tr>
                     <th scope="row" style="line-height:30px;">Court 2</th>
-                    <td><button>Close</button></td>
+                    <td><button class="Status" disabled>{{Court2Open}}</button></td>
                     <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
                   </tr>
                   <tr>
                     <th scope="row" style="line-height:30px;">Court 3</th>
-                    <td><button>Close</button></td>
+                    <td><button class="Status" disabled>{{Court3Open}}</button></td>
                     <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
 
                   </tr>
                   <tr>
                     <th scope="row" style="line-height:30px;">Court 4</th>
-                    <td><button>Close</button></td>
+                    <td><button class="Status" disabled>{{Court4Open}}</button></td>
                     <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
                   </tr>
                 </tbody>
@@ -396,14 +404,14 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/chart.js/chart.min.js"></script>
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/quill/quill.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/chart.js/chart.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{url_for('static',filename='vendor/echarts/echarts.min.js')}}"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

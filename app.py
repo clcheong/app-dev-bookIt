@@ -15,7 +15,7 @@ from tkinter import messagebox
   
 
 # $env:FLASK_ENV = "development"
-# $env:GOOGLE_APPLICATION_CREDENTIALS="D:\UTM DEGREE\year3\sem1\Application Development\Sport Booking System\bookit-court-booking-system-55f5c7b6bd4d.json"
+# $env:GOOGLE_APPLICATION_CREDENTIALS="D:\UTM DEGREE\year3\sem1\Application Development\Sport Booking System\bookit-court-booking-system-1-0983f119afe8.json"
 
 """
 ==================================================================================================
@@ -183,15 +183,30 @@ def IndexAdmin():
 def IndexAdminPost():
     client = bigquery.Client()
     app.logger.info('Info level log')
-    Booking_ID=request.form['Booking_ID'].replace("/","");
-    query="""
-    UPDATE `bookit-court-booking-system-1.main.Reservation` 
-    SET ApproveStatus = FALSE
-    WHERE Booking_ID = {}
-    """.format('\"'+Booking_ID+'\"')
-    app.logger.info(query)
+    if 'Booking_ID' in request.form:
+        Booking_ID=request.form['Booking_ID'].replace("/","");
+        app.logger.info(Booking_ID)
+    if 'Booking_Status' in request.form:
+        Booking_Status=request.form['Booking_Status'].replace("/","");
+        app.logger.info(Booking_Status)
+    if Booking_Status=="Disapprove":
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Reservation` 
+        SET Approve_Status = FALSE
+        WHERE Book_ID = {}
+        """.format('\"'+Booking_ID+'\"')
+        app.logger.info(query)
+        query_job = client.query(query)
 
-    query_job = client.query(query)
+    if Booking_Status=="Approve":
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Reservation` 
+        SET Approve_Status = TRUE
+        WHERE Book_ID = {}
+        """.format('\"'+Booking_ID+'\"')
+        app.logger.info(query)    
+        query_job = client.query(query)
+
     return '', 400
 #Below this is not under AD project
 
@@ -384,7 +399,46 @@ def courtAvailable():
         return redirect('/login')
     
     else:      
-        return render_template('court-availability.html')
+        client=bigquery.Client()
+        court1Open="Close";
+        court2Open="Close";
+        court3Open="Close";
+        court4Open="Close";
+        
+        query ="""
+            Select * from main.Court1 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                court1Open="Open"
+                break
+        query ="""
+            Select * from main.Court2 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                court2Open="Open"
+                break
+        query ="""
+            Select * from main.Court3 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                court3Open="Open"
+                break
+        query ="""
+            Select * from main.Court4 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                court4Open="Open"
+                break
+
+        return render_template('court-availability.html',Court1Open=court1Open,Court2Open=court2Open,Court3Open=court3Open,Court4Open=court4Open);
 
 
 #Render template for Manage facility 
@@ -468,6 +522,12 @@ def ManageFacility():
 
         return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time)
 
+@app.route('/Feedback')
+def Feedback():
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    else:
+        return render_template('Feedback.html')
 
 #Update Court 1
 @app.route('/Update-Facility-1', methods=['GET', 'POST'])
@@ -758,187 +818,3 @@ def faq():
 
 if __name__ == "__main__":
     app.run()
-
-# @app.route('/buttons')
-# def buttons():
-#     return render_template('buttons.html')
-
-# @app.route('/cards')
-# def cards():
-#     return render_template('cards.html')
-
-# @app.route('/layout')
-# def layout():
-#     return render_template('layout.html')
-
-
-# @app.route('/utilities-animation')
-# def utilitiesAnimation():
-#     return render_template('utilities-animation.html')
-
-# @app.route('/utilities-border')
-# def utilitiesBorder():
-#     return render_template('utilities-border.html')
-
-# @app.route('/utilities-color')
-# def utilitiesColor():
-#     return render_template('utilities-color.html')
-
-# @app.route('/utilities-other')
-# def utilitiesOther():
-#     return render_template('utilities-other.html')
-
-# @app.route('/update-consumption',methods=['GET','POST']) 
-# def updateConsumption():
-#     day = getCurrentDay()
-#     month = getCurrentMonth()
-#     year = getCurrentYear()
-    
-#     if request.method == 'POST':
-#         form = request.form.get(exampleFirstName)
-#         flask(f"update {form}")
-#         return redirect(url_for("index"))
-    
-#     return render_template('update-consumption.html',currMonth=month,currYear=year)
-
-
-# @app.route('/home')
-# def home():
-#     studentID = None
-#     course_registered = []
-#     if 'user' in session:
-#         studentID = session['user']
-
-#         user_course = registers.query.filter_by(studentID=studentID).all()
-#         for course in user_course:
-#             course_registered.append(get_course_detail(course.courseID, str(course.section)))
-
-#     return render_template('home.html', studentID=studentID, courses=course_registered)
-
-# @app.route('/course')
-# def course():
-#     list_courses = get_course_no_repeat()
-#     return render_template('course.html', courses=list_courses)
-
-# @app.route('/section')
-# def section():
-#     # Get Method
-#     courseID = request.args.get('courseID')
-#     section_list = get_course_section(courseID)
-    
-#     return render_template('section.html', sections=section_list, courseID=courseID)
-
-# @app.route('/enrollment')
-# def enrollment():
-#     courseID = request.args.get('courseID')
-#     section = request.args.get('section')
-
-#     if not 'user' in session:
-#         flash("Please Login to Enrol in the Course!")
-#         return redirect(url_for('login'))
-
-#     studentID = session['user']
-#     course_registered = registers.query.filter_by(studentID=studentID).filter_by(courseID=courseID).first()
-
-#     if course_registered:
-#         flash(f"Error! {courseID} already registered!",)
-#         return redirect(url_for('course'))
-
-#     course = registers(studentID=studentID, courseID=courseID, section=section)
-#     db.session.add(course)
-#     db.session.commit()
-
-#     flash(f"{courseID} register successfully.", "register")
-#     return redirect(url_for('home'))
-
-# @app.route('/remove', methods=['GET', 'POST'])
-# def remove():
-#     studentID = None
-#     if 'user' in session:
-#         studentID = session['user']
-
-#     if request.method == "GET":
-#         user_courses = []
-#         db_user_courses = registers.query.filter_by(studentID=studentID).all()
-#         for course in db_user_courses:
-#             user_courses.append(course.courseID)
-    
-#         return render_template('remove.html', courses=user_courses)
-    
-#     else:
-#         courseID = request.form.get('course')
-         
-#         course = registers.query.filter_by(studentID=studentID).filter_by(courseID=courseID).first()
-#         db.session.delete(course)
-#         db.session.commit()
-
-#         flash(f"{courseID} removed.", "remove")
-#         return redirect(url_for('home'))
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if request.method == "GET":
-#         return render_template('login.html')
-
-#     else:
-#         studentID = request.form.get('inputStudentID')
-#         password = request.form.get('inputPassword')
-
-#         user_result = users.query.filter_by(studentID=studentID).first()
-
-#         if not user_result:
-#             flash('StudentID or Password incorrect!')
-#             return redirect(url_for('login'))
-
-#         elif check_password_hash(user_result.phash, password):
-#             session['user'] = studentID
-#             return redirect(url_for('home'))
-
-#         else:
-#             flash('StudentID or Password incorrect!')
-#             return redirect(url_for('login'))
-
-# @app.route('/register', methods=['GET', 'POST'])
-# def register():
-#     if request.method == "GET":
-#         return render_template('register.html')
-
-#     else:
-#        studentID = request.form.get('inputStudentID')
-#         password = request.form.get('inputPassword')
-#         retype = request.form.get('inputRetype')
-#         phash = None
-
-#         if password == retype:
-#             phash = generate_password_hash(password)
-
-#             # Check student used or not
-#             user_result = users.query.filter_by(studentID=studentID).first()
-
-#             if user_result:
-#                 flash("Student ID have been register! Please SignIn")
-#                 return redirect(url_for('register'))
-
-#         elif len(studentID) > 9:
-#             flash("Student ID Invalid! Please try again.")
-#             return redirect(url_for('register'))
-
-#         else:
-#             flash("Password not same! Please try again.")
-#             return redirect(url_for('register'))
-
-#         # Create new user in database
-#         user = users(studentID = studentID, phash = phash)
-#         db.session.add(user)
-#         db.session.commit()
-        
-#         # Update user in session
-#         session['user'] = studentID
-
-#         flash("Account Created", "register")
-#         return redirect(url_for('home'))
-
-# @app.route('/logout')
-# def logout():
-#     session.pop('user', None)
-#     return redirect(url_for('home'))
