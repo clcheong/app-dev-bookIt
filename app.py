@@ -33,7 +33,7 @@ def login():
 
     else:
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Customer'
+        cust_table_id='bookit-court-booking-system-1.main.Customer'
         username = request.form['username']
         password = request.form['passwword']
 
@@ -87,7 +87,7 @@ def register():
 
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Customer'
+        cust_table_id='bookit-court-booking-system-1.main.Customer'
 
         username = request.form['inputusername']
         password = request.form['inputpassword']
@@ -170,7 +170,7 @@ def IndexAdmin():
 
         query="""
            SELECT *
-           FROM `bookit-court-booking-system.main.Reservation`
+           FROM `bookit-court-booking-system-1.main.Reservation`
         """
 
         query_job = client.query(query)
@@ -185,7 +185,7 @@ def IndexAdminPost():
     app.logger.info('Info level log')
     Booking_ID=request.form['Booking_ID'].replace("/","");
     query="""
-    UPDATE `bookit-court-booking-system.main.Reservation` 
+    UPDATE `bookit-court-booking-system-1.main.Reservation` 
     SET ApproveStatus = FALSE
     WHERE Booking_ID = {}
     """.format('\"'+Booking_ID+'\"')
@@ -283,7 +283,7 @@ def updateProfile():
         client = bigquery.Client()
         
         query = """
-            UPDATE `bookit-court-booking-system.main.Customer`
+            UPDATE `bookit-court-booking-system-1.main.Customer`
             SET username='""" + newUsername + """', name='""" + newName + """', email='"""+ newEmail + """', PhoneNumber='""" + newPhoneNum + """',BlockNumber='""" + newBlockNum + """',UnitNumber='""" + newUnitNum + """'
             WHERE username='""" + username + """'
         """
@@ -349,7 +349,7 @@ def updatePassword():
             client = bigquery.Client()
             
             query = """
-                UPDATE `bookit-court-booking-system.main.Customer`
+                UPDATE `bookit-court-booking-system-1.main.Customer`
                 SET password='""" + newPassword + """'
                 WHERE username='""" + username + """'
             """
