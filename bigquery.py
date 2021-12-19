@@ -10,11 +10,6 @@ def GetUserName():
     username=request.form['username']
     return username
 
-    
-
-
-
-
 
 #def getAvgCFB001():
     # Construct a BigQuery client object.
@@ -109,19 +104,19 @@ def GetUserName():
 #        return(row["culTotal"])
     
     
-#def getTotalRecycledKG():
-#    client = bigquery.Client()
+def getTotalRecycledKG():
+   client = bigquery.Client()
     
-#    query="""
-#        SELECT SUM(totalKG) AS totalKGrecycled
-#        FROM `hlbcyhi2021-2.main.hlb-recycle`
-#        WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
-#    """
+   query="""
+       SELECT SUM(totalKG) AS totalKGrecycled
+       FROM `hlbcyhi2021-2.main.hlb-recycle`
+       WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
+   """
     
-#    query_job = client.query(query)
-#    # print("The query data:")
-#    for row in query_job:
-#        return(row["totalKGrecycled"])    
+   query_job = client.query(query)
+   # print("The query data:")
+   for row in query_job:
+       return(row["totalKGrecycled"])    
     
     
     
@@ -224,6 +219,19 @@ def testingEmail():
 
     
 # if __name__ == "__main__":
-#     print(testingGetusername())
-# if __name__ == "__main__":
-#     print(testingEmailSQL())
+#     print(testingInsert())
+
+# ReservationQuery
+
+def getReservation():
+    client = bigquery.Client()
+    
+    query="""
+       SELECT CourtNo, Booker, ApproveStatus, Time
+       FROM `bookit-court-booking-system.main.Reservation`
+       WHERE EXTRACT(Month FROM Date) = EXTRACT(Month FROM CURRENT_DATE())
+    """
+    
+    query_job = client.query(query)
+    # print("The query data:")
+    return query_job;    

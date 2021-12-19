@@ -1,11 +1,5 @@
-# My own Library
-# from course import get_course_all, get_course_no_repeat, get_course_section, get_course_detail
-
 # Library from Flask
 
-from datetime import datetime
-from logging import StringTemplateStyle
-from os import name
 from google.cloud import bigquery
 from google.cloud.bigquery import client, dbapi, query
 from bigquery import GetUserName
@@ -16,6 +10,7 @@ import smtplib
 from flask import jsonify
 from flask import json
 # from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -31,31 +26,8 @@ import random
 import string  
   
 
-
-
-
-"""
-==================================================================================================
-||        Data Base Setup                                                                       ||
-==================================================================================================
-"""
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mzqzzqbbqshuyu:8dac9f5ddbfbc9f7556554c9d4d7b101acc45c7b2d8bce1c9ae90931f464c22f@ec2-54-205-61-191.compute-1.amazonaws.com:5432/d55vjv88et7bmh"
-# app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
-
-# db = SQLAlchemy(app)
-
-# class users(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     studentID = db.Column(db.String(10), nullable=False, unique=True)
-#     phash = db.Column(db.String(120), nullable=False)
-
-# class registers(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     studentID = db.Column(db.String(10), nullable=False)
-#     courseID = db.Column(db.String(10), nullable=False)
-#     section = db.Column(db.Integer, nullable=False)
-
+# $env:FLASK_ENV = "development"
+# $env:GOOGLE_APPLICATION_CREDENTIALS="D:\UTM DEGREE\year3\sem1\Application Development\Sport Booking System\bookit-court-booking-system-55f5c7b6bd4d.json"
 
 """
 ==================================================================================================
@@ -198,23 +170,6 @@ def resetPassword():
        
 @app.route('/index')
 def index():
-    # branchCount = getBranchCount()
-    # staffCount = getStaffCount()
-    # day = getCurrentDay()
-    # month = getCurrentMonth()
-    # year = getCurrentYear()
-    # currTotalCF = round(getTotalCFcurrMonth() * 0.001,3)
-    # avgCurrTotalCF = round(currTotalCF/branchCount,3)
-    # culTotalCFcurrMonth = round(getCulmulativeCFcurrMonth()*0.001,3)
-    # avgCulTotal = round(culTotalCFcurrMonth/branchCount,3)
-    # currMonthCFperCapita = round(currTotalCF/staffCount,3)
-    # safePerCapita = round(4/12,3)
-    # totSafe = round(staffCount*safePerCapita/branchCount,3)
-    
-    # kgRecycled = round(getTotalRecycledKG(),3)
-    # treesPlanted = round(getTotalTreesPlanted(),3)
-    # energySaved = round(getTotalEnergySaved(),3)
-    #username = GetUserName()
     return render_template('index.html')#,energySaved=energySaved,treesPlanted=treesPlanted,kgRecycled=kgRecycled,branchCountHTML=branchCount,totSafe=totSafe,staffCount=staffCount,currMonth=month,currYear=year, totalCF=currTotalCF, avgCF=avgCurrTotalCF, culTotal=culTotalCFcurrMonth, avgCulTotal=avgCulTotal,currMonthCFperCapita=currMonthCFperCapita,safe=safePerCapita,currDay=day)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -363,9 +318,18 @@ def IndexAdmin():
         return redirect('/login')
     
     else:    
+        client = bigquery.Client()
+
+        query="""
+           SELECT *
+           FROM `bookit-court-booking-system-1.main.Reservation`
+        """
+
+        query_job = client.query(query)
+        # print("The query data:")
         name = session['name']
         username = session['username']
-        return render_template('IndexAdmin.html',name=name, username=username)
+        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job)
 
 @app.route('/viewReservation')
 def viewReservation():
@@ -411,7 +375,21 @@ def viewReservation():
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=rlist,bid=bid)
-            
+
+
+@app.route('/IndexAdminPost', methods=['POST'])
+def IndexAdminPost():
+    client = bigquery.Client()
+    app.logger.info('Info level log')
+    Booking_ID=request.form['Booking_ID'].replace("/","");
+    query="""
+    UPDATE `bookit-court-booking-system-1.main.Reservation` 
+    SET ApproveStatus = FALSE
+    WHERE Booking_ID = {}
+    """.format('\"'+Booking_ID+'\"')
+    app.logger.info(query)
+    query_job = client.query(query)
+    return '', 400
 
 @app.route('/reservations')
 def reservations():
@@ -423,36 +401,35 @@ def reservations():
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']
         username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        rlist=[]
+        cust=name
+        bid=[]           
+        # View reservation history of user
+        query = """
+        SELECT Court_ID, Customer_Name,Approve_Status,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
+        FORMAT_TIME("%R",Start_Time) as stime
+        FROM main.Reservation
+        ORDER BY Reserve_Time DESC
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            cust=row['Customer_Name']
+            if cust==name:
+                rlist.append("Court Number: "+row['Court_ID'])
+                rlist.append("Reservation Date: "+row['rDate'])
+                rlist.append("Reservation Time: "+row['stime'])                    
+                rlist.append("Booking Status: ")
+                rlist.append(row['Approve_Status'])
+                rlist.append("Booking ID: ")
+                rlist.append(row['Book_ID'])
+                bid.append(row['Book_ID'])
 
-    client =bigquery.Client()
-    cust_table_id='bookit-court-booking-system-1.main.Reservation'
-    rlist=[]
-    cust=name
-    bid=[]           
-    # View reservation history of user
-    query = """
-    SELECT Court_ID, Customer_Name,Approve_Status,FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,Book_ID,
-    FORMAT_TIME("%R",Start_Time) as stime
-    FROM main.Reservation
-    ORDER BY Reserve_Time DESC
-    """
-    query_job = client.query(query)
-    for row in query_job:
-        cust=row['Customer_Name']
-        if cust==name:
-            rlist.append("Court Number: "+row['Court_ID'])
-            rlist.append("Reservation Date: "+row['rDate'])
-            rlist.append("Reservation Time: "+row['stime'])                    
-            rlist.append("Booking Status: ")
-            rlist.append(row['Approve_Status'])
-            rlist.append("Booking ID: ")
-            rlist.append(row['Book_ID'])
-            bid.append(row['Book_ID'])
+                
 
-            
-
-    return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
-        cust=cust,rlist=rlist,bid=bid)
+        return render_template("reservations.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
+            cust=cust,rlist=rlist,bid=bid)
 
 
 @app.route('/makereservation<int:court_id>', methods=['GET', 'POST'])
@@ -691,10 +668,386 @@ def profileAdmin():
         unitNum = session['UnitNumber']    
         return render_template('admin-profile.html',username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
+@app.route('/court-availability')
+def courtAvailable():
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:      
+        return render_template('court-availability.html')
+
+
+#Render template for Manage facility 
+@app.route('/ManageFacilityAvailability')
+def ManageFacility():
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    else:
+        Court1_Start_Time="-"
+        Court1_End_Time="-"
+        Court3_Start_Time="-"
+        Court3_End_Time="-"
+        Court2_Start_Time="-"
+        Court2_End_Time="-"
+        Court4_Start_Time="-"
+        Court4_End_Time="-"
+        client=bigquery.Client()
+
+        #Court 1 start time & END TIME
+        query ="""
+            Select * from main.Court1 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court1_Start_Time = row['Start_Time']
+                break
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court1_End_Time = row['End_Time']
+
+        #Court 2 start time & end time
+        query ="""
+            Select * from main.Court2 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court2_Start_Time = row['Start_Time']
+                break
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court2_End_Time = row['End_Time']
+        
+        #Court 3 Start Time and End Time
+        query ="""
+            Select * from main.Court3 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court3_Start_Time = row['Start_Time']
+                break
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court3_End_Time = row['End_Time']
+
+        #Court 4 Start Time and End Time
+        query ="""
+            Select * from main.Court4 order by Start_Time
+        """
+        query_job = client.query(query)
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court4_Start_Time = row['Start_Time']
+                break
+        for row in query_job:
+            if   row['Available'] ==True:
+                Court4_End_Time = row['End_Time']
+
+        
+        if Court1_Start_Time==Court2_Start_Time and Court1_Start_Time==Court3_Start_Time and Court1_Start_Time==Court4_Start_Time:
+            AllCourt_Start_Time = Court1_Start_Time
+        else:
+            AllCourt_Start_Time ="-"
+
+        if Court1_End_Time==Court2_End_Time and Court1_End_Time==Court3_End_Time and Court1_End_Time==Court4_End_Time:
+            AllCourt_End_Time=Court1_End_Time
+        else:
+            AllCourt_End_Time="-"
+
+        return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time)
+
+
+#Update Court 1
+@app.route('/Update-Facility-1', methods=['GET', 'POST'])
+def UpdateFacility1():
+    if request.method == "GET":
+        return render_template('ManageFacility.html')
+    
+    else:    
+        
+        client=bigquery.Client()
+        
+
+        Start_time = request.form['Start_time']
+        End_time = request.form['End_time']
+        availability=request.form['Availability']
+        available="available"
+        session['Start_time']=Start_time
+        session['End_time']=End_time
+        if availability == available:
+            
+        
+            query="""
+                UPDATE main.Court1 set Available = False ,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """  
+             
+            query_job = client.query(query)
+            
+            query_job.result()
+            
+            query1="""
+                UPDATE main.Court1 set Available = True 
+                    where Start_Time >= '""" + Start_time + """' 
+                   and  End_Time <= '""" + End_time + """'
+
+               """
+
+            query_job = client.query(query1)
+        
+            query_job.result()
+            
+        elif availability =="unavailable":
+            query="""
+                UPDATE main.Court1 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """     
+            query_job = client.query(query)
+        
+        
+            query_job.result()           
+        return redirect('/ManageFacilityAvailability')
+        
+#Update Court 2   
+@app.route('/Update-Facility-2', methods=['GET', 'POST'])
+def UpdateFacility2():
+    if request.method == "GET":
+        return render_template('ManageFacility.html')
+    
+    else:    
+        
+        client=bigquery.Client()
+       
+
+        Start_time = request.form['Start_time']
+        End_time = request.form['End_time']
+        availability=request.form['Availability']
+        available="available"
+        session['Start_time']=Start_time
+        session['End_time']=End_time
+        if availability == available:
+            
+        
+            query="""
+                UPDATE main.Court2 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """  
+             
+            query_job = client.query(query)
+            
+            query_job.result()
+            
+            query1="""
+                UPDATE main.Court2 set Available = True
+                    where Start_Time >= '""" + Start_time + """' 
+                   and  End_Time <= '""" + End_time + """'
+
+               """
+
+            query_job = client.query(query1)
+        
+            query_job.result()
+            
+        elif availability =="unavailable":
+            query="""
+                UPDATE main.Court2 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """     
+            query_job = client.query(query)
+        
+        
+            query_job.result()           
+        return redirect('/ManageFacilityAvailability')
+
+#Update Court 3
+@app.route('/Update-Facility-3', methods=['GET', 'POST'])
+def UpdateFacility3():
+    if request.method == "GET":
+        return render_template('ManageFacility.html')
+    
+    else:    
+        
+        client=bigquery.Client()
+        
+
+        Start_time = request.form['Start_time']
+        End_time = request.form['End_time']
+        availability=request.form['Availability']
+        available="available"
+        session['Start_time']=Start_time
+        session['End_time']=End_time
+        if availability == available:
+            
+        
+            query="""
+                UPDATE main.Court3 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """  
+             
+            query_job = client.query(query)
+            
+            query_job.result()
+            
+            query1="""
+                UPDATE main.Court3 set Available = True
+                    where Start_Time >= '""" + Start_time + """' 
+                   and  End_Time <= '""" + End_time + """'
+
+               """
+
+            query_job = client.query(query1)
+        
+            query_job.result()
+            
+        elif availability =="unavailable":
+            query="""
+                UPDATE main.Court3 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """     
+            query_job = client.query(query)
+        
+        
+            query_job.result()           
+        return redirect('/ManageFacilityAvailability')
+
+
+#Update Court 4
+@app.route('/Update-Facility-4', methods=['GET', 'POST'])
+def UpdateFacility4():
+    if request.method == "GET":
+        return render_template('ManageFacility.html')
+    
+    else:    
+        
+        client=bigquery.Client()
+        
+
+        Start_time = request.form['Start_time']
+        End_time = request.form['End_time']
+        availability=request.form['Availability']
+        available="available"
+        session['Start_time']=Start_time
+        session['End_time']=End_time
+        if availability == available:
+            
+        
+            query="""
+                UPDATE main.Court4 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """  
+             
+            query_job = client.query(query)
+            
+            query_job.result()
+            
+            query1="""
+                UPDATE main.Court4 set Available = True
+                    where Start_Time >= '""" + Start_time + """' 
+                   and  End_Time <= '""" + End_time + """'
+
+               """
+
+            query_job = client.query(query1)
+        
+            query_job.result()
+            
+        elif availability =="unavailable":
+            query="""
+                UPDATE main.Court4 set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                """     
+            query_job = client.query(query)
+        
+        
+            query_job.result()           
+        return redirect('/ManageFacilityAvailability')   
+
+#Update for all Courts              HAVENT settle
+@app.route('/Update-Facility-all', methods=['GET', 'POST'])
+def UpdateFacilityAll():
+    if request.method == "GET":
+        return render_template('ManageFacility.html')
+    
+    else:    
+        
+        client=bigquery.Client()
+        
+
+        Start_time = request.form['Start_time']
+        End_time = request.form['End_time']
+        availability=request.form['Availability']
+        available="available"
+        session['Start_time']=Start_time
+        session['End_time']=End_time
+        if availability == available:
+            
+            
+
+            for num in range(1,5):
+                StringNum=str(num)
+                query="""
+                         UPDATE main.Court"""+(StringNum)+""" set Available = False,Booking = False
+                        where Start_Time >= '01:00:00' 
+                        and  End_Time <= '23:00:00'
+
+                     """  
+             
+                query_job = client.query(query)
+            
+                query_job.result()
+            
+                query1="""
+                    UPDATE main.Court"""+(StringNum)+""" set Available = True
+                    where Start_Time >= '""" + Start_time + """' 
+                     and  End_Time <= '""" + End_time + """'
+
+                        """
+
+                query_job = client.query(query1)
+        
+                query_job.result()
+            
+        elif availability =="unavailable":
+            
+            for num in range(1,5):
+                StringNum=str(num)
+                query="""
+                    UPDATE main.Court"""+(StringNum)+""" set Available = False,Booking = False
+                    where Start_Time >= '01:00:00' 
+                    and  End_Time <= '23:00:00'
+
+                    """     
+                query_job = client.query(query)
+        
+        
+                query_job.result()           
+        return redirect('/ManageFacilityAvailability')   
+
 
 @app.route('/faq')
 def faq():
     return render_template('pages-faq.html')
+
+if __name__ == "__main__":
+    app.run()
 
 # @app.route('/buttons')
 # def buttons():
