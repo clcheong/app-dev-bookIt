@@ -73,7 +73,7 @@ def login():
 
     else:
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Customer'
+        cust_table_id='bookit-court-booking-system-1.main.Customer'
         username = request.form['username']
         password = request.form['passwword']
 
@@ -127,7 +127,7 @@ def checkAccount():
     client = bigquery.Client();
     query = """ 
         SELECT email 
-        FROM `bookit-court-booking-system.main.Customer`
+        FROM `bookit-court-booking-system-1.main.Customer`
         WHERE email=\'""" + email + """\'
     """
     
@@ -184,7 +184,7 @@ def resetPassword():
         client = bigquery.Client()
         
         query = """
-            UPDATE `bookit-court-booking-system.main.Customer`
+            UPDATE `bookit-court-booking-system-1.main.Customer`
             SET password='""" + newPW + """'
             WHERE email='""" + email + """'
         """
@@ -225,7 +225,7 @@ def register():
 
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Customer'
+        cust_table_id='bookit-court-booking-system-1.main.Customer'
 
         username = request.form['inputusername']
         password = request.form['inputpassword']
@@ -296,7 +296,7 @@ def IndexResident():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Court1'
+        cust_table_id='bookit-court-booking-system-1.main.Court1'
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court1
@@ -379,7 +379,7 @@ def viewReservation():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Reservation'
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
         rlist=[]
         cust=name
         bid=[]
@@ -425,7 +425,7 @@ def reservations():
         username = session['username']
 
     client =bigquery.Client()
-    cust_table_id='bookit-court-booking-system.main.Reservation'
+    cust_table_id='bookit-court-booking-system-1.main.Reservation'
     rlist=[]
     cust=name
     bid=[]           
@@ -461,7 +461,7 @@ def zhixuen(court_id):
         return redirect('/login')  
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system.main.Court{}'.format(court_id)
+        cust_table_id='bookit-court-booking-system-1.main.Court{}'.format(court_id)
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court{}
@@ -489,7 +489,7 @@ def zhixuen(court_id):
 
             client=bigquery.Client()
             query = """
-            INSERT INTO bookit-court-booking-system.main.Reservation 
+            INSERT INTO bookit-court-booking-system-1.main.Reservation 
             (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
             VALUES 
             ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
@@ -497,7 +497,7 @@ def zhixuen(court_id):
             query_job = client.query(query)
 
             query1 = """
-            UPDATE `bookit-court-booking-system.main.Court""" +Court_ID +"""`
+            UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
             SET Booking=True
             WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         """.format(court_id)
@@ -596,7 +596,7 @@ def updateProfile():
         client = bigquery.Client()
         
         query = """
-            UPDATE `bookit-court-booking-system.main.Customer`
+            UPDATE `bookit-court-booking-system-1.main.Customer`
             SET username='""" + newUsername + """', name='""" + newName + """', email='"""+ newEmail + """', PhoneNumber='""" + newPhoneNum + """',BlockNumber='""" + newBlockNum + """',UnitNumber='""" + newUnitNum + """'
             WHERE username='""" + username + """'
         """
@@ -662,7 +662,7 @@ def updatePassword():
             client = bigquery.Client()
             
             query = """
-                UPDATE `bookit-court-booking-system.main.Customer`
+                UPDATE `bookit-court-booking-system-1.main.Customer`
                 SET password='""" + newPassword + """'
                 WHERE username='""" + username + """'
             """
