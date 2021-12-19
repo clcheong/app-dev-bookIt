@@ -37,7 +37,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body onload="createDiv()">
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -342,29 +342,23 @@
             <div class="col-10">
               <div class="card">
 
-                <div class="card-body">
-                  <h5 class="card-title" onload="createDiv()">Today's Reservation</h5>
-                  <div id="res">
-
+                <div class="card-body" id="res">
+                  <h5 class="card-title">Today's Reservation</h5>
+                  <div>
+                  Reservation Details(Reservations shown are for one hour period):<br>
+                  {% for rlist in rlist %}
+                      <p>
+                        {{rlist}}
+                        {% for bid in bid%}
+                          {% if rlist == bid %}
+                          <hr style="height: 3px;">
+                          {% endif %}
+                        {% endfor %}
+                      </p>
+                  {% endfor %}
+                  
                   </div>
-                  <script>
-                    function createDiv()
-                    {
-                      alert("Running");
-                      const newDiv = document.createElement("div");
-
-                      // and give it some content
-                      const newContent = document.createTextNode("Hi there and greetings!");
-
-                      // add the text node to the newly created div
-                      newDiv.appendChild(newContent);
-
-                      // add the newly created element and its content into the DOM
-                      const currentDiv = document.getElementById("res");
-                      document.body.insertBefore(newDiv, currentDiv);
-                    }
-                  </script>
-                  <a href='/reservations' class="btn btn-primary w-25" >View Reservation History</a>
+                  <a href='/reservations' class="btn btn-primary w-75" >View Reservation History</a>
                 </div>
                 
               </div>
@@ -411,3 +405,19 @@
 </body>
 
 </html>
+<script>
+  function createDiv()
+  {
+    var count=0;
+    var max=parseInt('{{count}}');
+    if (max==1)
+    {
+      var div= document.createElement("div");
+      var para=document.createElement("p");
+      para.innerHTML='{{rlist[0]}}'+'{{rlist[1]}}'+'{{rlist[2]}}'+'{{rlist[3]}}'+'{{rlist[4]}}';
+      document.getElementById("res").appendChild(div);
+      document.getElementById("res").appendChild(para);
+    }
+ 
+  }
+</script>

@@ -150,6 +150,20 @@ def getTotalRecycledKG():
 #    for row in query_job:
 #        return(row["totalEnergySaved"])  
 
+def testingGetusername():
+    client = bigquery.Client()
+
+    query = """
+                SELECT name 
+                FROM `bookit-court-booking-system.main.Customer` 
+                WHERE username='""" + "bryan" + """'
+            """
+    query_job = client.query(query)
+    print("The query data:")
+    for row in query_job:
+        return(row["name"])
+
+
 
 # def testingInsert():
     
