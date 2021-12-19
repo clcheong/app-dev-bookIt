@@ -37,7 +37,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body onload="createDiv()">
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -338,24 +338,33 @@
         <div class="col-lg-8">
           <div class="row">
 
-            <!-- Reservation History -->
+            <!-- Today's Reservation -->
             <div class="col-10">
               <div class="card">
 
-                <div class="card-body">
-                  <h5 class="card-title" id="history">Reservation History</h5>
-                  <script>
-                    const rlist= new Array('{{rlist}}');
-                    document.getElementById("history").innerHTML=rlist;
-                    
-                  </script>
+                <div class="card-body" id="res">
+                  <h5 class="card-title">List of Reservations(Including Today)</h5>
+                  <div>
+                  Reservation Details(Reservations shown are for one hour period):<br>
+                  {% for rlist in rlist %}
+                      <p>
+                        {{rlist}}
+                        {% for bid in bid%}
+                          {% if rlist == bid %}
+                          <hr style="height: 3px;">
+                          {% endif %}
+                        {% endfor %}
+                      </p>
+                  {% endfor %}
+                  </div>
                 </div>
-
+                
               </div>
-            </div><!-- End Reservation History -->
+            </div><!-- End Today's Reservation's -->
 
           </div>
         </div><!-- End Left side columns -->
+
 
       </div>
     </section>
@@ -394,3 +403,19 @@
 </body>
 
 </html>
+<script>
+  function createDiv()
+  {
+    var count=0;
+    var max=parseInt('{{count}}');
+    if (max==1)
+    {
+      var div= document.createElement("div");
+      var para=document.createElement("p");
+      para.innerHTML='{{rlist[0]}}'+'{{rlist[1]}}'+'{{rlist[2]}}'+'{{rlist[3]}}'+'{{rlist[4]}}';
+      document.getElementById("res").appendChild(div);
+      document.getElementById("res").appendChild(para);
+    }
+ 
+  }
+</script>
