@@ -38,6 +38,14 @@
       border-radius:2rem;
       color:white;
     }
+    button
+    {
+      background-color:#4154f1;
+      border:none;
+      padding:5px 15px;
+      border-radius:2rem;
+      color:white;
+    }
     .Status
     {
       background-color:transparent;
@@ -386,7 +394,8 @@
                       <input type="hidden" name="Booking_Status" value="Approve"/>
                       <input type="submit" value="Approve"/>
                     </form>
-                    {% endif %}                    
+                    {% endif %}
+                    <a href="{{url_for('IndexAdmin')}}"><button>Edit</button></a>                    
                   {% endfor %}
                   <script 
                       src="https://code.jquery.com/jquery-3.5.1.min.js" 
