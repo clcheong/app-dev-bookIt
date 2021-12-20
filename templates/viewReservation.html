@@ -351,6 +351,10 @@
                         {{rlist}}
                         {% for bid in bid%}
                           {% if rlist == bid %}
+                          
+                          <div style="display:flex; flex-direction:row-reverse;">
+                          <input class="btn btn-primary" type="submit" value="Reschedule">
+                          </div>
                           <hr style="height: 3px;">
                           {% endif %}
                         {% endfor %}
