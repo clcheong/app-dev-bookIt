@@ -280,10 +280,13 @@
                     {% endfor %}          
                     <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=600 height=auto>
                     <br><br>
-                    <a href="makereservation1" class="btn btn-primary w-100">Reschedule Here!</a>                  
-
+                    <form action="RescheduleReservation1" method="post">
+                    <input type="text" id="bookID" name="bookID" value="{{bookID}}" hidden>
+                    <input type="text" id="courtID" name="courtID" value="1" hidden> 
+                    <input type="submit" class="btn btn-primary w-100" value="Reschedule Here!">
+                    <!--<a href="RescheduleReservation1" class="btn btn-primary w-100">Reschedule Here!</a> -->                 
+                    </form>
                     </div>
-
                 </div>
                 </div><!-- End Court 1 Card -->
 
@@ -300,9 +303,13 @@
                     {% endfor %}
                     <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=600 height=auto>
                     <br><br>
-                    <a href="makereservation2" class="btn btn-primary w-100">Reschedule Here!</a>
+                    <form action="RescheduleReservation2" method="post">
+                        <input type="text" id="bookID" name="bookID" value="{{bookID}}" hidden>
+                        <input type="text" id="courtID" name="courtID" value="2" hidden> 
+                        <input type="submit" class="btn btn-primary w-100" value="Reschedule Here!">
+                        <!--<a href="RescheduleReservation1" class="btn btn-primary w-100">Reschedule Here!</a> -->                 
+                    </form>                    
                     </div>
-
                 </div>
                 </div><!-- End Court 2 Card -->
 
@@ -319,8 +326,12 @@
                     {% endfor %}
                     <img src="{{url_for('static',filename='img/testing3.png')}}" class="court" width=600 height=auto>
                     <br><br>
-                    <a href="makereservation3" class="btn btn-primary w-100" >Reschedule Here!</a>
-
+                    <form action="RescheduleReservation3" method="post">
+                        <input type="text" id="bookID" name="bookID" value="{{bookID}}" hidden>
+                        <input type="text" id="courtID" name="courtID" value="3" hidden> 
+                        <input type="submit" class="btn btn-primary w-100" value="Reschedule Here!">
+                        <!--<a href="RescheduleReservation1" class="btn btn-primary w-100">Reschedule Here!</a> -->                 
+                    </form>
                     </div>
                 </div>
                 </div><!-- End Court 3 Card -->
@@ -338,9 +349,13 @@
                     {% endfor %}               
                     <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=600 height=auto>
                     <br><br>
-                    <a href="makereservation4" class="btn btn-primary w-100">Reschedule Here!</a>
+                    <form action="RescheduleReservation4" method="post">
+                        <input type="text" id="bookID" name="bookID" value="{{bookID}}" hidden>
+                        <input type="text" id="courtID" name="courtID" value="4" hidden> 
+                        <input type="submit" class="btn btn-primary w-100" value="Reschedule Here!">
+                        <!--<a href="RescheduleReservation1" class="btn btn-primary w-100">Reschedule Here!</a> -->                 
+                    </form>                    
                     </div>
-
                 </div>
                 </div><!-- End Court 4 -->
           </div>

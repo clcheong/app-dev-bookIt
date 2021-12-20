@@ -1179,6 +1179,97 @@ def Reschedule():
 
         return render_template("reschedule.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=stime,
         c2stime=c2stime,c3stime=c3stime,c4stime=c4stime,bookID=bookID)
+   
+   
+   
+        
+@app.route('/RescheduleReservation<int:court_id>', methods=['GET', 'POST'])
+def makeReschedule(court_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Court{}'.format(court_id)
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court{}
+        ORDER BY Start_Time
+        """.format(court_id)
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                stime.append(row['Start_Time'])      
+            else:
+                pass
+            letters = string.digits
+        Book_ID = request.form['bookID'] #str(''.join(random.choice(letters) for i in range(16)))
+        Customer_Name = session["name"]
+        Court_ID = request.form['courtID']
+        Customer_Phone_Number = session['PhoneNumber']
+        #if request.method == "POST":
+        return render_template('makeReschedule.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
+        #else:   #might need to seperate this into a new route
+        #     print("asd")
+        #     Start_Time_Form = (str(request.form.get('Start_time')))
+        #     date_object_start_time = datetime.strptime(Start_Time_Form, "%H:%M:%S")
+        #     date_object_end_time = date_object_start_time + timedelta(hours=1)
+
+        #     client=bigquery.Client()
+        #     query = """
+        #     INSERT INTO bookit-court-booking-system-1.main.Reservation 
+        #     (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
+        #     VALUES 
+        #     ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
+
+        #     query_job = client.query(query)
+
+        #     query1 = """
+        #     UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
+        #     SET Booking=True
+        #     WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
+        # """.format(court_id)
+
+        #     query_job = client.query(query1)
+        #     print('success')
+        #     return redirect("/viewReservation")
+
+
+@app.route('/UpdateReschedule<int:court_id>', methods=['GET', 'POST'])
+def updateReschedule(court_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        Book_ID = request.form['bookID'] #str(''.join(random.choice(letters) for i in range(16)))
+        Customer_Name = session["name"]
+        Court_ID = request.form['courtID']
+        Customer_Phone_Number = session['PhoneNumber']
+        
+        print("asd")
+        Start_Time_Form = (str(request.form.get('Start_time')))
+        date_object_start_time = datetime.strptime(Start_Time_Form, "%H:%M:%S")
+        date_object_end_time = date_object_start_time + timedelta(hours=1)
+
+        client=bigquery.Client()
+        query = """
+        INSERT INTO bookit-court-booking-system-1.main.Reservation 
+        (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
+        VALUES 
+        ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
+
+        query_job = client.query(query)
+
+        query1 = """
+        UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
+        SET Booking=True
+        WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
+        """.format(court_id)
+
+        query_job = client.query(query1)
+        print('success')
+        return redirect("/viewReservation")
+        
+
 
 if __name__ == "__main__":
     app.run()
