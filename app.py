@@ -376,6 +376,93 @@ def viewReservation():
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
         cust=cust,rlist=rlist,bid=bid)
 
+@app.route('/AdminEditBooking<Booking_ID>',methods=['GET', 'POST'])
+def AdminEditBooking(Booking_ID):
+    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+        return redirect('/login')
+    
+    else:
+        username = session['username']
+        usertype = session['UserType']
+        name = session['name']
+        email = session['email']
+        phoneNum = session['PhoneNumber']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber'] 
+
+        client=bigquery.Client()
+        
+        query ="""
+        SELECT * FROM main.Reservation 
+        WHERE Book_ID = "{}"
+        """.format(Booking_ID)
+        
+        query_job = client.query(query)
+
+        
+        for row in query_job:
+            Customer_Name=row['Customer_Name']   
+            Customer_Phone_Number=row['Customer_Phone_Number']
+            Customer_initialTime =row['Start_Time']
+            court_id=row['Court_ID']    
+
+
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court{}
+        ORDER BY Start_Time
+        """.format(court_id)
+
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                stime.append(row['Start_Time'])      
+            else:
+                pass
+        
+        
+
+        if request.method == "GET":
+            return render_template("AdminEditBooking.html",Customer_initialTime=str(Customer_initialTime),Customer_Name=Customer_Name,Book_ID=Booking_ID,Court_ID=court_id, Customer_Phone_Number=Customer_Phone_Number,stime=stime,username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
+        else:
+            Start_Time_Form = (str(request.form.get('Start_time'))) 
+            date_object_start_time = datetime.strptime(Start_Time_Form, "%H:%M:%S")
+            date_object_end_time = date_object_start_time + timedelta(hours=1)
+            
+            
+            #Set reservation Time to new   (can use already )
+            client=bigquery.Client()
+            query = """
+            UPDATE bookit-court-booking-system-1.main.Reservation 
+            set Start_Time = TIME \"""" + str(date_object_start_time.time()) + """\",
+            End_Time = TIME \"""" + str(date_object_end_time.time()) + """\"
+            WHERE Book_ID = '{}'
+            """.format(Booking_ID)
+
+
+            query_job = client.query(query)
+
+            #Change court old time to OPEN    (got problem)
+            query1 = """
+                UPDATE bookit-court-booking-system-1.main.Court"""+court_id+"""
+                set Booking = False
+                WHERE Start_Time=TIME \"""" + str(Customer_initialTime) + """\"
+            """
+
+            query_job = client.query(query1)
+
+            #Change court new time to CLOSE    can use
+            query2 = """
+            UPDATE `bookit-court-booking-system-1.main.Court""" +court_id +"""`
+            SET Booking=True
+            WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
+            """
+            query_job = client.query(query2)
+            
+            return redirect("/IndexAdmin")
+    
+
 
 @app.route('/IndexAdminPost', methods=['POST'])
 def IndexAdminPost():
@@ -472,6 +559,8 @@ def zhixuen(court_id):
             Customer_Name = session["name"]
             Court_ID = str(court_id)
             Customer_Phone_Number = session['PhoneNumber']
+            
+
         if request.method == "GET":
             return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
         else:
@@ -690,6 +779,14 @@ def courtAvailable():
         return redirect('/login')
     
     else:      
+        username = session['username']
+        usertype = session['UserType']
+        name = session['name']
+        email = session['email']
+        phoneNum = session['PhoneNumber']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        
         client=bigquery.Client()
         court1Open="Close";
         court2Open="Close";
@@ -729,7 +826,7 @@ def courtAvailable():
                 court4Open="Open"
                 break
 
-        return render_template('court-availability.html',Court1Open=court1Open,Court2Open=court2Open,Court3Open=court3Open,Court4Open=court4Open);
+        return render_template('court-availability.html',Court1Open=court1Open,Court2Open=court2Open,Court3Open=court3Open,Court4Open=court4Open,username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum);
 
 
 #Render template for Manage facility 
@@ -738,6 +835,14 @@ def ManageFacility():
     if session['loggedIn'] == FALSE or session['UserType']=="USER":
         return redirect('/login')
     else:
+
+        username = session['username']
+        usertype = session['UserType']
+        name = session['name']
+        email = session['email']
+        phoneNum = session['PhoneNumber']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']    
         Court1_Start_Time="-"
         Court1_End_Time="-"
         Court3_Start_Time="-"
@@ -811,7 +916,7 @@ def ManageFacility():
         else:
             AllCourt_End_Time="-"
 
-        return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time)
+        return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time,username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
 @app.route('/Feedback')
 def Feedback():

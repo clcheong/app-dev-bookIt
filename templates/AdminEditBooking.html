@@ -5,19 +5,18 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>Admin / Profile</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-   <link href="{{url_for('static',filename='img/favicon.png')}}" rel="icon">
+  <link href="{{url_for('static',filename='img/bookitLogoOnly.png')}}" rel="icon">
   <link href="{{url_for('static',filename='img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <!-- Vendor CSS Files -->
   <link href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
@@ -26,6 +25,7 @@
   <link href="{{url_for('static',filename='vendor/quill/quill.snow.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
+
   <!-- Template Main CSS File -->
   <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
 
@@ -35,24 +35,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  <style>
-    button
-    {
-      background-color:#4154f1;
-      border:none;
-      padding:5px 15px;
-      border-radius:2rem;
-      color:white;
-    }
-    .Status
-    {
-      background-color:transparent;
-      border:1px solid #4154f1;
-      padding:5px 15px;
-      border-radius:2rem;
-      color:#4154f1;      
-    }
-  </style>
+
 </head>
 
 <body>
@@ -286,7 +269,7 @@
 
   </header><!-- End Header -->
 
-    <!-- ======= Sidebar ======= -->
+  <!-- Start Sidebar-->
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -318,6 +301,7 @@
           <span>Court Managing</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{url_for('Feedback')}}">
           <i class="bi bi-question-circle"></i>
@@ -331,66 +315,77 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Court Availability</h1>
+      <h1>Edit Booking</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Court Availability</li>
+          <li class="breadcrumb-item"><a href="index.html">IndexAdmin</a></li>
+          <li class="breadcrumb-item">EditBooking</li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
     <section class="section">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
+
+          
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Court availability</h5>
+              <h5 class="card-title">Change Reservation</h5>
 
-              <!-- Table with stripped rows -->
-              <table class="table datatable" >
-                <thead>
-                  <tr>
-                    <th scope="col" style="width: 50%">Court</th>
-                    <th scope="col">Availability</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="height:30px">
-                    <th scope="row" style="line-height:30px;">Court 1</th>
-                    <td><button class="Status" disabled>{{Court1Open}}</button></td>
-                    <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="line-height:30px;">Court 2</th>
-                    <td><button class="Status" disabled>{{Court2Open}}</button></td>
-                    <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="line-height:30px;">Court 3</th>
-                    <td><button class="Status" disabled>{{Court3Open}}</button></td>
-                    <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
-
-                  </tr>
-                  <tr>
-                    <th scope="row" style="line-height:30px;">Court 4</th>
-                    <td><button class="Status" disabled>{{Court4Open}}</button></td>
-                    <td><a href="{{url_for('ManageFacility')}}"><button>Manage</button></a></td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
+              <!-- Multi Columns Form -->
+              <form name="" method="post" action='/AdminEditBooking{{Book_ID}}'>
+                <div class="col-md-6">
+                    <label for="yourName" class="form-label">Book_ID</label>
+                    <span name="Book_ID" class="form-control" id="yourName" >{{Book_ID}}</span>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputEmail5" class="form-label">Name</label>
+                  <span name="Customer_Name" class="form-control" id="yourName" >{{Customer_Name}}</span>
+                </div>
+                
+                <div class="col-6">
+                    <label for="yourPhoneNumber" class="form-label">Customer Phone Number</label>
+                    <span name="Customer_Phone_Number" class="form-control" id="yourName" >{{Customer_Phone_Number}}</span>
+                </div>
+                <div class="col-6">
+                  <label for="inputAddress2" class="form-label">Court</label>
+                  <span name="Court_ID" class="form-control" id="yourName" >{{Court_ID}}</span>
+                </div>
+                <div class="col-6">
+                    <label for="InitialStartTime" class="form-label">Initial Start Time</label>
+                    <span name="Court_ID" class="form-control" id="yourName" >{{Customer_initialTime}}</span>
+                  </div>
+                <br/>
+                <div class="col-md-4">
+                    <label for="yourTime" class="form-label">New Start Time</label>
+                    <select aria-label="Default select example" name="Start_time">
+                      {%for time in stime%}
+                            <option name="Time" value="{{time}}">{{time}}</option>
+                      {%endfor%}
+                  </select>
+                </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  
+                </div>
+              </form><!-- End Multi Columns Form -->
 
             </div>
           </div>
+
+        </div>
+
+        
 
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -419,7 +414,7 @@
   <script src="{{url_for('static',filename='vendor/echarts/echarts.min.js')}}"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{{url_for('static',filename='js/main.js')}}"></script>
 
 </body>
 
