@@ -347,7 +347,7 @@ def viewReservation():
         rlist=[]
         cust=name
         bid=[]
-
+        
         
         # View today reservation of user
         query = """
@@ -370,7 +370,7 @@ def viewReservation():
                     rlist.append("Booking ID: ")
                     rlist.append(row['Book_ID'])
                     bid.append(row['Book_ID'])
-
+                    
                    
 
         return render_template("viewReservation.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,
@@ -1106,6 +1106,79 @@ def UpdateFacilityAll():
 @app.route('/faq')
 def faq():
     return render_template('pages-faq.html')
+
+@app.route('/Reschedule', methods=['GET','POST'])
+def Reschedule():
+    
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')
+    
+    else:
+        bookID = request.form['bookID']
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Court1'
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court1
+        ORDER BY Start_Time
+        """
+        stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                stime.append(row['Start_Time'])
+                    
+            else:
+                pass
+                              
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court2
+        ORDER BY Start_Time
+        """
+        c2stime=[]
+        
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                c2stime.append(row['Start_Time'])
+                    
+
+            else:
+                pass
+
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court3
+        ORDER BY Start_Time
+        """
+        c3stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                c3stime.append(row['Start_Time'])
+                    
+            else:
+                pass
+        query = """
+        SELECT Start_Time,Booking,Available
+        FROM main.Court4
+        ORDER BY Start_Time
+        """
+        c4stime=[]
+        query_job = client.query(query)
+        for row in query_job:
+            if row['Booking']==False and row['Available']==True:
+                c4stime.append(row['Start_Time'])
+            else:
+                pass
+
+        return render_template("reschedule.html",username=username,name=name, blockNum=blockNum,unitNum=unitNum,stime=stime,
+        c2stime=c2stime,c3stime=c3stime,c4stime=c4stime,bookID=bookID)
 
 if __name__ == "__main__":
     app.run()

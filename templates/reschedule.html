@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>BookIt! View Reservation</title>
+  <title>BookIt! Resident Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -26,6 +26,7 @@
   <link href="{{url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
+
   <!-- Template Main CSS File -->
   <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
 
@@ -37,17 +38,17 @@
   ======================================================== -->
 </head>
 
-<body onload="createDiv()">
+<body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/index" class="logo d-flex align-items-center">
+      <a href="/IndexResident" class="logo d-flex align-items-center">
         <img src="{{url_for('static',filename='img/bookitLogoOnly.png')}}" alt="">
         <span class="d-none d-lg-block">BookIt!</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <!--<i class="bi bi-list toggle-sidebar-btn"></i>-->
     </div><!-- End Logo -->
     
     <div class="search-bar">
@@ -75,7 +76,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have 4 new notifications
+              You have 2 new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
@@ -101,32 +102,6 @@
                 <h4>Atque rerum nesciunt</h4>
                 <p>Quae dolorem earum veritatis oditseno</p>
                 <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
               </div>
             </li>
 
@@ -268,112 +243,149 @@
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link " href="/IndexResident">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/profile">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/faq">
-          <i class="ri-file-upload-line"></i>
-          <span>Make Reservation</span>
-        </a>
-      </li><!-- End Make Reservation Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/viewReservation">
-          <i class="ri-booklet-line"></i>
-          <span>Reservation History</span>
-        </a>
-      </li><!-- End Reservation History Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/register">
-          <i class="ri-survey-line"></i>
-          <span>Give Feedback</span>
-        </a>
-      </li><!-- End Give Feedback Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/login">
-          <i class="ri-book-open-line"></i>
-          <span>Feedback List</span>
-        </a>
-      </li><!-- End Feedback List Nav -->
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
-
+<div style="display:flex; flex-direction:row; align-items:center;">
     <div class="pagetitle">
-      <h1>Reservation History</h1>
+            <h1>Reschedule (Booking ID: {{bookID}})</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/index">Home</a></li>
-          <li class="breadcrumb-item active">Reservations made</li>
+          <li class="breadcrumb-item"><a href="/index">Reservations</a></li>
+          <li class="breadcrumb-item active">Reschedule</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
+    <a href="/viewReservation"  class="btn btn-primary w-25" style="margin-left:auto; margin-bottom:10px;">Cancel Reschedule</a>
+
+</div>
+
     <section class="section dashboard">
       <div class="row">
-
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
+            <p>Available time is shown below in 1 hour period ( Eg.17:00:00 to 18:00:00 is available)</p>
+                <!-- Court 1 Card -->
+                <div class="col-10">
+                <div class="card info-card sales-card">
 
-            <!-- Today's Reservation -->
-            <div class="col-10">
-              <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Court 1</h5>
+                    {% for stime in stime %}
+                    <p class="text-success">
+                        <li>{{stime}}</li>
+                    </p>
+                    {% endfor %}          
+                    <img src="{{url_for('static',filename='img/testing1.png')}}" class="court" width=600 height=auto>
+                    <br><br>
+                    <a href="makereservation1" class="btn btn-primary w-100">Reschedule Here!</a>                  
 
-                <div class="card-body" id="res">
-                  <h5 class="card-title">Today's Reservation</h5>
-                  <div>
-                  Reservation Details(Reservations shown are for one hour period):<br>
-                  {% for rlist in rlist %}
-                      <p>
-                        {{rlist}}
-                        {% for bid in bid%}
-                          {% if rlist == bid %}
-                          
-                          <div style="display:flex; flex-direction:row-reverse;">
-                          <form action="/Reschedule" method="post">
-                          <input type="text" name="bookID" id="bookID" value="{{bid}}" hidden>
-                          <input class="btn btn-primary" type="submit" value="Reschedule">
-                          </form>
-                          </div>
-                          <hr style="height: 3px;">
-                          {% endif %}
-                        {% endfor %}
-                      </p>
-                  {% endfor %}
-                  
-                  </div>
-                  <a href='/reservations' class="btn btn-primary w-75" >View Reservation History</a>
+                    </div>
+
                 </div>
-                
-              </div>
-            </div><!-- End Today's Reservation's -->
+                </div><!-- End Court 1 Card -->
 
+                <!-- Court 2 Card -->
+                <div class="col-10">
+                <div class="card info-card revenue-card">
+
+                    <div class="card-body">
+                    <h5 class="card-title">Court 2 </h5>
+                    {% for c2stime in c2stime %}
+                    <p class="text-success">
+                        <li>{{c2stime}}</li>
+                    </p>
+                    {% endfor %}
+                    <img src="{{url_for('static',filename='img/testing2.png')}}" class="court" width=600 height=auto>
+                    <br><br>
+                    <a href="makereservation2" class="btn btn-primary w-100">Reschedule Here!</a>
+                    </div>
+
+                </div>
+                </div><!-- End Court 2 Card -->
+
+                <!-- Court 3 Card -->
+                <div class="col-10">
+                <div class="card info-card customers-card">
+
+                    <div class="card-body">
+                    <h5 class="card-title">Court 3</h5>
+                    {% for c3stime in c3stime %}
+                    <p class="text-success">
+                        <li>{{c3stime}}</li>
+                    </p>
+                    {% endfor %}
+                    <img src="{{url_for('static',filename='img/testing3.png')}}" class="court" width=600 height=auto>
+                    <br><br>
+                    <a href="makereservation3" class="btn btn-primary w-100" >Reschedule Here!</a>
+
+                    </div>
+                </div>
+                </div><!-- End Court 3 Card -->
+
+                <!-- Court 4 Card -->
+                <div class="col-10">
+                <div class="card">
+
+                    <div class="card-body">
+                    <h5 class="card-title">Court 4</h5>
+                    {% for c4stime in c4stime %}
+                    <p class="text-success">
+                        <li>{{c4stime}}</li>
+                    </p>
+                    {% endfor %}               
+                    <img src="{{url_for('static',filename='img/testing4.jpeg')}}" class="court" width=600 height=auto>
+                    <br><br>
+                    <a href="makereservation4" class="btn btn-primary w-100">Reschedule Here!</a>
+                    </div>
+
+                </div>
+                </div><!-- End Court 4 -->
           </div>
         </div><!-- End Left side columns -->
 
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+          <!-- How to BookIt! -->
+          <div class="card">
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">How to BookIt!</h5>
+
+              <div class="news">
+                <div class="post-item clearfix">
+                  <img src="{{url_for('static',filename='img/s1.png')}}" alt="">
+                  <p>Select court and press the button</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="{{url_for('static',filename='img/s2.png')}}" alt="">
+                  <p>Select time and date of your reservation</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="{{url_for('static',filename='img/s3.png')}}" alt="">
+                  <p>Submit reservation request</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="{{url_for('static',filename='img/s4.png')}}" alt="">
+                  <p>Check your reservation history for reservation status</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="{{url_for('static',filename='img/s5.png')}}" alt="">
+                  <p>Enjoy your exercise when the time is right</p>
+                </div>
+                <br>
+              </div><!-- End sidebar recent posts-->
+            </div>
+          </div><!-- End News & Updates -->
+
+        </div><!-- End Right side columns -->
 
       </div>
     </section>
@@ -412,19 +424,3 @@
 </body>
 
 </html>
-<script>
-  function createDiv()
-  {
-    var count=0;
-    var max=parseInt('{{count}}');
-    if (max==1)
-    {
-      var div= document.createElement("div");
-      var para=document.createElement("p");
-      para.innerHTML='{{rlist[0]}}'+'{{rlist[1]}}'+'{{rlist[2]}}'+'{{rlist[3]}}'+'{{rlist[4]}}';
-      document.getElementById("res").appendChild(div);
-      document.getElementById("res").appendChild(para);
-    }
- 
-  }
-</script>
