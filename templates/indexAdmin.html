@@ -365,26 +365,30 @@
 
 
                   {% for item in bookingData %}
-                    <table>
+                    <table style="width: 100%;">
                     <colgroup>
                     <col span="1" style="width: 30%;">
-                    <col span="1" style="width: 50%;">
-                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 35%;">
+                    <col span="1" style="width: 35%;">
                     </colgroup>      
                     <tr>
                     <td><h6>Court {{item.Court_ID}}</h6></td>
                     <td></td>
-                    <td><h6>ID: {{item.Book_ID}}</h6></td>
+                    <td><h6 style="text-align:right"><i>ID: {{item.Book_ID}}</i></h6></td>
                     </tr>
                     <tr>
                     <td><h6>Booker name: {{item.Customer_Name}}</h6></td>   
                     <td><h6>Duration: {{item.Start_Time}} - {{item.End_Time}}</h6></td>
                     </tr>
-                    </table>
+                    <tr>    
+                    <td>
                     {% if item.Approve_Status==True %}
                     <form name="my-form">
                       <input type="hidden" name="Booking_ID" value={{item.Book_ID}}/>
                       <input type="hidden" name="Booking_Status" value="Disapprove"/>
+                      <input type="hidden" name="Start_Time" value={{item.Start_Time}}/>
+                      <input type="hidden" name="End_Time" value={{item.End_Time}}/>
+                      <input type="hidden" name="Court_ID" value={{item.Court_ID}}/>
                       <input type="submit" value="Disapprove">
                     </form>
                     {% endif %}
@@ -392,11 +396,21 @@
                     <form name="my-form">
                       <input type="hidden" name="Booking_ID" value={{item.Book_ID}}/>
                       <input type="hidden" name="Booking_Status" value="Approve"/>
+                      <input type="hidden" name="Start_Time" value={{item.Start_Time}}/>
+                      <input type="hidden" name="End_Time" value={{item.End_Time}}/>
+                      <input type="hidden" name="Court_ID" value={{item.Court_ID}}/>
                       <input type="submit" value="Approve"/>
                     </form>
+                    </td>
+
                     {% endif %}
-                    
+                    <td>                    
                     <a href="/AdminEditBooking{{item.Book_ID}}"><button>Edit</button></a>        
+                    </td>
+                    </tr>
+                    </table>
+                    <br>
+                    <hr>
                                
                   {% endfor %}
                   <script 

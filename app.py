@@ -324,6 +324,7 @@ def IndexAdmin():
            SELECT *
            FROM `bookit-court-booking-system-1.main.Reservation`
            WHERE Reserve_Time>=TIMESTAMP(TIMESTAMP_TRUNC(CURRENT_DATETIME(),DAY))
+           ORDER BY Court_ID ASC
         """
 
         query_job = client.query(query)
@@ -476,6 +477,16 @@ def IndexAdminPost():
     if 'Booking_Status' in request.form:
         Booking_Status=request.form['Booking_Status'].replace("/","");
         app.logger.info(Booking_Status)
+    if 'Start_Time' in request.form:
+        Start_Time=request.form['Start_Time'].replace("/","");
+        app.logger.info(Start_Time)
+    if 'Start_Time' in request.form:
+        Start_Time=request.form['Start_Time'].replace("/","");
+        app.logger.info(Start_Time)        
+    if 'Court_ID' in request.form:
+        Court_ID=request.form['Court_ID'].replace("/","");
+        app.logger.info(Court_ID)
+
     if Booking_Status=="Disapprove":
         query="""
         UPDATE `bookit-court-booking-system-1.main.Reservation` 
@@ -484,6 +495,13 @@ def IndexAdminPost():
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)
         query_job = client.query(query)
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        SET Booking = FALSE
+        WHERE START_TIME = {}
+        """.format(Court_ID,'\"'+Start_Time+'\"')
+        app.logger.info(query)
+        query_job = client.query(query)        
 
     if Booking_Status=="Approve":
         query="""
@@ -493,7 +511,14 @@ def IndexAdminPost():
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)    
         query_job = client.query(query)
-
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        SET Booking = TRUE
+        WHERE START_TIME = {}
+        """.format(Court_ID,'\"'+Start_Time+'\"')
+        app.logger.info(query)
+        query_job = client.query(query)
+        
     return '', 400
 
 @app.route('/reservations')
