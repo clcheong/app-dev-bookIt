@@ -355,12 +355,12 @@
                           <div style="display:flex; flex-direction:row-reverse;">
                           <form action="/Reschedule" method="post">
                           <input type="text" name="bookID" id="bookID" value="{{bid}}" hidden>
-                          {% for startTime in startTime%}
-                          <input type="text" name="startTime" id="startTime" value="{{startTime}}" hidden>
-                          {% endfor %}
-                          {% for oldCourtID in oldCourtID%}
-                          <input type="text" name="oldCourtID" id="oldCourtID" value="{{oldCourtID}}" hidden>
-                          {% endfor %}
+                          
+                          <!--<input type="text" name="startTime" id="startTime" value="{{startTime}}" hidden>
+                          
+                          
+                          <input type="text" name="oldCourtID" id="oldCourtID" value="{{oldCourtID}}" hidden>-->
+                          
                           <input class="btn btn-primary" type="submit" value="Reschedule">
                           </form>
                           </div>

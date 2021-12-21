@@ -70,23 +70,33 @@
 
                   
                   <form name="" method="post" action='/UpdateReschedule{{Court_ID}}'>
-                    <div class="col-12">
+                    <!--<div class="col-12">
                       <label for="yourUsername" class="form-label">Your Name</label>
-                      <div class="input-group has-validation">
+                      <div class="input-group has-validation">-->
                         <!--<span class="input-group-text" id="inputGroupPrepend">@</span>-->
                         
                         <!-- <span type="text" name="inputusername" class="form-control" id="yourUsername" required></span> -->
-                        <input type="text" name="custName" class="form-control" id="custName" value="{{Customer_Name}}" readonly>
+                        <!--<input type="text" name="custName" class="form-control" id="custName" value="{{Customer_Name}}" readonly>-->
                         <!-- <div class="invalid-feedback">{{name}}</div> -->
-                      </div>
+                    <!--  </div>
                     </div>
-                    <br>
+                    <br>-->
+                    <!--<div class="col-12">
+                      <label for="yourPhoneNumber" class="form-label">Customer Phone Number</label>
+                      <input type="text" name="custPhone" class="form-control" id="custPhone" value="{{Customer_Phone_Number}}" readonly>
+                    </div>
+                    <br>-->
                     <!-- <form class="row g-3" > -->
                       <div class="col-12">
-                            <label for="yourName" class="form-label">Book ID</label>
+                            <label for="yourName" class="form-label">Booking ID</label>
                             <input type="text" name="bookID" class="form-control" id="bookID" value="{{Book_ID}}" readonly>
                             <!-- <input type="text" name="court" class="form-control" id="yourName" > -->
                             <!-- <div class="invalid-feedback"></div> -->
+                        </div>
+                        <br>
+                        <div class="col-12">
+                          <label for="yourEmail" class="form-label">Current Court ID</label>
+                          <input type="text" name="oldCourtID" class="form-control" id="oldCourtID" value="{{oldCourtID}}" readonly>
                         </div>
                         <br>
                         <div class="col-12">
@@ -94,6 +104,11 @@
                           <input type="text" name="startTime" class="form-control" id="startTime" value="{{startTime}}" readonly>
                           <!-- <input type="text" name="court" class="form-control" id="yourName" > -->
                           <!-- <div class="invalid-feedback"></div> -->
+                      </div>
+                      <br>
+                      <div class="col-12">
+                        <label for="yourEmail" class="form-label">New Court ID</label>
+                        <input type="text" name="courtID" class="form-control" id="courtID" value="{{Court_ID}}" readonly>
                       </div>
                       <br>
                       <div class="col-12">
@@ -107,21 +122,7 @@
                         <!-- <input type="text" name="starttime" class="form-control" id="yourTime" required>
                         <div class="invalid-feedback">Enter your start time</div> -->
                       <br>
-                      <div class="col-12">
-                        <label for="yourEmail" class="form-label">Current Court ID</label>
-                        <input type="text" name="oldCourtID" class="form-control" id="oldCourtID" value="{{oldCourtID}}" readonly>
-                      </div>
-                      <br>
-                      <div class="col-12">
-                        <label for="yourEmail" class="form-label">New Court ID</label>
-                        <input type="text" name="courtID" class="form-control" id="courtID" value="{{Court_ID}}" readonly>
-                      </div>
-                      <br>
-                      <div class="col-12">
-                        <label for="yourPhoneNumber" class="form-label">Customer Phone Number</label>
-                        <input type="text" name="custPhone" class="form-control" id="custPhone" value="{{Customer_Phone_Number}}" readonly>
-                      </div>
-                      <br>
+
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>

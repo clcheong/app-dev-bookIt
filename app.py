@@ -1221,13 +1221,30 @@ def Reschedule():
     
     else:
         bookID = request.form['bookID']
-        startTime = request.form['startTime']
-        oldCourtID = request.form['oldCourtID']
+        #startTime = request.form['startTime']
+        #oldCourtID = request.form['oldCourtID']
+        startTime=""
+        oldCourtID=""
+        
+        client =bigquery.Client()
+        
+        queryTest = """
+        SELECT FORMAT_TIME("%T",Start_Time) as stime, Court_ID
+        FROM `bookit-court-booking-system-1.main.Reservation`
+        WHERE Book_ID=\"""" + str(bookID) + """\"
+        """
+        
+        query_job=client.query(queryTest)
+        
+        for row in query_job:
+            startTime = str(row['stime'])
+            oldCourtID = row['Court_ID']
+        
         name = session['name']
         blockNum = session['BlockNumber']
         unitNum = session['UnitNumber']
         username = session['username']
-        client =bigquery.Client()
+        
         cust_table_id='bookit-court-booking-system-1.main.Court1'
         query = """
         SELECT Start_Time,Booking,Available
