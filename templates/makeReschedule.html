@@ -80,18 +80,25 @@
                         <!-- <div class="invalid-feedback">{{name}}</div> -->
                       </div>
                     </div>
-
+                    <br>
                     <!-- <form class="row g-3" > -->
                       <div class="col-12">
-                            <label for="yourName" class="form-label">Book_ID</label>
+                            <label for="yourName" class="form-label">Book ID</label>
                             <input type="text" name="bookID" class="form-control" id="bookID" value="{{Book_ID}}" readonly>
                             <!-- <input type="text" name="court" class="form-control" id="yourName" > -->
                             <!-- <div class="invalid-feedback"></div> -->
                         </div>
-
+                        <br>
+                        <div class="col-12">
+                          <label for="yourName" class="form-label">Current Start Time</label>
+                          <input type="text" name="startTime" class="form-control" id="startTime" value="{{startTime}}" readonly>
+                          <!-- <input type="text" name="court" class="form-control" id="yourName" > -->
+                          <!-- <div class="invalid-feedback"></div> -->
+                      </div>
+                      <br>
                       <div class="col-12">
-                        <label for="yourTime" class="form-label">Start Time</label>
-                        <select aria-label="Default select example" name="Start_time">
+                        <label for="yourTime" class="form-label">New Start Time</label><br>
+                        <select aria-label="Default select example" class="form-select" name="Start_time">
                           {%for time in stime%}
                                 <option name="Time" value="{{time}}">{{time}}</option>
                           {%endfor%}
@@ -99,18 +106,22 @@
                       </div>
                         <!-- <input type="text" name="starttime" class="form-control" id="yourTime" required>
                         <div class="invalid-feedback">Enter your start time</div> -->
-                      </div>
-                      
+                      <br>
                       <div class="col-12">
-                        <label for="yourEmail" class="form-label">Court ID</label>
+                        <label for="yourEmail" class="form-label">Current Court ID</label>
+                        <input type="text" name="oldCourtID" class="form-control" id="oldCourtID" value="{{oldCourtID}}" readonly>
+                      </div>
+                      <br>
+                      <div class="col-12">
+                        <label for="yourEmail" class="form-label">New Court ID</label>
                         <input type="text" name="courtID" class="form-control" id="courtID" value="{{Court_ID}}" readonly>
                       </div>
-
+                      <br>
                       <div class="col-12">
                         <label for="yourPhoneNumber" class="form-label">Customer Phone Number</label>
                         <input type="text" name="custPhone" class="form-control" id="custPhone" value="{{Customer_Phone_Number}}" readonly>
                       </div>
-
+                      <br>
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
@@ -118,7 +129,7 @@
                         <div class="invalid-feedback">You must agree before submitting.</div>
                       </div>
                     </div>
-
+                    <br>
                     <div class="col-12">
                       <input class="btn btn-primary w-100" type="submit" value="Reschedule Booking">
                     </div>

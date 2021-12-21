@@ -395,7 +395,9 @@
                       <input type="submit" value="Approve"/>
                     </form>
                     {% endif %}
-                    <a href="{{url_for('IndexAdmin')}}"><button>Edit</button></a>                    
+                    
+                    <a href="/AdminEditBooking{{item.Book_ID}}"><button>Edit</button></a>        
+                               
                   {% endfor %}
                   <script 
                       src="https://code.jquery.com/jquery-3.5.1.min.js" 
