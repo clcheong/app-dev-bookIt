@@ -361,7 +361,7 @@ def viewReservation():
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
-            if cust==name:
+            if cust==username:
                 if row['date']==row['today']:
                     rlist.append("Court Number: "+row['Court_ID'])
                     rlist.append("Reservation Date: "+row['rDate'])
@@ -520,7 +520,7 @@ def reservations():
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
-            if cust==name:
+            if cust==username:
                 rlist.append("Court Number: "+row['Court_ID'])
                 rlist.append("Reservation Date: "+row['rDate'])
                 rlist.append("Reservation Time: "+row['stime'])                    
