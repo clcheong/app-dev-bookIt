@@ -1251,6 +1251,7 @@ def updateReschedule(court_id):
         date_object_end_time = date_object_start_time + timedelta(hours=1)
 
         client=bigquery.Client()
+        #this query might have to change to an update query
         query = """
         INSERT INTO bookit-court-booking-system-1.main.Reservation 
         (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
@@ -1264,6 +1265,10 @@ def updateReschedule(court_id):
         SET Booking=True
         WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         """.format(court_id)
+        
+        #additional codes and queries might need to be added to check weather or not the previously reserved time is still later than current
+        #time. if so, need to update prvious time back to available.
+        #if not, ignore
 
         query_job = client.query(query1)
         print('success')
