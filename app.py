@@ -323,6 +323,7 @@ def IndexAdmin():
         query="""
            SELECT *
            FROM `bookit-court-booking-system-1.main.Reservation`
+           WHERE Reserve_Time>=TIMESTAMP(TIMESTAMP_TRUNC(CURRENT_DATETIME(),DAY))
         """
 
         query_job = client.query(query)
