@@ -352,7 +352,7 @@
                         {% for bid in bid%}
                           {% if rlist == bid %}
                           
-                          <div style="display:flex; flex-direction:row-reverse;">
+                          <div style="display:flex; flex-direction:row-reverse; align-items:center">
                           <form action="/Reschedule" method="post">
                           <input type="text" name="bookID" id="bookID" value="{{bid}}" hidden>
                           {% for startTime in startTime%}
@@ -363,7 +363,9 @@
                           {% endfor %}
                           <input class="btn btn-primary" type="submit" value="Reschedule">
                           </form>
+                          <a href="/cancelreservation{{bid}}"><button class="btn btn-primary" style="margin-right:20px">Cancel Reservation</button></a>
                           </div>
+
                           <hr style="height: 3px;">
                           {% endif %}
                         {% endfor %}
