@@ -356,13 +356,13 @@ def viewReservation():
         SELECT Court_ID, Customer_Name,Approve_Status, Start_Time, End_Time,Book_ID,
         FORMAT_TIMESTAMP("%b-%d-%Y",Reserve_Time) as rDate,FORMAT_TIME("%T",Start_Time) as stime,
         EXTRACT (DATE FROM CURRENT_TIMESTAMP()) as today,EXTRACT (DATE FROM Reserve_Time) as date
-        FROM main.Reservation
+        FROM main.Reservation WHERE Approve_Status=True
         ORDER BY Reserve_Time DESC
         """
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
-            if cust==name:
+            if cust==username:
                 if row['date']==row['today']:
                     rlist.append("Court Number: "+row['Court_ID'])
                     rlist.append("Reservation Date: "+row['rDate'])
@@ -521,7 +521,7 @@ def reservations():
         query_job = client.query(query)
         for row in query_job:
             cust=row['Customer_Name']
-            if cust==name:
+            if cust==username:
                 rlist.append("Court Number: "+row['Court_ID'])
                 rlist.append("Reservation Date: "+row['rDate'])
                 rlist.append("Reservation Time: "+row['stime'])                    
@@ -564,7 +564,7 @@ def zhixuen(court_id):
             
 
         if request.method == "GET":
-            return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
+            return render_template('makereservation.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
         else:
             print("asd")
             Start_Time_Form = (str(request.form.get('Start_time')))
@@ -1441,6 +1441,38 @@ def updateReschedule(court_id):
         
         return redirect("/viewReservation")        
         
+@app.route("/cancelreservation<bid>")
+def cancelreservation(bid):
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login') 
+    else:
+        client=bigquery.Client()
+        query1 = """
+        UPDATE bookit-court-booking-system-1.main.Reservation 
+        set Approve_Status = False
+        WHERE Book_ID = '{}'
+        """.format(bid)
+        query_job = client.query(query1)
+
+        query2 = """
+        SELECT Court_ID, Start_Time from bookit-court-booking-system-1.main.Reservation 
+        WHERE Book_ID = '{}'
+        """.format(bid)
+        query_job2 = client.query(query2)
+
+        for row in query_job2:
+            court_id = row["Court_ID"]
+            Start_Time = row["Start_Time"]
+        print(Start_Time)
+        query3 = """ 
+        UPDATE bookit-court-booking-system-1.main.Court{} 
+        set Booking = False
+        WHERE Start_Time = '{}'
+        """.format(court_id, Start_Time)
+        query_job = client.query(query3)
+            
+        
+        return redirect("/viewReservation")
 
 
 if __name__ == "__main__":
