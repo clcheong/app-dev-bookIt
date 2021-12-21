@@ -558,7 +558,7 @@ def zhixuen(court_id):
                 pass
             letters = string.digits
             Book_ID = str(''.join(random.choice(letters) for i in range(16)))
-            Customer_Name = session["name"]
+            Customer_Name = session["username"]
             Court_ID = str(court_id)
             Customer_Phone_Number = session['PhoneNumber']
             
