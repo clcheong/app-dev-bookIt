@@ -563,7 +563,7 @@ def zhixuen(court_id):
             
 
         if request.method == "GET":
-            return render_template('zhixuen-test.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
+            return render_template('makereservation.html',Customer_Name=Customer_Name,Book_ID=Book_ID,Court_ID=Court_ID, Customer_Phone_Number=Customer_Phone_Number,stime=stime)
         else:
             print("asd")
             Start_Time_Form = (str(request.form.get('Start_time')))
