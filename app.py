@@ -518,8 +518,8 @@ def IndexAdminPost():
         """.format(Court_ID,'\"'+Start_Time+'\"')
         app.logger.info(query)
         query_job = client.query(query)
-        
-    return '', 400
+    
+    return redirect("/IndexAdmin")
 
 @app.route('/reservations')
 def reservations():
