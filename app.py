@@ -934,7 +934,7 @@ def feedbacks():
         # View feedback list of user
         
         query = """
-        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
         FROM main.Feedback WHERE Name='{}'
         ORDER BY Time DESC
         """.format(name)
@@ -1502,7 +1502,7 @@ def viewFeedbacks():
         # View today feedback of user
         
         query = """
-        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
+        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
         EXTRACT (DATE FROM Time) as date
         FROM main.Feedback WHERE Name='{}'
         ORDER BY Time DESC

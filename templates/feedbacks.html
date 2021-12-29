@@ -339,18 +339,20 @@
                   <h5 class="card-title">List of Feedbacks (Including Today)</h5>
                   <div>
                   List of feedbacks:<br>
-                  
-                      <p>
-                        Feedback:<br>
-                        {% for item in flist %}                        
-                        {{item.FeedbackDetails}}<br><br>
-                        Date:<br>{{item.date}}<br><br>
-                        Time:<br>{{item.time}}<br><br>
-                        Status:<br>{{item.Status}}<br><br>                                               
-                          <hr style="height: 3px;">
-                        {% endfor %}
-                      </p>
-                  
+                  {% for item in flist %}
+                    <p>
+                      <br>
+                      Subject:<br>
+                      {{item.Subject}}<br><br>
+                      Feedback:<br>                        
+                      {{item.FeedbackDetails}}<br><br>
+                      Date:<br>{{item.date}}<br><br>
+                      Time:<br>{{item.time}}<br><br>
+                      Status:<br>{{item.Status}}<br><br>                                               
+                      <hr style="height: 3px;">
+                      
+                    </p>
+                  {% endfor %}
                   </div>
                 </div>
                 
