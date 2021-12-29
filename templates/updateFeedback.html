@@ -336,29 +336,27 @@
               <div class="card">
 
                 <div class="card-body" id="res">
-                  <h5 class="card-title">Today's Feedbacks</h5>
-                  <div>
-                  Feedbacks for today:<br>
-                  {% for item in flist %}
-                    {% if item.today == item.date%} 
-                    <p>             
-                      <br>
-                      Subject:<br>
-                      {{item.Subject}}<br><br>
-                      Feedback:<br>
-                      {{item.FeedbackDetails}}<br><br>
-                      Date:<br>{{item.date}}<br><br>
-                      Time:<br>{{item.time}}<br><br>
-                      Status:<br>{{item.Status}}<br><br>
-                      <a href="/updateFeedback{{item.FeedbackID}}"><button class="btn btn-primary" style="margin-right:20px">Update Feedback</button></a>                                             
-                      <hr style="height: 3px;">
-                    </p>
-                    {% endif %}                                            
-                  {% endfor %}
-                  
-                  </div>
-                  <a href='/feedbacks' class="btn btn-primary w-75" >View Feedback List</a>
-                </div>
+                  <form class="row g-3 needs-validation" method="post" action="/updateFeedback{{feedback_id}}">
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label"></label>
+                      <p>Username:</p>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <span name="Customer_Name" class="form-control" id="yourName" >{{name}}</span>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourSubject" class="form-label">Feedback Subject:</label><br><br>
+                      <input type="text" aria-label="Subject of the feedback" name="Feedback_Subject" class="col-12" value="{{Feedback_Subject}}"></input>        
+                    </div>
+                    <div class="col-12">
+                      <label for="yourFeedback" class="form-label">Feedback Description:</label><br><br>
+                      <textarea aria-label="Provide the details of your feedback" name="Feedback_Details" class="form-control col-12">{{Feedback_Details}}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Submit Feedback</button>
+                    </div>
+                  </form>
                 
               </div>
             </div><!-- End Today's Reservation's -->

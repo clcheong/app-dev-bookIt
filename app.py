@@ -1502,15 +1502,14 @@ def viewFeedbacks():
         # View today feedback of user
         
         query = """
-        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
+        SELECT FeedbackID, Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
         EXTRACT (DATE FROM Time) as date
         FROM main.Feedback WHERE Name='{}'
         ORDER BY Time DESC
         """.format(username)
         query_job = client.query(query)
         
-
-        return render_template("viewFeedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
+        return render_template("viewFeedbacks.html",name=username,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
 
                     
 
@@ -1520,6 +1519,8 @@ def giveFeedback():
         return redirect('/login')  
     else:
         client=bigquery.Client()
+        letters = string.digits
+        Feedback_ID = "F" + str(''.join(random.choice(letters) for i in range(8)))
         Customer_Name=session['name']
         username=session['username']
         blockNum=session['BlockNumber']
@@ -1528,19 +1529,57 @@ def giveFeedback():
         time=str(datetime.today())
         subject=str(request.form.get('subject'))
         if request.method == "GET":
-            return render_template('giveFeedback.html',name=Customer_Name,blockNum=blockNum,unitNum=unitNum)
+            return render_template('giveFeedback.html',username=username,blockNum=blockNum,unitNum=unitNum)
         else:
             query = """
             INSERT INTO bookit-court-booking-system-1.main.Feedback 
-            (Name,FeedbackDetails,Time,Status,Subject,Username) 
+            (FeedbackID, Name,FeedbackDetails,Time,Status,Subject,Username) 
             VALUES 
-            ('""" + Customer_Name +"""','""" + feedback_Form +"""', DATETIME \"""" + time + """\",False,'""" + subject +"""','""" + username +"""')
+            ('""" + Feedback_ID +"""','""" + Customer_Name +"""','""" + feedback_Form +"""', DATETIME \"""" + time + """\",False,'""" + subject +"""','""" + username +"""')
             """
 
             query_job = client.query(query)
             print('success')
             return redirect("/viewFeedbacks")
 
+
+@app.route('/updateFeedback<feedback_id>', methods=['GET','POST'])
+def updateFeedback(feedback_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        Customer_Name=session['name']
+        username=session['username']
+        blockNum=session['BlockNumber']
+        unitNum=session['UnitNumber']
+        time=str(datetime.today())
+        details = []
+
+        query2 = """
+        SELECT Subject, FeedbackDetails from bookit-court-booking-system-1.main.Feedback
+        WHERE FeedbackID = '{}'
+        """.format(feedback_id)
+        query_job2 = client.query(query2)
+
+        for row in query_job2:
+            Feedback_Subject = row['Subject']
+            Feedback_Details = row["FeedbackDetails"]
+
+        if request.method == "GET":
+            return render_template('updateFeedback.html',name=Customer_Name,blockNum=blockNum, feedback_id = feedback_id, unitNum=unitNum,Feedback_Details=Feedback_Details,Feedback_Subject=Feedback_Subject)
+        else:
+            Feedback_Subject = request.form["Feedback_Subject"]
+            Feedback_Details = request.form["Feedback_Details"]
+            query = """
+            UPDATE `bookit-court-booking-system-1.main.Feedback`
+            SET Subject='""" + Feedback_Subject + """',FeedbackDetails='""" + Feedback_Details + """'
+            WHERE FeedbackID='""" + feedback_id + """'
+        """
+            query_job = client.query(query)
+
+            print('success')
+            return redirect("/viewFeedbacks")
 
 if __name__ == "__main__":
     app.run()
