@@ -295,14 +295,14 @@
       </li><!-- End Reservation History Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/register">
+        <a class="nav-link collapsed" href="/giveFeedback">
           <i class="ri-survey-line"></i>
           <span>Give Feedback</span>
         </a>
       </li><!-- End Give Feedback Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/login">
+        <a class="nav-link collapsed" href="/viewFeedbacks">
           <i class="ri-book-open-line"></i>
           <span>Feedback List</span>
         </a>
@@ -311,14 +311,13 @@
     </ul>
 
   </aside><!-- End Sidebar-->
-
   <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Reservation History</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/index">Home</a></li>
+          <li class="breadcrumb-item"><a href="/IndexResident">Home</a></li>
           <li class="breadcrumb-item active">Reservations made</li>
         </ol>
       </nav>
@@ -413,19 +412,3 @@
 </body>
 
 </html>
-<script>
-  function createDiv()
-  {
-    var count=0;
-    var max=parseInt('{{count}}');
-    if (max==1)
-    {
-      var div= document.createElement("div");
-      var para=document.createElement("p");
-      para.innerHTML='{{rlist[0]}}'+'{{rlist[1]}}'+'{{rlist[2]}}'+'{{rlist[3]}}'+'{{rlist[4]}}';
-      document.getElementById("res").appendChild(div);
-      document.getElementById("res").appendChild(para);
-    }
- 
-  }
-</script>

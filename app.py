@@ -920,12 +920,26 @@ def ManageFacility():
 
         return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time,username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
-@app.route('/Feedback')
-def Feedback():
-    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+@app.route("/feedbacks")
+def feedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
         return redirect('/login')
     else:
-        return render_template('Feedback.html')
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View feedback list of user
+        
+        query = """
+        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Name='{}'
+        ORDER BY Time DESC
+        """.format(name)
+        query_job = client.query(query)
+        return render_template("feedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
 
 #Update Court 1
 @app.route('/Update-Facility-1', methods=['GET', 'POST'])
@@ -1473,6 +1487,59 @@ def cancelreservation(bid):
             
         
         return redirect("/viewReservation")
+
+@app.route("/viewFeedbacks", methods=['GET','POST'])
+def viewFeedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login') 
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View today feedback of user
+        
+        query = """
+        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
+        EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Name='{}'
+        ORDER BY Time DESC
+        """.format(username)
+        query_job = client.query(query)
+        
+
+        return render_template("viewFeedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
+
+                    
+
+@app.route('/giveFeedback', methods=['GET','POST'])
+def giveFeedback():   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        Customer_Name=session['name']
+        username=session['username']
+        blockNum=session['BlockNumber']
+        unitNum=session['UnitNumber']
+        feedback_Form= str(request.form.get('feedback'))
+        time=str(datetime.today())
+        subject=str(request.form.get('subject'))
+        if request.method == "GET":
+            return render_template('giveFeedback.html',name=Customer_Name,blockNum=blockNum,unitNum=unitNum)
+        else:
+            query = """
+            INSERT INTO bookit-court-booking-system-1.main.Feedback 
+            (Name,FeedbackDetails,Time,Status,Subject,Username) 
+            VALUES 
+            ('""" + Customer_Name +"""','""" + feedback_Form +"""', DATETIME \"""" + time + """\",False,'""" + subject +"""','""" + username +"""')
+            """
+
+            query_job = client.query(query)
+            print('success')
+            return redirect("/viewFeedbacks")
 
 
 if __name__ == "__main__":
