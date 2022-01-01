@@ -352,7 +352,7 @@
                       Status:<br>{{item.Status}}<br><br>
                       <div style="display:flex; flex-direction:row-reverse;">
                         <a href="/updateFeedback{{item.FeedbackID}}"><button class="btn btn-primary">Update Feedback</button></a>   
-                        <form action="" method="post">
+                        <form action="/deleteFeedback{{item.FeedbackID}}" method="post">
                           <button class="btn btn-primary" style="margin-right:20px;">Delete Feedback</button>
                         </form>  
                       </div>                                        

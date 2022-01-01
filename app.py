@@ -1580,6 +1580,21 @@ def updateFeedback(feedback_id):
 
             print('success')
             return redirect("/viewFeedbacks")
+        
+
+@app.route('/deleteFeedback<feedback_id>', methods=['GET','POST'])
+def deleteFeedback(feedback_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        
+        query = """DELETE FROM `bookit-court-booking-system-1.main.Feedback` WHERE FeedbackID = \"""" + feedback_id + """\""""
+        
+        query_job = client.query(query)
+        
+        return redirect("/viewFeedbacks")
+
 
 if __name__ == "__main__":
     app.run()
