@@ -350,7 +350,12 @@
                       Date:<br>{{item.date}}<br><br>
                       Time:<br>{{item.time}}<br><br>
                       Status:<br>{{item.Status}}<br><br>
-                      <a href="/updateFeedback{{item.FeedbackID}}"><button class="btn btn-primary" style="margin-right:20px">Update Feedback</button></a>                                             
+                      <div style="display:flex; flex-direction:row-reverse;">
+                        <a href="/updateFeedback{{item.FeedbackID}}"><button class="btn btn-primary">Update Feedback</button></a>   
+                        <form action="" method="post">
+                          <button class="btn btn-primary" style="margin-right:20px;">Delete Feedback</button>
+                        </form>  
+                      </div>                                        
                       <hr style="height: 3px;">
                     </p>
                     {% endif %}                                            
