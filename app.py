@@ -11,6 +11,7 @@ from flask import jsonify
 from flask import json
 # from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -330,7 +331,17 @@ def IndexAdmin():
         # print("The query data:")
         name = session['name']
         username = session['username']
-        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job)
+
+        today=date.today()
+        d1 = today.strftime("%Y-%m-%d")
+        query_feedback = """
+        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Time>= CURRENT_DATE()
+        ORDER BY Time DESC
+        """
+        query_job_feedback = client.query(query_feedback)
+
+        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job,FeedbackData=query_job_feedback)
 
 @app.route('/viewReservation')
 def viewReservation():
@@ -940,6 +951,27 @@ def feedbacks():
         """.format(name)
         query_job = client.query(query)
         return render_template("feedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
+
+@app.route("/Adminfeedbacks")
+def Adminfeedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="User":
+        return redirect('/login')
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View feedback list of user
+        
+        query = """
+        SELECT Name,Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback 
+        ORDER BY Time DESC
+        """
+        query_job = client.query(query)
+        return render_template("Adminfeedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
 
 #Update Court 1
 @app.route('/Update-Facility-1', methods=['GET', 'POST'])
