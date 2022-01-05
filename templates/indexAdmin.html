@@ -301,35 +301,35 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{url_for('IndexAdmin')}}">
+        <a class="nav-link " href="/IndexAdmin">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url_for('profileAdmin')}}">
+        <a class="nav-link collapsed" href="/profile-admin">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url_for('courtAvailable')}}">
+        <a class="nav-link collapsed" href="/court-availability">
           <i class="bi bi-question-circle"></i>
           <span>Court Availability</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url_for('ManageFacility')}}">
+        <a class="nav-link collapsed" href="/ManageFacilityAvailability">
           <i class="bi bi-question-circle"></i>
           <span>Court Managing</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url_for('Feedback')}}">
+        <a class="nav-link collapsed" href="/Adminfeedbacks">
           <i class="bi bi-question-circle"></i>
           <span>Feedback</span>
         </a>
@@ -426,28 +426,18 @@
 
           <!-- Recent Activity -->
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
+            
 
             <div class="card-body">
               <h5 class="card-title">Feedback <span>| Today</span></h5>
 
-              <div class="activity">
-                <h6>The court had water on it <br>09:18:33 17/11/2021</h6>
-                <hr>
-                <h6>There is food on the chair of the court <br>09:18:33 17/11/2021</h6> 
-              </div>
-
+              
+                {% for item in FeedbackData %}
+                  <h6>{{item.FeedbackDetails}}<br>{{item.date}}    {{item.time}}</h6>
+                  <hr>
+                
+              
+                {% endfor %}
             </div>
           </div><!-- End Recent Activity -->
 
