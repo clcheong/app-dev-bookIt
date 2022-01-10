@@ -337,7 +337,7 @@ def IndexAdmin():
         d1 = today.strftime("%Y-%m-%d")
         query_feedback = """
         SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
-        FROM main.Feedback WHERE Time>= CURRENT_DATE()
+        FROM main.Feedback WHERE Time>= DATETIME_TRUNC(CURRENT_DATE(),DAY)
         ORDER BY Time DESC
         """
         query_job_feedback = client.query(query_feedback)
@@ -1561,7 +1561,7 @@ def viewFeedbacks():
         query = """
         SELECT FeedbackID, Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
         EXTRACT (DATE FROM Time) as date
-        FROM main.Feedback WHERE Name='{}'
+        FROM main.Feedback WHERE Name='{}' AND Time>=DATETIME_TRUNC(CURRENT_DATE(),DAY)
         ORDER BY Time DESC
         """.format(username)
         query_job = client.query(query)
