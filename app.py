@@ -970,10 +970,10 @@ def feedbacks():
         # View feedback list of user
         
         query = """
-        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
         FROM main.Feedback WHERE Name='{}'
-        ORDER BY Time DESC
-        """.format(name)
+        ORDER BY date DESC
+        """.format(username)
         query_job = client.query(query)
         return render_template("feedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
 

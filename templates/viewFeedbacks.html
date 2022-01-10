@@ -36,8 +36,15 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
-<body onload="createDiv()">
+<script>
+  window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+</script>
+<body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
