@@ -7,6 +7,7 @@ from flask import * #Flask, render_template, request, redirect, session, flash, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint, randrange
 import smtplib
+import re
 from flask import jsonify
 from flask import json
 # from flask_sqlalchemy import SQLAlchemy
@@ -192,7 +193,31 @@ def register():
         BlockNum=request.form['inputBlockNumber']
         UnitNum=request.form['inputUnitNumber']
 
-         
+        #make sure name has no numbers
+        x = re.findall("[0-9]",name)
+        if x:
+            return render_template('pages-register.html')
+        
+        #make sure blockNum has no numbers
+        x = re.findall("[A-Z][A-Z]", BlockNum)
+        if not (x and (len(BlockNum) == 2)):
+            return render_template('pages-register.html')
+        
+        #make sure email is correct format
+        x = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(x,email)):
+            return render_template('pages-register.html')
+        
+        #make sure phone is numbers only
+        x = re.findall("^[0-9]*$",phoneNum)
+        if not x:
+            return render_template('pages-register.html')
+        
+        #make sure unitNum is numbers only
+        x = re.findall("[0-9][0-9][0-9][0-9]",UnitNum)
+        if not (x and (len(UnitNum) == 4)):
+            return render_template('pages-register.html')
+                 
         if password == retype:
             
 
@@ -707,12 +732,52 @@ def updateProfile():
         newUnitNum = request.form['unitNum']
         
         usertype = session['UserType']
-        # name = session['name']
-        # email = session['email']
-        # phoneNum = session['PhoneNumber']
-        # blockNum = session['BlockNumber']
-        # unitNum = session['UnitNumber']
+
+        #make sure name has no numbers
+        x = re.findall("[0-9]",newName)
+        if x:
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
         
+        #make sure blockNum has no numbers
+        x = re.findall("[A-Z][A-Z]", newBlockNum)
+        if not (x and (len(newBlockNum) == 2)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+        
+        #make sure email is correct format
+        x = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(x,newEmail)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
+        #make sure phone is numbers only
+        x = re.findall("^[0-9]*$",newPhoneNum)
+        if not x:
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
+        #make sure unitNum is numbers only
+        x = re.findall("[0-9][0-9][0-9][0-9]",newUnitNum)
+        if not (x and (len(newUnitNum) == 4)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
         client = bigquery.Client()
         
         query = """
@@ -972,7 +1037,11 @@ def feedbacks():
         query = """
         SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
         FROM main.Feedback WHERE Name='{}'
+<<<<<<< HEAD
         ORDER BY date DESC
+=======
+        ORDER BY Time DESC
+>>>>>>> clBranch
         """.format(username)
         query_job = client.query(query)
         return render_template("feedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
