@@ -7,6 +7,7 @@ from flask import * #Flask, render_template, request, redirect, session, flash, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint, randrange
 import smtplib
+import re
 from flask import jsonify
 from flask import json
 # from flask_sqlalchemy import SQLAlchemy
@@ -192,7 +193,31 @@ def register():
         BlockNum=request.form['inputBlockNumber']
         UnitNum=request.form['inputUnitNumber']
 
-         
+        #make sure name has no numbers
+        x = re.findall("[0-9]",name)
+        if x:
+            return render_template('pages-register.html')
+        
+        #make sure blockNum has no numbers
+        x = re.findall("[A-Z][A-Z]", BlockNum)
+        if not (x and (len(BlockNum) == 2)):
+            return render_template('pages-register.html')
+        
+        #make sure email is correct format
+        x = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(x,email)):
+            return render_template('pages-register.html')
+        
+        #make sure phone is numbers only
+        x = re.findall("^[0-9]*$",phoneNum)
+        if not x:
+            return render_template('pages-register.html')
+        
+        #make sure unitNum is numbers only
+        x = re.findall("[0-9][0-9][0-9][0-9]",UnitNum)
+        if not (x and (len(UnitNum) == 4)):
+            return render_template('pages-register.html')
+                 
         if password == retype:
             
 
