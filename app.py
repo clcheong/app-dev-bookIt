@@ -7,10 +7,12 @@ from flask import * #Flask, render_template, request, redirect, session, flash, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint, randrange
 import smtplib
+import re
 from flask import jsonify
 from flask import json
 # from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -191,7 +193,31 @@ def register():
         BlockNum=request.form['inputBlockNumber']
         UnitNum=request.form['inputUnitNumber']
 
-         
+        #make sure name has no numbers
+        x = re.findall("[0-9]",name)
+        if x:
+            return render_template('pages-register.html')
+        
+        #make sure blockNum has no numbers
+        x = re.findall("[A-Z][A-Z]", BlockNum)
+        if not (x and (len(BlockNum) == 2)):
+            return render_template('pages-register.html')
+        
+        #make sure email is correct format
+        x = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(x,email)):
+            return render_template('pages-register.html')
+        
+        #make sure phone is numbers only
+        x = re.findall("^[0-9]*$",phoneNum)
+        if not x:
+            return render_template('pages-register.html')
+        
+        #make sure unitNum is numbers only
+        x = re.findall("[0-9][0-9][0-9][0-9]",UnitNum)
+        if not (x and (len(UnitNum) == 4)):
+            return render_template('pages-register.html')
+                 
         if password == retype:
             
 
@@ -324,13 +350,24 @@ def IndexAdmin():
            SELECT *
            FROM `bookit-court-booking-system-1.main.Reservation`
            WHERE Reserve_Time>=TIMESTAMP(TIMESTAMP_TRUNC(CURRENT_DATETIME(),DAY))
+           ORDER BY Court_ID ASC
         """
 
         query_job = client.query(query)
         # print("The query data:")
         name = session['name']
         username = session['username']
-        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job)
+
+        today=date.today()
+        d1 = today.strftime("%Y-%m-%d")
+        query_feedback = """
+        SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Time>= DATETIME_TRUNC(CURRENT_DATE(),DAY)
+        ORDER BY Time DESC
+        """
+        query_job_feedback = client.query(query_feedback)
+
+        return render_template('IndexAdmin.html',name=name, username=username, bookingData=query_job,FeedbackData=query_job_feedback)
 
 @app.route('/viewReservation')
 def viewReservation():
@@ -476,6 +513,16 @@ def IndexAdminPost():
     if 'Booking_Status' in request.form:
         Booking_Status=request.form['Booking_Status'].replace("/","");
         app.logger.info(Booking_Status)
+    if 'Start_Time' in request.form:
+        Start_Time=request.form['Start_Time'].replace("/","");
+        app.logger.info(Start_Time)
+    if 'Start_Time' in request.form:
+        Start_Time=request.form['Start_Time'].replace("/","");
+        app.logger.info(Start_Time)        
+    if 'Court_ID' in request.form:
+        Court_ID=request.form['Court_ID'].replace("/","");
+        app.logger.info(Court_ID)
+
     if Booking_Status=="Disapprove":
         query="""
         UPDATE `bookit-court-booking-system-1.main.Reservation` 
@@ -484,6 +531,13 @@ def IndexAdminPost():
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)
         query_job = client.query(query)
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        SET Booking = FALSE
+        WHERE START_TIME = {}
+        """.format(Court_ID,'\"'+Start_Time+'\"')
+        app.logger.info(query)
+        query_job = client.query(query)        
 
     if Booking_Status=="Approve":
         query="""
@@ -493,8 +547,15 @@ def IndexAdminPost():
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)    
         query_job = client.query(query)
-
-    return '', 400
+        query="""
+        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        SET Booking = TRUE
+        WHERE START_TIME = {}
+        """.format(Court_ID,'\"'+Start_Time+'\"')
+        app.logger.info(query)
+        query_job = client.query(query)
+    
+    return redirect("/IndexAdmin")
 
 @app.route('/reservations')
 def reservations():
@@ -671,12 +732,52 @@ def updateProfile():
         newUnitNum = request.form['unitNum']
         
         usertype = session['UserType']
-        # name = session['name']
-        # email = session['email']
-        # phoneNum = session['PhoneNumber']
-        # blockNum = session['BlockNumber']
-        # unitNum = session['UnitNumber']
+
+        #make sure name has no numbers
+        x = re.findall("[0-9]",newName)
+        if x:
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
         
+        #make sure blockNum has no numbers
+        x = re.findall("[A-Z][A-Z]", newBlockNum)
+        if not (x and (len(newBlockNum) == 2)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+        
+        #make sure email is correct format
+        x = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(x,newEmail)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
+        #make sure phone is numbers only
+        x = re.findall("^[0-9]*$",newPhoneNum)
+        if not x:
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
+        #make sure unitNum is numbers only
+        x = re.findall("[0-9][0-9][0-9][0-9]",newUnitNum)
+        if not (x and (len(newUnitNum) == 4)):
+            if usertype == "USER":
+                return redirect('/profile')
+
+            else:
+                return redirect('/profile-admin')
+                    
         client = bigquery.Client()
         
         query = """
@@ -920,12 +1021,47 @@ def ManageFacility():
 
         return render_template('ManageFacility.html',Court1_Start_Time=Court1_Start_Time,Court1_End_Time=Court1_End_Time,Court2_Start_Time=Court2_Start_Time,Court2_End_Time=Court2_End_Time,Court3_Start_Time=Court3_Start_Time,Court3_End_Time=Court3_End_Time,Court4_Start_Time=Court4_Start_Time,Court4_End_Time=Court4_End_Time,AllCourt_Start_Time=AllCourt_Start_Time,AllCourt_End_Time=AllCourt_End_Time,username=username, usertype=usertype,name=name,email=email,phoneNum=phoneNum,blockNum=blockNum,unitNum=unitNum)
 
-@app.route('/Feedback')
-def Feedback():
-    if session['loggedIn'] == FALSE or session['UserType']=="USER":
+@app.route("/feedbacks")
+def feedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
         return redirect('/login')
     else:
-        return render_template('Feedback.html')
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View feedback list of user
+        
+        query = """
+        SELECT Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Name='{}'
+        ORDER BY date DESC
+        """.format(username)
+        query_job = client.query(query)
+        return render_template("feedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
+
+@app.route("/Adminfeedbacks")
+def Adminfeedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="User":
+        return redirect('/login')
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View feedback list of user
+        
+        query = """
+        SELECT Name,Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback 
+        ORDER BY Time DESC
+        """
+        query_job = client.query(query)
+        return render_template("Adminfeedbacks.html",name=name,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
 
 #Update Court 1
 @app.route('/Update-Facility-1', methods=['GET', 'POST'])
@@ -1473,6 +1609,113 @@ def cancelreservation(bid):
             
         
         return redirect("/viewReservation")
+
+@app.route("/viewFeedbacks", methods=['GET','POST'])
+def viewFeedbacks():
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login') 
+    else:
+        name = session['name']
+        blockNum = session['BlockNumber']
+        unitNum = session['UnitNumber']
+        username = session['username']
+        client =bigquery.Client()
+        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        # View today feedback of user
+        
+        query = """
+        SELECT FeedbackID, Subject,FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today,
+        EXTRACT (DATE FROM Time) as date
+        FROM main.Feedback WHERE Name='{}' AND Time>=DATETIME_TRUNC(CURRENT_DATE(),DAY)
+        ORDER BY Time DESC
+        """.format(username)
+        query_job = client.query(query)
+        
+        return render_template("viewFeedbacks.html",name=username,blockNum=blockNum,unitNum=unitNum,username=username,flist=query_job)
+
+                    
+
+@app.route('/giveFeedback', methods=['GET','POST'])
+def giveFeedback():   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        letters = string.digits
+        Feedback_ID = "F" + str(''.join(random.choice(letters) for i in range(8)))
+        Customer_Name=session['name']
+        username=session['username']
+        blockNum=session['BlockNumber']
+        unitNum=session['UnitNumber']
+        feedback_Form= str(request.form.get('feedback'))
+        time=str(datetime.today())
+        subject=str(request.form.get('subject'))
+        if request.method == "GET":
+            return render_template('giveFeedback.html',username=username,blockNum=blockNum,unitNum=unitNum)
+        else:
+            query = """
+            INSERT INTO bookit-court-booking-system-1.main.Feedback 
+            (FeedbackID, Name,FeedbackDetails,Time,Status,Subject,Username) 
+            VALUES 
+            ('""" + Feedback_ID +"""','""" + username +"""','""" + feedback_Form +"""', DATETIME \"""" + time + """\",False,'""" + subject +"""','""" + username +"""')
+            """
+
+            query_job = client.query(query)
+            print('success')
+            return redirect("/viewFeedbacks")
+
+
+@app.route('/updateFeedback<feedback_id>', methods=['GET','POST'])
+def updateFeedback(feedback_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        Customer_Name=session['name']
+        username=session['username']
+        blockNum=session['BlockNumber']
+        unitNum=session['UnitNumber']
+        time=str(datetime.today())
+        details = []
+
+        query2 = """
+        SELECT Subject, FeedbackDetails from bookit-court-booking-system-1.main.Feedback
+        WHERE FeedbackID = '{}'
+        """.format(feedback_id)
+        query_job2 = client.query(query2)
+
+        for row in query_job2:
+            Feedback_Subject = row['Subject']
+            Feedback_Details = row["FeedbackDetails"]
+
+        if request.method == "GET":
+            return render_template('updateFeedback.html',name=Customer_Name,blockNum=blockNum, feedback_id = feedback_id, unitNum=unitNum,Feedback_Details=Feedback_Details,Feedback_Subject=Feedback_Subject)
+        else:
+            Feedback_Subject = request.form["Feedback_Subject"]
+            Feedback_Details = request.form["Feedback_Details"]
+            query = """
+            UPDATE `bookit-court-booking-system-1.main.Feedback`
+            SET Subject='""" + Feedback_Subject + """',FeedbackDetails='""" + Feedback_Details + """'
+            WHERE FeedbackID='""" + feedback_id + """'
+        """
+            query_job = client.query(query)
+
+            print('success')
+            return redirect("/viewFeedbacks")
+        
+
+@app.route('/deleteFeedback<feedback_id>', methods=['GET','POST'])
+def deleteFeedback(feedback_id):   
+    if session['loggedIn'] == FALSE or session['UserType']=="ADMIN":
+        return redirect('/login')  
+    else:
+        client=bigquery.Client()
+        
+        query = """DELETE FROM `bookit-court-booking-system-1.main.Feedback` WHERE FeedbackID = \"""" + feedback_id + """\""""
+        
+        query_job = client.query(query)
+        
+        return redirect("/viewFeedbacks")
 
 
 if __name__ == "__main__":
