@@ -255,7 +255,7 @@ def register():
             print(f'encounter error : {errors}')
 
         
-    return redirect('/login')
+    return redirect('/IndexAdmin')
 
 @app.route('/logout')
 def logout():
