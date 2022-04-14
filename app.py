@@ -47,7 +47,7 @@ def login():
 
     else:
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Customer'
+        cust_table_id='genuine-ember-347203.main.Customer'
         username = request.form['username']
         password = request.form['passwword']
 
@@ -101,7 +101,7 @@ def checkAccount():
     client = bigquery.Client();
     query = """ 
         SELECT email 
-        FROM `bookit-court-booking-system-1.main.Customer`
+        FROM `genuine-ember-347203.main.Customer`
         WHERE email=\'""" + email + """\'
     """
     
@@ -158,7 +158,7 @@ def resetPassword():
         client = bigquery.Client()
         
         query = """
-            UPDATE `bookit-court-booking-system-1.main.Customer`
+            UPDATE `genuine-ember-347203.main.Customer`
             SET password='""" + newPW + """'
             WHERE email='""" + email + """'
         """
@@ -182,7 +182,7 @@ def register():
 
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Customer'
+        cust_table_id='genuine-ember-347203.main.Customer'
 
         username = request.form['inputusername']
         password = request.form['inputpassword']
@@ -277,7 +277,7 @@ def IndexResident():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Court1'
+        cust_table_id='genuine-ember-347203.main.Court1'
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court1
@@ -348,7 +348,7 @@ def IndexAdmin():
 
         query="""
            SELECT *
-           FROM `bookit-court-booking-system-1.main.Reservation`
+           FROM `genuine-ember-347203.main.Reservation`
            WHERE Reserve_Time>=TIMESTAMP(TIMESTAMP_TRUNC(CURRENT_DATETIME(),DAY))
            ORDER BY Court_ID ASC
         """
@@ -362,7 +362,7 @@ def IndexAdmin():
         d1 = today.strftime("%Y-%m-%d")
         query_feedback = """
         SELECT FeedbackDetails,FORMAT_DATETIME("%T",Time) as time,Status,EXTRACT (DATE FROM CURRENT_DATETIME()) as today, EXTRACT (DATE FROM Time) as date
-        FROM main.Feedback WHERE Time>= DATETIME_TRUNC(CURRENT_DATE(),DAY)
+        FROM `genuine-ember-347203.main.Feedback` WHERE Time>= DATETIME_TRUNC(CURRENT_DATE(),DAY)
         ORDER BY Time DESC
         """
         query_job_feedback = client.query(query_feedback)
@@ -381,7 +381,7 @@ def viewReservation():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        cust_table_id='genuine-ember-347203.main.Reservation'
         rlist=[]
         cust=name
         bid=[]
@@ -473,7 +473,7 @@ def AdminEditBooking(Booking_ID):
             #Set reservation Time to new   (can use already )
             client=bigquery.Client()
             query = """
-            UPDATE bookit-court-booking-system-1.main.Reservation 
+            UPDATE genuine-ember-347203.main.Reservation 
             set Start_Time = TIME \"""" + str(date_object_start_time.time()) + """\",
             End_Time = TIME \"""" + str(date_object_end_time.time()) + """\"
             WHERE Book_ID = '{}'
@@ -484,7 +484,7 @@ def AdminEditBooking(Booking_ID):
 
             #Change court old time to OPEN    (got problem)
             query1 = """
-                UPDATE bookit-court-booking-system-1.main.Court"""+court_id+"""
+                UPDATE genuine-ember-347203.main.Court"""+court_id+"""
                 set Booking = False
                 WHERE Start_Time=TIME \"""" + str(Customer_initialTime) + """\"
             """
@@ -493,7 +493,7 @@ def AdminEditBooking(Booking_ID):
 
             #Change court new time to CLOSE    can use
             query2 = """
-            UPDATE `bookit-court-booking-system-1.main.Court""" +court_id +"""`
+            UPDATE `genuine-ember-347203.main.Court""" +court_id +"""`
             SET Booking=True
             WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
             """
@@ -525,14 +525,14 @@ def IndexAdminPost():
 
     if Booking_Status=="Disapprove":
         query="""
-        UPDATE `bookit-court-booking-system-1.main.Reservation` 
+        UPDATE `genuine-ember-347203.main.Reservation` 
         SET Approve_Status = FALSE
         WHERE Book_ID = {}
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)
         query_job = client.query(query)
         query="""
-        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        UPDATE `genuine-ember-347203.main.Court{}` 
         SET Booking = FALSE
         WHERE START_TIME = {}
         """.format(Court_ID,'\"'+Start_Time+'\"')
@@ -541,14 +541,14 @@ def IndexAdminPost():
 
     if Booking_Status=="Approve":
         query="""
-        UPDATE `bookit-court-booking-system-1.main.Reservation` 
+        UPDATE `genuine-ember-347203.main.Reservation` 
         SET Approve_Status = TRUE
         WHERE Book_ID = {}
         """.format('\"'+Booking_ID+'\"')
         app.logger.info(query)    
         query_job = client.query(query)
         query="""
-        UPDATE `bookit-court-booking-system-1.main.Court{}` 
+        UPDATE `genuine-ember-347203.main.Court{}` 
         SET Booking = TRUE
         WHERE START_TIME = {}
         """.format(Court_ID,'\"'+Start_Time+'\"')
@@ -568,7 +568,7 @@ def reservations():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        cust_table_id='genuine-ember-347203.main.Reservation'
         rlist=[]
         cust=name
         bid=[]           
@@ -604,7 +604,7 @@ def zhixuen(court_id):
         return redirect('/login')  
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Court{}'.format(court_id)
+        cust_table_id='genuine-ember-347203.main.Court{}'.format(court_id)
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court{}
@@ -634,7 +634,7 @@ def zhixuen(court_id):
 
             client=bigquery.Client()
             query = """
-            INSERT INTO bookit-court-booking-system-1.main.Reservation 
+            INSERT INTO genuine-ember-347203.main.Reservation 
             (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
             VALUES 
             ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
@@ -642,7 +642,7 @@ def zhixuen(court_id):
             query_job = client.query(query)
 
             query1 = """
-            UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
+            UPDATE `genuine-ember-347203.main.Court""" +Court_ID +"""`
             SET Booking=True
             WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         """.format(court_id)
@@ -781,7 +781,7 @@ def updateProfile():
         client = bigquery.Client()
         
         query = """
-            UPDATE `bookit-court-booking-system-1.main.Customer`
+            UPDATE `genuine-ember-347203.main.Customer`
             SET username='""" + newUsername + """', name='""" + newName + """', email='"""+ newEmail + """', PhoneNumber='""" + newPhoneNum + """',BlockNumber='""" + newBlockNum + """',UnitNumber='""" + newUnitNum + """'
             WHERE username='""" + username + """'
         """
@@ -847,7 +847,7 @@ def updatePassword():
             client = bigquery.Client()
             
             query = """
-                UPDATE `bookit-court-booking-system-1.main.Customer`
+                UPDATE `genuine-ember-347203.main.Customer`
                 SET password='""" + newPassword + """'
                 WHERE username='""" + username + """'
             """
@@ -1031,7 +1031,7 @@ def feedbacks():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        cust_table_id='genuine-ember-347203.main.Reservation'
         # View feedback list of user
         
         query = """
@@ -1052,7 +1052,7 @@ def Adminfeedbacks():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        cust_table_id='genuine-ember-347203.main.Reservation'
         # View feedback list of user
         
         query = """
@@ -1367,7 +1367,7 @@ def Reschedule():
         
         queryTest = """
         SELECT FORMAT_TIME("%T",Start_Time) as stime, Court_ID
-        FROM `bookit-court-booking-system-1.main.Reservation`
+        FROM `genuine-ember-347203.main.Reservation`
         WHERE Book_ID=\"""" + str(bookID) + """\"
         """
         
@@ -1382,7 +1382,7 @@ def Reschedule():
         unitNum = session['UnitNumber']
         username = session['username']
         
-        cust_table_id='bookit-court-booking-system-1.main.Court1'
+        cust_table_id='genuine-ember-347203.main.Court1'
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court1
@@ -1451,7 +1451,7 @@ def makeReschedule(court_id):
         return redirect('/login')  
     else:
         client=bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Court{}'.format(court_id)
+        cust_table_id='genuine-ember-347203.main.Court{}'.format(court_id)
         query = """
         SELECT Start_Time,Booking,Available
         FROM main.Court{}
@@ -1481,7 +1481,7 @@ def makeReschedule(court_id):
 
         #     client=bigquery.Client()
         #     query = """
-        #     INSERT INTO bookit-court-booking-system-1.main.Reservation 
+        #     INSERT INTO genuine-ember-347203.main.Reservation 
         #     (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
         #     VALUES 
         #     ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
@@ -1489,7 +1489,7 @@ def makeReschedule(court_id):
         #     query_job = client.query(query)
 
         #     query1 = """
-        #     UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
+        #     UPDATE `genuine-ember-347203.main.Court""" +Court_ID +"""`
         #     SET Booking=True
         #     WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         # """.format(court_id)
@@ -1519,7 +1519,7 @@ def updateReschedule(court_id):
         # client=bigquery.Client()
         # #this query might have to change to an update query
         # query = """
-        # INSERT INTO bookit-court-booking-system-1.main.Reservation 
+        # INSERT INTO genuine-ember-347203.main.Reservation 
         # (Customer_Name,Book_ID,Court_ID,Approve_Status,Customer_Phone_Number,Reserve_Time,Start_Time,End_Time) 
         # VALUES 
         # ('""" + Customer_Name +"""','"""+ Book_ID + """','""" + Court_ID + """',True,'""" + Customer_Phone_Number + """', CURRENT_TIMESTAMP(),TIME \"""" + str(date_object_start_time.time()) + """\",TIME \"""" + str(date_object_end_time.time()) + """\")"""
@@ -1527,7 +1527,7 @@ def updateReschedule(court_id):
         # query_job = client.query(query)
 
         # query1 = """
-        # UPDATE `bookit-court-booking-system-1.main.Court""" +Court_ID +"""`
+        # UPDATE `genuine-ember-347203.main.Court""" +Court_ID +"""`
         # SET Booking=True
         # WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         # """.format(court_id)
@@ -1548,7 +1548,7 @@ def updateReschedule(court_id):
         #Set reservation Time to new   (can use already )
         client=bigquery.Client()
         query = """
-        UPDATE bookit-court-booking-system-1.main.Reservation 
+        UPDATE genuine-ember-347203.main.Reservation 
         set Start_Time = TIME \"""" + str(date_object_start_time.time()) + """\",
         End_Time = TIME \"""" + str(date_object_end_time.time()) + """\",
         Court_ID = \"""" + str(court_id) + """\"
@@ -1560,7 +1560,7 @@ def updateReschedule(court_id):
 
         #Change court old time to OPEN    (got problem)
         query1 = """
-            UPDATE bookit-court-booking-system-1.main.Court"""+str(oldCourtID)+"""
+            UPDATE genuine-ember-347203.main.Court"""+str(oldCourtID)+"""
             set Booking = False
             WHERE Start_Time=TIME \"""" + str(Customer_initialTime) + """\"
         """
@@ -1569,7 +1569,7 @@ def updateReschedule(court_id):
 
         #Change court new time to CLOSE    can use
         query2 = """
-        UPDATE `bookit-court-booking-system-1.main.Court""" +str(court_id) +"""`
+        UPDATE `genuine-ember-347203.main.Court""" +str(court_id) +"""`
         SET Booking=True
         WHERE Start_Time=TIME \"""" + str(date_object_start_time.time()) + """\"
         """
@@ -1584,14 +1584,14 @@ def cancelreservation(bid):
     else:
         client=bigquery.Client()
         query1 = """
-        UPDATE bookit-court-booking-system-1.main.Reservation 
+        UPDATE genuine-ember-347203.main.Reservation 
         set Approve_Status = False
         WHERE Book_ID = '{}'
         """.format(bid)
         query_job = client.query(query1)
 
         query2 = """
-        SELECT Court_ID, Start_Time from bookit-court-booking-system-1.main.Reservation 
+        SELECT Court_ID, Start_Time from genuine-ember-347203.main.Reservation 
         WHERE Book_ID = '{}'
         """.format(bid)
         query_job2 = client.query(query2)
@@ -1601,7 +1601,7 @@ def cancelreservation(bid):
             Start_Time = row["Start_Time"]
         print(Start_Time)
         query3 = """ 
-        UPDATE bookit-court-booking-system-1.main.Court{} 
+        UPDATE genuine-ember-347203.main.Court{} 
         set Booking = False
         WHERE Start_Time = '{}'
         """.format(court_id, Start_Time)
@@ -1620,7 +1620,7 @@ def viewFeedbacks():
         unitNum = session['UnitNumber']
         username = session['username']
         client =bigquery.Client()
-        cust_table_id='bookit-court-booking-system-1.main.Reservation'
+        cust_table_id='genuine-ember-347203.main.Reservation'
         # View today feedback of user
         
         query = """
@@ -1654,7 +1654,7 @@ def giveFeedback():
             return render_template('giveFeedback.html',username=username,blockNum=blockNum,unitNum=unitNum)
         else:
             query = """
-            INSERT INTO bookit-court-booking-system-1.main.Feedback 
+            INSERT INTO genuine-ember-347203.main.Feedback 
             (FeedbackID, Name,FeedbackDetails,Time,Status,Subject,Username) 
             VALUES 
             ('""" + Feedback_ID +"""','""" + username +"""','""" + feedback_Form +"""', DATETIME \"""" + time + """\",False,'""" + subject +"""','""" + username +"""')
@@ -1679,7 +1679,7 @@ def updateFeedback(feedback_id):
         details = []
 
         query2 = """
-        SELECT Subject, FeedbackDetails from bookit-court-booking-system-1.main.Feedback
+        SELECT Subject, FeedbackDetails from genuine-ember-347203.main.Feedback
         WHERE FeedbackID = '{}'
         """.format(feedback_id)
         query_job2 = client.query(query2)
@@ -1694,7 +1694,7 @@ def updateFeedback(feedback_id):
             Feedback_Subject = request.form["Feedback_Subject"]
             Feedback_Details = request.form["Feedback_Details"]
             query = """
-            UPDATE `bookit-court-booking-system-1.main.Feedback`
+            UPDATE `genuine-ember-347203.main.Feedback`
             SET Subject='""" + Feedback_Subject + """',FeedbackDetails='""" + Feedback_Details + """'
             WHERE FeedbackID='""" + feedback_id + """'
         """
@@ -1711,7 +1711,7 @@ def deleteFeedback(feedback_id):
     else:
         client=bigquery.Client()
         
-        query = """DELETE FROM `bookit-court-booking-system-1.main.Feedback` WHERE FeedbackID = \"""" + feedback_id + """\""""
+        query = """DELETE FROM `genuine-ember-347203.main.Feedback` WHERE FeedbackID = \"""" + feedback_id + """\""""
         
         query_job = client.query(query)
         
